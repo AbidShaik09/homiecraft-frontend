@@ -1,10 +1,16 @@
 import './App.css';
-import Home from './pages/customer/Home';
+import Navbar from './components/navbar/Navbar';
+import { createTheme,ThemeProvider } from '@mui/material/styles';
+import OrangeTheme from './themes/OrangeTheme';
 
 function App() {
   return (
-    
-    <></>
+    <ThemeProvider theme={OrangeTheme}>
+      
+
+
+      
+    </ThemeProvider>
   );
 }
 
