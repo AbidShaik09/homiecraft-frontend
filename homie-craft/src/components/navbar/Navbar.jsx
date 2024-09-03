@@ -17,6 +17,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import OrangeTheme from '../../themes/OrangeTheme';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -38,6 +39,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
   position: 'absolute',
+
   pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
@@ -61,14 +63,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const navhook=useNavigate()
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const openProfile=()=>{
+    navhook('/profile')
+  }
 
+  const openHome =()=>{
+    navhook('/')
+  }
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -98,14 +106,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       }}
       sx={{
         '& .MuiPaper-root': {
-          backgroundColor: OrangeTheme.palette.secondary.main, // Apply secondary color here
+          backgroundColor: OrangeTheme.palette.primary.main, 
         },
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={openProfile}>Profile</MenuItem>
     </Menu>
   );
 
@@ -117,6 +124,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         vertical: 'top',
         horizontal: 'right',
       }}
+      
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
@@ -127,24 +135,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       onClose={handleMobileMenuClose}
     >
       
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      
+      <MenuItem onClick={openProfile}>
         <IconButton
           size="large"
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
+          aria-haspopup="false"
           color="inherit"
         >
           <AccountCircle />
@@ -167,6 +164,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
           >
            
           </IconButton>
+          <MenuItem onClick={openHome}>
           <Typography
             variant="h6"
             noWrap
@@ -175,6 +173,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
           >
             Homie Craft
           </Typography>
+          
+         
+          
+          </MenuItem>
+          
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -191,10 +194,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
             <IconButton
               size="large"
               edge="end"
-              aria-label="account of current user"
+              aria-label="profile of current user"
               aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              aria-haspopup="false"
+              onClick={openProfile}
               color="inherit"
             >
               <AccountCircle />

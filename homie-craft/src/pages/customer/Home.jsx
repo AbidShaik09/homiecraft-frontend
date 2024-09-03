@@ -5,7 +5,6 @@ import OrangeCard from '../../components/orangeCard/OrangeCard'
 const Home = () => {
   return (
     <>
-    <Navbar/>
    <div style={{display:'flex',justifyContent:'space-around'}}>
    <OrangeCard/>
    <OrangeCard/>

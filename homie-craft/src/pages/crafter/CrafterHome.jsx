@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Home() {
+function CrafterHome() {
   return (
     <div></div>
   )
