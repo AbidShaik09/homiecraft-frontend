@@ -2,9 +2,7 @@ import React from 'react'
 
 function Home() {
   return (
-    <div>
-       Crafter Home
-    </div>
+    <div></div>
   )
 }
 
