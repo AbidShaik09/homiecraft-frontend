@@ -1,14 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/navbar/Navbar';
+import { createTheme,ThemeProvider } from '@mui/material/styles';
+import OrangeTheme from './themes/OrangeTheme';
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={OrangeTheme}>
       
-    <Navbar/>
-   <h3>Homie Craft</h3>
-    </>
+
+
+      
+    </ThemeProvider>
   );
 }
 
