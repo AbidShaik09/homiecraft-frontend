@@ -3,11 +3,11 @@ import { createTheme,ThemeProvider } from '@mui/material/styles';
 const OrangeTheme = createTheme({
   palette: {
     primary: {
-      main: '#e6e6e6',
-      light:'#ff9900',
+      main: '#ff9900',
+      contrastText: '#0d1b2a'
     },
     secondary: {
-      main: '#ff9900',
+      main: '#e0e1dd',
     },
   },
 });
