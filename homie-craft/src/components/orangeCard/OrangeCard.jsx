@@ -4,10 +4,20 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-
+import styled from '@emotion/styled';
+import { alpha } from '@mui/material';
 export default function OrangeCard() {
+
+  const DivWrapper = styled('div')(({ theme }) => ({
+
+    backgroundColor: alpha(theme.palette.secondary.main,1),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.secondary.main)
+    }
+  }));
+  
   return (
-    <div className='orange-card' >
+    <DivWrapper className='orange-card' >
         
     <Card sx={{ maxWidth: 250 ,border:'2px solid black'}} >
       <CardMedia
@@ -20,7 +30,7 @@ export default function OrangeCard() {
         <Typography gutterBottom variant="h5" component="div">
           Category Title
         </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Typography variant="body2" >
           Category Description
         </Typography>
       </CardContent>
@@ -28,7 +38,7 @@ export default function OrangeCard() {
 
 
 
-    </div>  );
+    </DivWrapper>  );
 }
 
 
