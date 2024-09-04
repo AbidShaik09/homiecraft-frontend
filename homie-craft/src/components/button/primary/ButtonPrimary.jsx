@@ -1,10 +1,13 @@
 import React from 'react'
-
+import { Button } from '@mui/material'
 function ButtonPrimary(params) {
   return (
-    <div className='btn ' onClick={params.action} style={{ padding:'5px 25px',backgroundColor: '#ff9900', borderRadius:'3px'}}>
-        {params.name}
-    </div>
+    <>
+    <Button variant="contained" onClick={params.action}>{params.name}</Button>
+
+    
+
+    </>
   )
 }
 
