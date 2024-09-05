@@ -21,9 +21,9 @@ export default function OrangeCard(params) {
   return (
     <DivWrapper className='orange-card'>
         
-    <Card sx={{ maxWidth: 250 ,border:'2px solid black'}} >
+    <Card sx={{ maxWidth: 350,  }} >
       <CardMedia
-        sx={{ height: 100}}
+        sx={{ height: 200,objectFit:'cover'}}
         image={params.image}
         title={title}
         alt={title}
