@@ -1,6 +1,6 @@
 import React from 'react'
-import ButtonPrimary from '../../components/button/primary/ButtonPrimary'
-import ButtonSecondary from '../../components/button/secondary/ButtonSecondary'
+import ButtonPrimary from '../../../components/button/primary/ButtonPrimary'
+import ButtonSecondary from '../../../components/button/secondary/ButtonSecondary'
 import './CustomerProfile.css'
 import CreateIcon from '@mui/icons-material/Create';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -10,11 +10,12 @@ function CustomerProfile() {
 
   let userData = {
     name: 'user Name',
+    contact:'1234567890',
     profilePicURL: 'https://images.hitpaw.com/topics/3d/profile-photo-1.jpg',
-    address: 'User Adderss' ,
-    City:'User City', 
-    State:'User State', 
-    PinCode :'User Pincode'
+    houseNumber: 'User Adderss' ,
+    city:'User City', 
+    state:'User State', 
+    pinCode :'User Pincode'
 
 
   }
@@ -56,14 +57,31 @@ function CustomerProfile() {
             <ButtonSecondary name='Remove' action={removeProfilePic} />
           </div>
          
-          <div className='col-auto' >
-            <table className='table table-responsive'>
-              <tr>
-                <td className='bold'>
+          <div className='' >
+            <table className='table '>
+            <tr className='d-flex justify-content-between '>
+                <td className='bold larger grey'>
                   Name
                 </td>
-                <td>
+                <td >
+                  <div className='align-self-start'>
                   {userData.name}
+                  </div>
+                </td>
+                <td className='align-self-end'> 
+                  <div className='btn'>
+
+                    <CreateIcon fontSize="large" />
+
+                  </div>
+                </td>
+              </tr>
+              <tr className='d-flex justify-content-between '>
+                <td className='bold larger grey'>
+                Mobile
+                </td>
+                <td>
+                {userData.contact}
                 </td>
                 <td>
                   <div className='btn'>
@@ -74,62 +92,51 @@ function CustomerProfile() {
                 </td>
               </tr>
 
-              <tr>
-                <td className='bold'>
+              <tr className='d-flex justify-content-between align-items-center '>
+                
+                <td className='bold larger grey '>
                   Address
                 </td>
-                <td>
-                  {userData.address}
-                </td>
                 <td >
-                  <div className='btn'>
-
-                    <CreateIcon fontSize="large" />
-
-                  </div>
+                <table className='table margin'>
+                <tr >
+                    <td className='lessbold  grey'>
+                      H.No
+                    </td>
+                    <td>
+                      {userData.houseNumber}
+                    </td>
+                </tr>
+                <tr >
+                    <td className='lessbold grey'>
+                      City
+                    </td>
+                    <td>
+                      {userData.city}
+                    </td>
+                </tr>
+                <tr>
+                    <td className='lessbold  grey'>
+                      State
+                    </td>
+                    <td>
+                      {userData.state}
+                    </td>
+                </tr>
+                <tr >
+                    <td className='lessbold  grey'>
+                      PinCode
+                    </td>
+                    <td>
+                      {userData.pinCode}
+                    </td>
+                </tr>
+                </table>
                 </td>
-              </tr>
-              <tr>
-                <td className='bold'>
-                  city
-                </td>
-                <td>
-                  {userData.city}
-                </td>
-                <td >
-                  <div className='btn'>
-
-                    <CreateIcon fontSize="large" />
-
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className='bold'>
-                  state
-                </td>
-                <td>
-                  {userData.state}
-                </td>
-                <td >
-                  <div className='btn'>
-
-                    <CreateIcon fontSize="large" />
-
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className='bold'>
-                  Pincode
-                </td>
-                <td>
-                  {userData.PinCode}
-                </td>
-                <td >
-                  <div className='btn'>
-
-                    <CreateIcon fontSize="large" />
+                <td className=' '>
+                  <div className='btn  '>
+                    
+                    <CreateIcon fontSize="large" className='' />
 
                   </div>
                 </td>

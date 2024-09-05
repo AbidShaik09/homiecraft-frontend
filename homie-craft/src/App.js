@@ -4,7 +4,7 @@ import { createTheme,ThemeProvider } from '@mui/material/styles';
 import OrangeTheme from './themes/OrangeTheme';
 import Home from './pages/customer/Home';
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
-import CustomerProfile from './pages/customer/CustomerProfile';
+import CustomerProfile from './pages/customer/CustomerProfile/CustomerProfile';
 import Categories from './pages/customer/Categories';
 import Item from './pages/customer/Item';
 import Wishlist from './pages/customer/Wishlist';
