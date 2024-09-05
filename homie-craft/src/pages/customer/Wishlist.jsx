@@ -3,7 +3,7 @@ import React from 'react'
 function Wishlist() {
   return (
     <div>
-      Wishlist
+      Wishlist Items
     </div>
   )
 }

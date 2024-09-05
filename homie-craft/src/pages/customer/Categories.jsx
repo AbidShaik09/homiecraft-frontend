@@ -5,7 +5,7 @@ function Categories() {
     let {id} = useParams()
   return (
     <div>
-      <h1>Category with id: {id}</h1>
+      <h1>Category : {id}</h1>
     </div>
   )
 }
