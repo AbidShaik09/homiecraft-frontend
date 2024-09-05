@@ -5,8 +5,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import styled from '@emotion/styled';
 import { alpha } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 export default function OrangeCard(params) {
-
+  let id = params.id
   let title=params.title
   let description= params.description
 
@@ -17,22 +18,30 @@ export default function OrangeCard(params) {
       backgroundColor: alpha(theme.palette.secondary.main)
     }
   }));
+  const navhook = useNavigate()
+  const navigateHandler =()=>{
+    navhook('/categories/'+id)
+  }
   
   return (
-    <DivWrapper className='orange-card'>
+    <DivWrapper className='orange-card ' onClick={navigateHandler}>
         
-    <Card sx={{ maxWidth: 350,  }} >
+    <Card className='btn'  sx={{height: 270,width: 350,}}>
       <CardMedia
-        sx={{ height: 200,objectFit:'cover'}}
+        sx={{ height: 200,width: 320,objectFit:'cover'}}
         image={params.image}
         title={title}
         alt={title}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div"
+          sx={{ overflow: 'hidden'}}
+        >
           {title}
         </Typography>
-        <Typography variant="body2" >
+        <Typography variant="body2" 
+        sx={{ overflow: 'hidden'}}
+        >
           {description}
         </Typography>
       </CardContent>
