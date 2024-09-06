@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import styled from '@emotion/styled';
 import { alpha } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 export default function ItemCard(params) {
   let id = params.id
   let title=params.title
@@ -27,7 +28,7 @@ export default function ItemCard(params) {
   return (
     <DivWrapper className='orange-card ' onClick={navigateHandler}>
         
-    <Card className='btn'  sx={{height: 270,width: 350,}}>
+    <Card className='btn'  sx={{height: 300,width: 350,}}>
       <CardMedia
         sx={{ height: 200,width: 320,objectFit:'cover'}}
         image={params.image}
@@ -35,11 +36,17 @@ export default function ItemCard(params) {
         alt={title}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div"
+      <Typography gutterBottom variant="h5" component="div"
           sx={{ overflow: 'hidden'}}
         >
           {title}
-          {'₹ '+ price}
+    
+        </Typography>
+        <Typography gutterBottom variant="h4" component="div"
+          sx={{ overflow: 'hidden', fontWeight:'bold'}}
+        >
+         
+          {'₹ '+ price} 
         </Typography>
         
       </CardContent>

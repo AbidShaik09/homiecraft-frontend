@@ -18,7 +18,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import OrangeTheme from '../../themes/OrangeTheme';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -73,6 +74,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   const openProfile=()=>{
     navhook('/profile')
   }
+  const openOrders=()=>{
+    navhook('/orders')
+  }
+  const openWishlist=()=>{
+    navhook('/wishlist')
+  }
 
   const openHome =()=>{
     navhook('/')
@@ -113,6 +120,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       onClose={handleMenuClose}
     >
       <MenuItem onClick={openProfile}>Profile</MenuItem>
+      <MenuItem onClick={openWishlist}>Wishlist</MenuItem>
+      <MenuItem onClick={openOrders}>Orders</MenuItem>
     </Menu>
   );
 
@@ -147,6 +156,28 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+      </MenuItem><MenuItem onClick={openWishlist}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="false"
+          color="inherit"
+        >
+          <FavoriteOutlinedIcon/>
+        </IconButton>
+        <p>Wishlist</p>
+      </MenuItem><MenuItem onClick={openOrders}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="false"
+          color="inherit"
+        >
+          <LocalShippingIcon/>
+        </IconButton>
+        <p>Orders</p>
       </MenuItem>
     </Menu>
   );
@@ -188,9 +219,32 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex', gap:'20px' } }}>
            
             
+          <IconButton
+              size="large"
+              edge="end"
+              aria-label="profile of current user"
+              aria-controls={menuId}
+              aria-haspopup="false"
+              onClick={openOrders}
+              color="inherit"
+            >
+              <LocalShippingIcon/>
+             
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="profile of current user"
+              aria-controls={menuId}
+              aria-haspopup="false"
+              onClick={openWishlist}
+              color="inherit"
+            >
+              <FavoriteOutlinedIcon/>
+            </IconButton>
             <IconButton
               size="large"
               edge="end"
