@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import styled from '@emotion/styled';
 import { alpha } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-export default function OrangeCard(params) {
+export default function ItemCard(params) {
   let id = params.id
   let title=params.title
   let description= params.description
@@ -21,7 +21,7 @@ export default function OrangeCard(params) {
   }));
   const navhook = useNavigate()
   const navigateHandler =()=>{
-    navhook('/categories/'+id)
+    navhook('/item/'+id)
   }
   
   return (
@@ -39,12 +39,9 @@ export default function OrangeCard(params) {
           sx={{ overflow: 'hidden'}}
         >
           {title}
+          {'₹ '+ price}
         </Typography>
-        <Typography variant="body2" 
-        sx={{ overflow: 'hidden'}}
-        >
-          {description}
-        </Typography>
+        
       </CardContent>
     </Card>
 
