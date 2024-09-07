@@ -1,24 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ButtonPrimary from '../../../components/button/primary/ButtonPrimary'
 import ButtonSecondary from '../../../components/button/secondary/ButtonSecondary'
 import './CustomerProfile.css'
 import CreateIcon from '@mui/icons-material/Create';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
 function CustomerProfile() {
+  let [changeAddress, setChangeAddress] = useState(false)
+  let [changePersonal, setChangePersonal] = useState(false)
 
   const profilePicURL = 'https://th.bing.com/th/id/OIP.0YmnhQc7kf0h3EEYRAkgjQAAAA?rs=1&pid=ImgDetMain'
 
   let userData = {
     name: 'user Name',
-    contact:'1234567890',
+    mobile: '1234567890',
     profilePicURL: 'https://images.hitpaw.com/topics/3d/profile-photo-1.jpg',
-    houseNumber: 'User Adderss' ,
-    city:'User City', 
-    state:'User State', 
-    pinCode :'User Pincode'
-
+    houseNumber: 'User Adderss',
+    city: 'User City',
+    state: 'User State',
+    pinCode: 'User Pincode'
 
   }
+
+  let [name, setName] = useState(userData.name)
+  let [mobile, setMobile] = useState(userData.mobile)
+  let [house, setHouse] = useState(userData.houseNumber)
+  let [city, setCity] = useState(userData.city)
+  let [state, setState] = useState(userData.state)
+  let [pinCode, setPinCode] = useState(userData.pinCode)
   const navhook = useNavigate()
   const ordersHandler = () => {
     navhook('/orders')
@@ -28,10 +38,28 @@ function CustomerProfile() {
     navhook('/wishlist')
 
   }
-  const editAddress = () => {
-    console.log("Edit Address Button Clicked")
+  const personalHandler = () => {
+
+    console.log("Edit Personal Details successful")
+    setChangePersonal(false)
+
 
   }
+  const addressHandler = () => {
+
+    console.log("address change successful")
+    setChangeAddress(false)
+
+  }
+
+  const enableChangePersonal = () => {
+    setChangePersonal(true)
+  }
+
+  const enableChangeAddress = () => {
+    setChangeAddress(true)
+  }
+
   const changeProfilePic = () => {
     console.log("Change Profile Button Clicked")
   }
@@ -39,125 +67,148 @@ function CustomerProfile() {
     console.log('Remove Profile Pic')
   }
   return (
+    <div className='d-flex justify-content-center row'>
+      <div className=' d-flex  align-items-center justify-content-center pagecontainer'>
+        {
 
-    <div>
-      {
+          <>
+            <div className='container'>
 
-        <>
-          <h3 className='heading'>Profile</h3>
-          <div className="container profilePicArea">
-            <div className='circleWrapper'>
-              <img className='userProfile' src={userData.profilePicURL} />
+              <h3 className='heading'>Profile</h3>
+              <div className="container profilePicArea">
+                <div className='circleWrapper'>
+                  <img className='userProfile' src={userData.profilePicURL} />
+
+                </div>
+
+              </div>
+              <div className=' profileButtons '>
+                <ButtonPrimary name='Change' action={changeProfilePic} />
+                <ButtonSecondary name='Remove' action={removeProfilePic} />
+              </div>
+              <div className='container d-flex justify-content-center align-items-center' >
+
+                <table className='table2 '>
+
+
+
+
+                  <tr className=' '>
+                    <td className='bold larger grey '>
+                      User Name
+                    </td>
+                    <td>
+                      <input type="text" disabled={!changePersonal} value={name} onChange={e => setName(e.target.value)} />
+                    </td>
+                  </tr>
+                  <tr className=' '>
+                    <td className='bold larger grey '>
+                      Mobile
+                    </td>
+                    <td>
+                      <input type="text" disabled={!changePersonal} value={mobile} onChange={e => setMobile(e.target.value)} />
+
+                    </td>
+
+                  </tr>
+                </table>
+
+                <div className='btn justify-self-end'>
+                  {!changePersonal && (
+                    <CreateIcon
+                      fontSize="large"
+                      onClick={enableChangePersonal} // Enable editing on click
+                    />
+                  )}
+                  {changePersonal && (
+                    <SaveIcon fontSize="large"
+                      onClick={personalHandler} />
+                  )}
+                </div>
+              </div>
+
 
             </div>
+            <div className='container p-3' >
 
-          </div>
-          <div className=' profileButtons '>
-            <ButtonPrimary name='Change' action={changeProfilePic} />
-            <ButtonSecondary name='Remove' action={removeProfilePic} />
-          </div>
-         
-          <div className='' >
-            <table className='table '>
-            <tr className='d-flex justify-content-between '>
-                <td className='bold larger grey'>
-                  Name
-                </td>
-                <td >
-                  <div className='align-self-start'>
-                  {userData.name}
-                  </div>
-                </td>
-                <td className='align-self-end'> 
-                  <div className='btn'>
 
-                    <CreateIcon fontSize="large" />
+              <h3 className='subheading'>Address</h3>
+              <div className='container d-flex justify-content-center align-items-center' >
 
-                  </div>
-                </td>
-              </tr>
-              <tr className='d-flex justify-content-between '>
-                <td className='bold larger grey'>
-                Mobile
-                </td>
-                <td>
-                {userData.contact}
-                </td>
-                <td>
-                  <div className='btn'>
+                <table className='table2 '>
 
-                    <CreateIcon fontSize="large" />
 
-                  </div>
-                </td>
-              </tr>
 
-              <tr className='d-flex justify-content-between align-items-center '>
-                
-                <td className='bold larger grey '>
-                  Address
-                </td>
-                <td >
-                <table className='table margin'>
-                <tr >
-                    <td className='lessbold  grey'>
+
+                  <tr className=' '>
+                    <td className='bold larger grey '>
                       H.No
                     </td>
                     <td>
-                      {userData.houseNumber}
+                      <input type="text" disabled={!changeAddress} value={house} onChange={e => setHouse(e.target.value)} />
                     </td>
-                </tr>
-                <tr >
-                    <td className='lessbold grey'>
+                  </tr>
+                  <tr className=' '>
+                    <td className='bold larger grey '>
                       City
                     </td>
                     <td>
-                      {userData.city}
+                      <input type="text" disabled={!changeAddress} value={city} onChange={e => setCity(e.target.value)} />
+
                     </td>
-                </tr>
-                <tr>
-                    <td className='lessbold  grey'>
+
+                  </tr>
+                  <tr className=' '>
+                    <td className='bold larger grey '>
                       State
                     </td>
                     <td>
-                      {userData.state}
+                      <input type="text" disabled={!changeAddress} value={state} onChange={e => setState(e.target.value)} />
                     </td>
-                </tr>
-                <tr >
-                    <td className='lessbold  grey'>
+                  </tr>
+                  <tr className=' '>
+                    <td className='bold larger grey '>
                       PinCode
                     </td>
                     <td>
-                      {userData.pinCode}
+                      <input type="text" disabled={!changeAddress} value={pinCode} onChange={e => setPinCode(e.target.value)} />
                     </td>
-                </tr>
+                  </tr>
+
                 </table>
-                </td>
-                <td className=' '>
-                  <div className='btn  '>
-                    
-                    <CreateIcon fontSize="large" className='' />
 
-                  </div>
-                </td>
-              </tr>
-            </table>
+                <div className='btn justify-self-end'>
+                  {!changeAddress && (
+                    <CreateIcon
+                      fontSize="large"
+                      onClick={enableChangeAddress} // Enable editing on click
+                    />
+                  )}
+                  {changeAddress && (
+                    <SaveIcon fontSize="large"
+                      onClick={addressHandler} />
+                  )}
+                </div>
 
-          </div>
-        
-          
-          <div className=' profileButtons '>
-            <ButtonSecondary name='Orders' action={ordersHandler} />
-            <ButtonPrimary name='Wishlist' action={wishlistHandler} />
-          </div>
+              </div>
+             
+            </div>
+            
 
-        </>
+          </>
 
 
-      }
+        }
 
+
+      </div>
+      <div className=' profileButtons '>
+                <ButtonSecondary name='Orders' action={ordersHandler} />
+                <ButtonPrimary name='Wishlist' action={wishlistHandler} />
+              </div>
 
     </div>
+
   )
 }
 
