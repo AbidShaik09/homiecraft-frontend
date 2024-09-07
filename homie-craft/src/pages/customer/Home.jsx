@@ -1,3 +1,4 @@
+import Banner from '../../components/banner/Banner'
 import OrangeCard from '../../components/orangeCard/OrangeCard'
 
 const Home = () => {
@@ -42,7 +43,9 @@ const Home = () => {
   }]
   return (
     <>
-    <div class="mt-2" style={{width:"full", backgroundColor:"chocolate",height:"50vh"}}>Banner</div>
+    <div class=" m-auto mt-3 rounded">
+      <Banner image="https://ei7sbsqceej.exactdn.com/wp-content/uploads/2022/07/Scrolling-Banner-for-Websites.jpg"/>
+    </div>
     
       <div className="container   mt-5 mb-5 p-3 pr-5 rounded" style={{display:"flex",flexWrap:"wrap",gap:"25px",alignItems:"center",justifyContent:"center"}}>
       {
