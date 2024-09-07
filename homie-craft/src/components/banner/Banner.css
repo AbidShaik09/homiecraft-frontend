@@ -1,0 +1,48 @@
+img{
+    width: 95vw;
+    height: 70vh;
+    border-radius: 10px;
+}
+.banner-container{
+    width: 96vw;
+    margin: auto;
+    border-radius: 10px;
+    height: 72vh;
+    position: relative;
+}
+.banner-container .wrapper{
+    overflow: hidden;
+}
+.banner-container .wrapper-holder{
+    display: grid;
+    grid-template-columns: repeat(4,100%);
+    height: auto;
+    width: auto;
+    animation: slider 30s ease-in-out infinite alternate;
+}
+.banner-container .button-holder .button{
+    background-color: white;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    display: inline-block;
+    margin: .3rem;
+}
+.banner-container .button-holder{
+    position: absolute;
+    left: 45%;
+    bottom: 2%;
+}
+ @keyframes slider{
+    0%{transform:translatexX(0%);}
+    10%{transform:translatexX(-100%);}
+    20%{transform:translatexX(-100%);}
+    30%{transform:translatexX(-200%);}
+    40%{transform:translatexX(-200%);}
+    50%{transform:translatexX(-200%);}
+    60%{transform:translatexX(-300%);}
+    70%{transform:translatexX(-300%);}
+    80%{transform:translatexX(-300%);}
+    90%{transform:translatexX(0%);}
+    100%{transform:translatexX(0%);}
+ }
