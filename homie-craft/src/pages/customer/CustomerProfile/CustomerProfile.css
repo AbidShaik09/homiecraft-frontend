@@ -36,10 +36,19 @@
  .larger{
     font-size: 1.4rem;
  }
- .table {
+ .table1 {
     font-size: 1.3rem;
     margin: auto;
     width: 40vw !important; 
+ }
+ .table2 {
+    font-size: 1.3rem;
+ }
+ .subheading{
+    display: flex;
+    justify-content: center;
+
+    padding-top :40px
  }
 .bold{
     font-weight: boldER;
@@ -63,4 +72,23 @@
     align-items: center;
     gap: 30px;
     width: 40vw;
+}
+@media (max-width : 1223px){
+    .pagecontainer{
+        flex-direction: column !important
+    }
+}
+
+@media (min-width : 1224px){
+    .pagecontainer{
+        display: flex;
+        flex-direction: row-reverse !important;
+        justify-content: space-around;
+        align-items: center;
+        max-width: 2500px;
+    }
+    .subheading{
+        
+    padding-top :200px
+    }
 }
