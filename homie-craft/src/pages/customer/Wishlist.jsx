@@ -1,5 +1,6 @@
 import React from 'react'
 import ItemHolder from '../../components/itemHolder/ItemHolder'
+import { Typography } from '@mui/material'
 
 function Wishlist() {
   const items= [
@@ -78,8 +79,17 @@ function Wishlist() {
   ]
 
   return (
-    <ItemHolder items={items}/>
+    <>
+     <Typography gutterBottom variant="h3" component="div"
+          sx={{ overflow: 'hidden', padding:'30px'}}>
 
+            Wishlist
+
+        </Typography>
+        <ItemHolder items={items}/>
+ 
+    </>
+   
   )
 }
 
