@@ -9,9 +9,14 @@ function ItemHolder(params) {
       {
         params.items.map((c)=>{
           return (
-            <div className="rounded" style={{boxShadow: "0 0 0px 2px rgba(0, 0, 0, 0.5)"}}>
+            <>
+              <div className="rounded" style={{boxShadow: "0 0 0px 2px rgba(0, 0, 0, 0.5)"}}>
             <ItemCard image={c.displayImage}  title={c.itemName} id= {c.id} price = {c.itemPrice} />
             </div>
+            
+            
+            </>
+            
             
           )
         })
