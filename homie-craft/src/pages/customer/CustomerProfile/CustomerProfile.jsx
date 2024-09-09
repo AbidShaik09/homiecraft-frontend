@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ButtonPrimary from '../../../components/button/primary/ButtonPrimary'
 import ButtonSecondary from '../../../components/button/secondary/ButtonSecondary'
 import './CustomerProfile.css'
@@ -6,29 +6,28 @@ import CreateIcon from '@mui/icons-material/Create';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
+import userRepository, { getUser,updateUser } from '../../../repository/userRepository/userRepository';
 function CustomerProfile() {
   let [changeAddress, setChangeAddress] = useState(false)
   let [changePersonal, setChangePersonal] = useState(false)
+  let [userData,setUserData] = useState({})
+ 
+  useEffect(()=>{
+   
 
-  const profilePicURL = 'https://th.bing.com/th/id/OIP.0YmnhQc7kf0h3EEYRAkgjQAAAA?rs=1&pid=ImgDetMain'
+    getUser().then(res =>{
+      setUserData(res)
+     
+      console.log(userData)
 
-  let userData = {
-    name: 'user Name',
-    mobile: '1234567890',
-    profilePicURL: 'https://images.hitpaw.com/topics/3d/profile-photo-1.jpg',
-    houseNumber: 'User Adderss',
-    city: 'User City',
-    state: 'User State',
-    pinCode: 'User Pincode'
+    })
+    
+  },[])
+  const defaultPic = 'https://th.bing.com/th/id/OIP.0YmnhQc7kf0h3EEYRAkgjQAAAA?rs=1&pid=ImgDetMain'
 
-  }
+ 
 
-  let [name, setName] = useState(userData.name)
-  let [mobile, setMobile] = useState(userData.mobile)
-  let [house, setHouse] = useState(userData.houseNumber)
-  let [city, setCity] = useState(userData.city)
-  let [state, setState] = useState(userData.state)
-  let [pinCode, setPinCode] = useState(userData.pinCode)
+  
   const navhook = useNavigate()
   const ordersHandler = () => {
     navhook('/orders')
@@ -39,15 +38,15 @@ function CustomerProfile() {
 
   }
   const personalHandler = () => {
-
-    console.log("Edit Personal Details successful")
+    updateUser(userData)
     setChangePersonal(false)
+    
 
 
   }
   const addressHandler = () => {
 
-    console.log("address change successful")
+    updateUser(userData)
     setChangeAddress(false)
 
   }
@@ -77,7 +76,7 @@ function CustomerProfile() {
               <h3 className='heading'>Profile</h3>
               <div className="container profilePicArea">
                 <div className='circleWrapper'>
-                  <img className='userProfile' src={userData.profilePicURL} />
+                  <img className='userProfile' src={userData.profilePicURL??defaultPic}  />
 
                 </div>
 
@@ -98,7 +97,7 @@ function CustomerProfile() {
                       User Name
                     </td>
                     <td>
-                      <input type="text" disabled={!changePersonal} value={name} onChange={e => setName(e.target.value)} />
+                      <input type="text" disabled={!changePersonal} value={userData.name} onChange={e => setUserData(userData=> ({...userData, name:e.target.value}))} />
                     </td>
                   </tr>
                   <tr className=' '>
@@ -106,7 +105,7 @@ function CustomerProfile() {
                       Mobile
                     </td>
                     <td>
-                      <input type="text" disabled={!changePersonal} value={mobile} onChange={e => setMobile(e.target.value)} />
+                      <input type="text" disabled={!changePersonal} value={userData.mobile} onChange={e => setUserData(userData=> ({...userData, mobile:e.target.value}))}  />
 
                     </td>
 
@@ -145,7 +144,7 @@ function CustomerProfile() {
                       H.No
                     </td>
                     <td>
-                      <input type="text" disabled={!changeAddress} value={house} onChange={e => setHouse(e.target.value)} />
+                      <input type="text" disabled={!changeAddress} value={userData.houseNumber} onChange={e => setUserData(userData=> ({...userData, houseNumber:e.target.value}))}/>
                     </td>
                   </tr>
                   <tr className=' '>
@@ -153,7 +152,7 @@ function CustomerProfile() {
                       City
                     </td>
                     <td>
-                      <input type="text" disabled={!changeAddress} value={city} onChange={e => setCity(e.target.value)} />
+                      <input type="text" disabled={!changeAddress} value={userData.city} onChange={e => setUserData(userData=> ({...userData, city:e.target.value}))}/>
 
                     </td>
 
@@ -163,7 +162,7 @@ function CustomerProfile() {
                       State
                     </td>
                     <td>
-                      <input type="text" disabled={!changeAddress} value={state} onChange={e => setState(e.target.value)} />
+                      <input type="text" disabled={!changeAddress} value={userData.state} onChange={e => setUserData(userData=> ({...userData, state:e.target.value}))}/>
                     </td>
                   </tr>
                   <tr className=' '>
@@ -171,7 +170,7 @@ function CustomerProfile() {
                       PinCode
                     </td>
                     <td>
-                      <input type="text" disabled={!changeAddress} value={pinCode} onChange={e => setPinCode(e.target.value)} />
+                      <input type="text" disabled={!changeAddress} value={userData.pinCode} onChange={e => setUserData(userData=> ({...userData, pinCode:e.target.value}))}/>
                     </td>
                   </tr>
 

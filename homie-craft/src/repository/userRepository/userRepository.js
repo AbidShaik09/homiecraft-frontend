@@ -1,9 +1,17 @@
+import { Alert } from '@mui/material'
 import axios from 'axios'
 import React from 'react'
-
-function userRepository() {
-    var userData= axios.get('http://localhost:3003/user').then(res=>res.data)
-    var res = await (userData.data)
+var baseUrl = "http://localhost:3003/user"
+const getUser= async()=>{
+    var res= await axios.get(baseUrl)
+    return res.data
 }
-
-export default userRepository
+const updateUser = async(userData) =>{
+    console.log("userData Before Update");
+    console.log(userData)
+    var res = await axios.put(baseUrl,userData);
+}
+const addUser = async(userData) =>{
+    var res = await axios.post(userData);
+}
+export {getUser,updateUser}
