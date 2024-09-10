@@ -1,46 +1,14 @@
+import { useEffect, useState } from 'react'
 import Banner from '../../components/banner/Banner'
 import OrangeCard from '../../components/orangeCard/OrangeCard'
+import { getCategories } from '../../repository/categoryRepository/categoryRepository';
+
 
 const Home = () => {
-  let categories = [{
-    id:'women-fashion',
-    title: "Women's Fashion",
-    description: "this is a collection of WoMen's clothes",
-    image: "https://static.independent.co.uk/s3fs-public/thumbnails/image/2019/04/30/12/sustainable-fashion-brands-women-indybest-0.jpg"
-  }, 
-  {
-    id: "men-fashion",
-    title: "Men's Fashion",
-    description: "this is a collection of Men's clothes",
-    image: "https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"
-  }, {
-    id: "kid-fashion",
-    title: "Kid's Fashion",
-    description: "this is a collection of Men's clothes",
-    image: "https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"
-  },
-  {
-    id: "accessories",
-    title: "Accessories",
-    description: "this is a collection of Men's clothes",
-    image: "https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"
-  }, {
-    id: "ornaments",
-    title: "Ornaments",
-    description: "this is a collection of Men's clothes",
-    image: "https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg"
-  },
-  {
-    id: "water-bottles",
-    title: "Water Bottles",
-    description: "this is a collection of Men's clothes dshf f sdf sdf sd f sdfsd f sdf sdf dsff  fd fds fd df dsc  ",
-    image: "https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"
-  }, {
-    id: "gadgets",
-    title: "Gadgets",
-    description: "this is a collection of Men's clothes",
-    image: "https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"
-  }]
+  const [categories,setCategories] = useState([]);
+  useEffect(()=>{
+    getCategories().then(res=>setCategories(res))     
+  },[])
   return (
     <>
     <div class=" m-auto mt-3 rounded">
