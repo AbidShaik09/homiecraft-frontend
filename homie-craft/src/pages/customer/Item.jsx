@@ -2,7 +2,6 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import ButtonSecondary from '../../components/button/secondary/ButtonSecondary'
 import ButtonPrimary from '../../components/button/primary/ButtonPrimary'
-import Banner from '../../components/banner/Banner'
 import ItemGallery from '../../components/gallerySection/ItemGallery'
 
 function Item() {
