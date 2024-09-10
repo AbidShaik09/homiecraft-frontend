@@ -2,5 +2,6 @@ img{
     width: 95vw;
     height: 70vh;
     border-radius: 10px;
+    margin: auto;
     align-items: center;
 }
