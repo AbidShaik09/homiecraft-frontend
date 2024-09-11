@@ -18,7 +18,6 @@ function CustomerProfile() {
     getUser().then(res =>{
       setUserData(res)
      
-      console.log(userData)
 
     })
     

@@ -12,7 +12,7 @@ function ItemHolder(params) {
           return (
             <>
               <div className="rounded" style={{boxShadow: "0 0 0px 2px rgba(0, 0, 0, 0.5)"}}>
-            <ItemCard image={c.displayImage}  title={c.itemName} id= {c.id} price = {c.itemPrice} />
+            <ItemCard image={c.images[0]}  title={c.name} id= {c.id} price = {c.price} />
             </div>
             
             
@@ -20,7 +20,7 @@ function ItemHolder(params) {
             
             
           )
-        }): <p>No items available</p>
+        }): <p>No crafts available</p>
         
       }
       </div>
