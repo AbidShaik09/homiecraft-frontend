@@ -1,5 +1,5 @@
 {
-    "user": [
+    "user": 
         {
             "name": "Shaik Abid Hussain",
             "password":"123",
@@ -11,19 +11,25 @@
             "pinCode": "500017",
             "id": "USR123"
           },
-          {
-            "name": "Shaik Abid Hussain",
-            "password":"123",
-            "mobile": "7670858952",
-            "profilePicURL": "https://images.hitpaw.com/topics/3d/profile-photo-1.jpg",
-            "houseNumber": "12-7-122/A",
-            "city": "Secunderabad",
-            "state": "Telangana",
-            "pinCode": "500017",
-            "id": "USR123"
-          }
-    ],
-
+          
+    "categories":[{
+    "id":"women-fashion",
+    "title": "Women's Fashion",
+    "description": "this is a collection of WoMen's clothes",
+    "image": "https://static.independent.co.uk/s3fs-public/thumbnails/image/2019/04/30/12/sustainable-fashion-brands-women-indybest-0.jpg"
+  }, 
+  {
+    "id": "men-fashion",
+    "title": "Men's Fashion",
+    "description": "this is a collection of Men's clothes",
+    "image": "https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"
+  }, {
+    "id": "kid-fashion",
+    "title": "Kid's Fashion",
+    "description": "this is a collection of Men's clothes",
+    "image": "https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"
+  }]
+,
     "crafter":[
         
         {
@@ -62,11 +68,13 @@
             "Id":"ORD12321",
             "CraftId":"CRA123",
             "UserId":"USR123",
+        
             "orderDate":"09/12/2024",
             "ordertype":"logistics",
-            "paymentMode":"PrePaid",
             "status":"requested" ,
-            "_comment": ["accepted","requested","rejected","inTransit","Delivered","delivered","inPersonPickUp"]
+            "Qty":2,
+            "orderTotal":4000
+
         }
     ],
     "statusRequests":[
