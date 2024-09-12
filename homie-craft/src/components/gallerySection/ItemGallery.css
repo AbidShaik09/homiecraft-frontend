@@ -1,10 +1,9 @@
-.images img{
-    width: 20vw;
-    height: 30vh;
+
+
+.image-container div img{
+    width: 30vw;
+    height: 40vh;
     border-radius: 10px;
     align-items: center;
+    margin: auto;
 }
-/* .image-container{
-    width: 30vw;
-    overflow: hidden;
-} */

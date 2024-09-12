@@ -9,6 +9,8 @@ import Categories from './pages/customer/Categories';
 import Item from './pages/customer/Item';
 import Wishlist from './pages/customer/Wishlist';
 import Orders from './pages/customer/Orders'
+import Login from './pages/customer/Login';
+import Signin from './pages/customer/Signin';
 function App() {
   return (
     <ThemeProvider theme={OrangeTheme}>
@@ -22,6 +24,8 @@ function App() {
           <Route path='/categories/:id' element={<Categories/>}/>
           <Route path='/item/:id' element={<Item/>}/>
           <Route path='*' element={<h1>404 Not Found </h1>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path="/signin" element={<Signin/>}/>
         </Routes>
 
       </Router>
