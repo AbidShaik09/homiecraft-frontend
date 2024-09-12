@@ -6,7 +6,6 @@ import ItemGallery from '../../components/gallerySection/ItemGallery'
 
 function Item() {
     let {id} = useParams()
-    const navhook = useNavigate()
     console.log(`Item With Id : ${id}`)
     const wishlistHandler = () => {
       alert('Item added to wishlist');
