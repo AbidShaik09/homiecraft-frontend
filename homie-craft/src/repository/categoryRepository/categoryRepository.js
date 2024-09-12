@@ -2,7 +2,7 @@
 import React from 'react'
 import axios from 'axios'
 
-var baseUrl = 'http://localhost:3003/categories'
+var baseUrl = 'http://localhost:5265/categories'
 var getCategories = ()=>{
     return axios.get(baseUrl).then(response => response.data)
 }

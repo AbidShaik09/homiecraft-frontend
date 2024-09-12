@@ -26,7 +26,7 @@ export default function ItemCard(params) {
   }
   
   return (
-    <DivWrapper className='orange-card ' onClick={navigateHandler}>
+    <DivWrapper key={id} className='orange-card ' onClick={navigateHandler}>
         
     <Card className='btn'  sx={{height: 300,width: 350,}}>
       <CardMedia
