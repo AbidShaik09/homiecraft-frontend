@@ -11,24 +11,12 @@ import Wishlist from './pages/customer/Wishlist';
 import Orders from './pages/customer/Orders'
 import Login from './pages/customer/Login';
 import Signin from './pages/customer/Signin';
+import IndexHandler from './routes/IndexHandler';
+
 function App() {
   return (
     <ThemeProvider theme={OrangeTheme}>
-      <Router>
-        <Navbar/>
-        <Routes>
-          <Route path='/profile'element={<CustomerProfile/>}/>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/wishlist' element={<Wishlist/>}/>
-          <Route path='/orders' element={<Orders/>}/>
-          <Route path='/categories/:id' element={<Categories/>}/>
-          <Route path='/item/:id' element={<Item/>}/>
-          <Route path='*' element={<h1>404 Not Found </h1>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path="/signin" element={<Signin/>}/>
-        </Routes>
-
-      </Router>
+      <IndexHandler/>
     </ThemeProvider>
   );
 }
