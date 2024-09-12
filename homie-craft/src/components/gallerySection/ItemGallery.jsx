@@ -20,7 +20,7 @@ function PrevArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "green" }}
+      style={{ ...style, display: "block", background: "gray" }}
       onClick={onClick}
     />
   );
@@ -38,14 +38,14 @@ const ItemGallery = () => {
   return (
     <div className="image-container">
         <Slider {...settings}>
-       <div className="images">
-        <img classNameme="images" src="https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"  alt="" />
+       <div >
+        <img  src="https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"  alt="" />
        </div>
        <div>
-        <img classNameme="images" src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2019/04/30/12/sustainable-fashion-brands-women-indybest-0.jpg"  alt="" />
+        <img  src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2019/04/30/12/sustainable-fashion-brands-women-indybest-0.jpg"  alt="" />
        </div>
        <div >
-        <img classNameme="images" src="https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg"  alt="" />
+        <img  src="https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg"  alt="" />
        </div>
        </Slider>
     </div>
