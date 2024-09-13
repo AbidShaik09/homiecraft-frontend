@@ -23,7 +23,7 @@ const Dashboard=(params)=>{
       </Box>
       <Box sx={{width:200, height:100, alignSelf:'center'}}>
       
-      <DashboardCard heading='Earnings This Month' content={params.earnings}/>
+      <DashboardCard heading='Earnings This Month' content={'₹'+params.earnings}/>
 
       </Box>
       
