@@ -2,7 +2,7 @@ import { Box, Container } from "@mui/material";
 import React from "react";
 import SalesGraph from "../barGraph/SalesGraph";
 import DashboardCard from "../card/DashboardCard";
-
+import StarIcon from '@mui/icons-material/Star';
 const Dashboard=(params)=>{
     
     
@@ -16,7 +16,15 @@ const Dashboard=(params)=>{
       </div>
 
       <Box sx={{width:200, height:100, alignSelf:'center'}}>
+      
+      <DashboardCard heading='Crafter Rating'  content={params.rating+ '✰'}></DashboardCard>
+      
+
+      </Box>
+      <Box sx={{width:200, height:100, alignSelf:'center'}}>
+      
       <DashboardCard heading='Earnings This Month' content={params.earnings}/>
+
       </Box>
       
 
