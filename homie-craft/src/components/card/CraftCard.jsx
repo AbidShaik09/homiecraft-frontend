@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 
 export default function CraftCard(params) {
   return (
-    <Card sx={{ maxWidth: 300 }}>
+    <Card sx={{ width: 200 }}>
       <CardMedia
         sx={{ height: 140 }}
         image={params.image}
@@ -16,17 +16,14 @@ export default function CraftCard(params) {
       />
       <CardContent>
       <Typography gutterBottom variant="h5" component="div" sx={{display:'flex',justifyContent:'space-between'}}>
-          <div>{params.price}</div> <div style={{fontSize:'1rem',alignSelf:'center'}}>Qty: <span style={{color:'green'}}>{params.quantity}</span></div>
+          <div>₹{params.price}</div> <div style={{fontSize:'1rem',alignSelf:'center'}}>Qty: <span style={{color:'green'}}>{params.quantity}</span></div>
         </Typography>
         <Typography  variant="body2" sx={{ color: 'text.secondary', overflow:'hidden'}}>
           {params.name}
         </Typography>
        
       </CardContent>
-      <CardActions>
-        <Button size="small">Edit</Button>
-        <Button size="small">Unlist</Button>
-      </CardActions>
+     
     </Card>
   );
 }
