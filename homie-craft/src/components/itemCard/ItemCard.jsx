@@ -28,21 +28,21 @@ export default function ItemCard(params) {
   return (
     <DivWrapper key={id} className='orange-card ' onClick={navigateHandler}>
         
-    <Card className='btn'  sx={{height: 300,width: 350,}}>
+    <Card className='btn'  sx={{height: 250,width: 270}}>
       <CardMedia
-        sx={{ height: 200,width: 320,objectFit:'cover'}}
+        sx={{ height: 150,width: 245,objectFit:'cover'}}
         image={params.image}
         title={title}
         alt={title}
       />
       <CardContent>
-      <Typography gutterBottom variant="h5" component="div"
+      <Typography gutterBottom variant="h6" component="div"
           sx={{ overflow: 'hidden'}}
         >
           {title}
     
         </Typography>
-        <Typography gutterBottom variant="h4" component="div"
+        <Typography gutterBottom variant="h5" component="div"
           sx={{ overflow: 'hidden', fontWeight:'bold'}}
         >
          

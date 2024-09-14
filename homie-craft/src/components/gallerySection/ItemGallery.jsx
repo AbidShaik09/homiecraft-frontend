@@ -25,20 +25,30 @@ function PrevArrow(props) {
     />
   );
 }
-const ItemGallery = () => {
+const ItemGallery = (props) => {
   
     var settings={
       dots: true,
       infinite: true,
       slidesToShow: 1,
       slidesToScroll: 1,
-      nextArrow: <NextArrow />,
-      prevArrow: <PrevArrow />
+      // nextArrow: <NextArrow />,
+      // prevArrow: <PrevArrow />,
+      arrows:false
     }
-  return (
+  return (props.images.length >0 ?
     <div className="image-container">
         <Slider {...settings}>
-       <div >
+          <div>
+            <img src={props.images[0]} alt="" />
+          </div>
+          <div>
+            <img src={props.images[1]} alt="" />
+          </div>
+          <div>
+            <img src={props.images[2]} alt="" />
+          </div>
+       {/* <div >
         <img  src="https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"  alt="" />
        </div>
        <div>
@@ -46,9 +56,10 @@ const ItemGallery = () => {
        </div>
        <div >
         <img  src="https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg"  alt="" />
-       </div>
+       </div> */}
        </Slider>
-    </div>
+    </div>:
+    <>No Images found</>
   )
 }
 
