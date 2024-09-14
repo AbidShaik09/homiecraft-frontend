@@ -13,11 +13,10 @@ const Banner = (params) => {
     speed: 3000,
     autoplaySpeed: 5000,
     cssEase: "linear",
-    nextArrow:false,
-    prevArrow:false
+    arrows:false
   };
   return (
-    <div class="w-80 h-10">
+    <div class="w-80 h-7">
         <Slider {...settings}>
             <div>
               <img src={params.image} alt="" />
