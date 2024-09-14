@@ -10,11 +10,11 @@ import Typography from '@mui/material/Typography';
 export default function DashboardCard(params) {
   return (
     <Card sx={{ maxWidth: 270 }}>
-      <CardContent>
-        <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+      <CardContent sx={{display:'flex',justifyContent:'center',flexDirection:'column'}}>
+        <Typography gutterBottom sx={{ color: 'text.secondary',textAlign:'center', fontSize: 14 }}>
           {params.heading}
         </Typography>
-        <Typography variant="h5" component="div">
+        <Typography variant="h5" component="div"sx={{textAlign:'center'}}>
           {params.content}
         </Typography>
         
