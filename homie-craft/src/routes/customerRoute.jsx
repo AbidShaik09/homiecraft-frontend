@@ -8,6 +8,7 @@ import Item from '../pages/customer/Item';
 import { ThemeProvider } from '@mui/material';
 import { Route,BrowserRouter as Router, Routes } from 'react-router-dom';
 import Navbar from '../components/navbar/Navbar';
+import Signin from '../pages/customer/Signin';
 function CustomerRoute() {
     return (
         <Router>
@@ -19,6 +20,7 @@ function CustomerRoute() {
             <Route path='/orders' element={<Orders/>}/>
             <Route path='/categories/:id' element={<Categories/>}/>
             <Route path='/item/:id' element={<Item/>}/>
+            <Route path='/signin' element={<Signin/>}/>
             <Route path='*' element={<h1>404 Not Found </h1>}/>
           </Routes>
   
