@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 
 export default function DashboardCard(params) {
   return (
-    <Card sx={{ maxWidth: 270 }}>
+    <Card sx={{ maxWidth: 270,backgroundColor:'#fff3b0' }}>
       <CardContent sx={{display:'flex',justifyContent:'center',flexDirection:'column'}}>
         <Typography gutterBottom sx={{ color: 'text.secondary',textAlign:'center', fontSize: 14 }}>
           {params.heading}
