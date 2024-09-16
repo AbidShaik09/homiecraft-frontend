@@ -4,7 +4,7 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 const Banner = (params) => {
-  var settings = {
+  let settings = {
     dots: true,
     infinite: true,
     slidesToShow: 1,
@@ -16,7 +16,7 @@ const Banner = (params) => {
     arrows:false
   };
   return (
-    <div class="w-80 h-7">
+    <div>
         <Slider {...settings}>
             <div>
               <img src={params.image} alt="" />

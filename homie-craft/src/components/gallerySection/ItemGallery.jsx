@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
@@ -27,27 +27,23 @@ function PrevArrow(props) {
 }
 const ItemGallery = (props) => {
   
-    var settings={
+    let settings={
       dots: true,
       infinite: true,
       slidesToShow: 1,
       slidesToScroll: 1,
-      // nextArrow: <NextArrow />,
-      // prevArrow: <PrevArrow />,
-      arrows:false
+      nextArrow: <NextArrow />,
+      prevArrow: <PrevArrow />,
+      // arrows:false
     }
   return (props.images.length >0 ?
     <div className="image-container">
         <Slider {...settings}>
-          <div>
-            <img src={props.images[0]} alt="" />
+          {props.images.map(i=>{
+            return <div>
+            <img src={i} alt="" />
           </div>
-          <div>
-            <img src={props.images[1]} alt="" />
-          </div>
-          <div>
-            <img src={props.images[2]} alt="" />
-          </div>
+          })}
        {/* <div >
         <img  src="https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"  alt="" />
        </div>
