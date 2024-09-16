@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 
 export default function CraftCard(params) {
   return (
-    <Card sx={{ width: 200 }}>
+    <Card className='btn' sx={{ width: 200 }}>
       <CardMedia
         sx={{ height: 140 }}
         image={params.image}

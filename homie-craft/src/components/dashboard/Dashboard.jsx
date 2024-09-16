@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import React from "react";
 import SalesGraph from "../barGraph/SalesGraph";
 import DashboardCard from "../card/DashboardCard";
@@ -6,26 +6,30 @@ import StarIcon from '@mui/icons-material/Star';
 const Dashboard=(params)=>{
     
     
-    return <div style={{backgroundColor:'#fff3b0'}}>
-    <Container>
-      <h3>DashBoard</h3>
-      <Container sx={{display:'flex', justifyContent:'space-between', alignItems:'canter',padding:'50px 20px'}}>
-      <div>
-    
-      <SalesGraph salesData={params.salesData} />
-      </div>
+    return <div style={{backgroundColor:'#ff9900'}}>
+    <Container sx={{padding:{xs:'0',sm:'auto'}}} >
+        <Typography variant="h3" component='h4' sx={{display:'flex',justifyContent:{xs:'center',md:'start'}}}>
+        DashBoard
+        </Typography>
+      <Container sx={{display:'flex',flexDirection:{
+        xs:'column',md:'row'
+      }, justifyContent:'space-between', alignItems:'canter',padding:'50px 20px'}}>
+      <Container sx={{display:'flex', width:'100%'}}>
+             <SalesGraph  salesData={params.salesData} />
+      </Container>
 
-      <Box sx={{width:200, height:100, alignSelf:'center'}}>
-      
-      <DashboardCard heading='Crafter Rating'  content={params.rating+ '✰'}></DashboardCard>
-      
 
+      <Container sx={{display:'flex',justifyContent:{xs:'space-between',sm:"space-around"},flexDirection:{xs:'column',sm:'row',md:'column',lg:'row'}}}>
+
+      <Box sx={{width:200, height:100, alignSelf:'center',margin:'7px'}}>
+            <DashboardCard heading='Crafter Rating'  content={ '✰'+params.rating}></DashboardCard>
       </Box>
-      <Box sx={{width:200, height:100, alignSelf:'center'}}>
-      
+      <Box sx={{width:200, height:100, alignSelf:'center',margin:'7px'}}>
       <DashboardCard heading='Earnings This Month' content={'₹'+params.earnings}/>
-
       </Box>
+      
+
+      </Container>
       
 
       </Container>
