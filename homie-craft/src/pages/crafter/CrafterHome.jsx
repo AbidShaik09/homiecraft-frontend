@@ -8,6 +8,7 @@ import ButtonPrimary from '../../components/button/primary/ButtonPrimary';
 import Dashboard from '../../components/dashboard/Dashboard';
 import RequsetCard from '../../components/RequestCard/RequestCard';
 import dayjs from 'dayjs';
+import OrderCard from '../../components/OrderCard/OrderCard';
 
 function CrafterHome() {
   
@@ -33,9 +34,8 @@ function CrafterHome() {
     })
     console.log(baseUrl + "/OrderRequest/crafter/" + crafterId)
     axios.get("http://localhost:5265/Order/" + crafterId).then(res => {
-      console.log("Crafter here: ")
-
-      console.log(res.data); setOrders(res.data);
+      let x= res.data
+      console.log(x); setOrders(x);
     })
 
 
@@ -86,8 +86,7 @@ function CrafterHome() {
                   orders.length > 0 ?
                     orders.map(c => {
                       return (
-                        <>{orders.length}</>
-                        //<RequsetCard orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={crafts.find(p => p.id == c.craftId).name} />
+                            <OrderCard orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} expectedPickup={formattedDate(c.expectedPickup)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} status={c.status} type={c.type} paymentType = {c.paymentType} />
                       )
                     }
                     )
@@ -108,7 +107,7 @@ function CrafterHome() {
                   orderRequests.length > 0 ?
                     orderRequests.map(c => {
                       return (
-                        <RequsetCard orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={crafts.find(p => p.id == c.craftId).name} />
+                        <RequsetCard crafterId = {crafterId} orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={crafts.find(p => p.id == c.craftId).name} />
                       )
                     }
                     )

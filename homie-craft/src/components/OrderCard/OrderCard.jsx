@@ -23,7 +23,6 @@ const OrderCard = (params) => {
            setShowButtons(false) })
     }
     const rejectOrderHandler = () => {
-        axios.post(baseUrl + 'reject/' + params.orderId, {"message":btnMessage.toString()}).then(e => { setIsHidden(true); setShowButtons(false) })
     }
 
     return (
@@ -41,9 +40,8 @@ const OrderCard = (params) => {
                             }}  >
                                 <div style={{display:'flex',justifyContent:'space-between'}}>
                                 <div>
-                                    <div>Qty: <span style={{ color: 'green' }}>{params.quantity}</span></div>
                                     <div>
-                                        Type: <span style={{ color: 'orange' , fontSize: '0.8rem' }}>{params.purchaseMode.toUpperCase()}</span>
+                                        Type: <span style={{ color: 'orange' , fontSize: '0.8rem' }}>{params.type.toUpperCase()}</span>
                                     </div>
                                 </div>
                                 
@@ -52,7 +50,7 @@ const OrderCard = (params) => {
                                         Price: <span style={{ color: 'green' }}>  ₹{params.price} </span>
                                     </div>
                                     <div>
-                                        Req Date: <span style={{ fontSize: '0.8rem', color: 'green'  }}>{params.createdDate} </span>
+                                        PickUp Date: <span style={{ fontSize: '0.8rem', color: 'green'  }}>{params.expectedPickup} </span>
                                     </div>
                                 
                                 </div>
@@ -60,16 +58,9 @@ const OrderCard = (params) => {
                                 </div>
                                 
                                 <div>
-                                    {showButtons ?
-                                        <div style={{display:'flex',justifyContent:'space-evenly', gap: '5px' }}>
-                                            
-                                            <RequestModal  message={btnMessage} setMessage ={setBtnMessage} action={acceptOrderHandler} name='Accept Order'/>
-                                            <RequestModal  message={btnMessage} setMessage = {setBtnMessage} action={rejectOrderHandler} name='Reject Order'/>
-                                            
-                                        </div>
-
-
-                                        : <p>{btnMessage}</p>}
+                                <div>
+                                        Payment Type: <span style={{ fontSize: '0.8rem', color: 'green'  }}>{params.paymentType} </span>
+                                    </div>
 
                                 </div>
 

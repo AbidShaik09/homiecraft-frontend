@@ -5,25 +5,27 @@ import ButtonPrimary from "../button/primary/ButtonPrimary"
 import axios from "axios"
 import RequestModal from "../modal/requestModal/RequestModal"
 const RequsetCard = (params) => {
-    let baseUrl = 'http://localhost:5265/orderrequest/'
+    let baseUrl = 'http://localhost:5265/'
     const [showButtons, setShowButtons] = useState(true);
     const [btnMessage, setBtnMessage] = useState('');
     const [isHidden, setIsHidden] = useState(false);
     
     const acceptOrderHandler = () => {
 
-        axios.post(baseUrl + 'approve/' +params.orderId,{"message":btnMessage.toString()
+        axios.post(baseUrl + 'orderrequest/approve/' +params.orderId,{"message":btnMessage.toString()
     
     } ).then(e => {  
            setIsHidden(true);
-           console.log("resultant :")
-           const x= e.data
-           params.setOrders((orders)=>({...(orders),x}));
+           axios.get(baseUrl + 'order/'+params.crafterId).then(x=>
+                
+           params.setOrders(x.data)
+           )
+           
            
            setShowButtons(false) })
     }
     const rejectOrderHandler = () => {
-        axios.post(baseUrl + 'reject/' + params.orderId, {"message":btnMessage.toString()}).then(e => { setIsHidden(true); setShowButtons(false) })
+        axios.post(baseUrl + 'orderrequest/reject/' + params.orderId, {"message":btnMessage.toString()}).then(e => { setIsHidden(true); setShowButtons(false) })
     }
 
     return (
