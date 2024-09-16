@@ -10,6 +10,7 @@ import RequsetCard from '../../components/RequestCard/RequestCard';
 import dayjs from 'dayjs';
 
 function CrafterHome() {
+  
   const salesData = [0, 0, 10000, 0, 0, 0, 0, 1200, 1700, 0, 0, 1000];
   var baseUrl = 'http://localhost:5265/'
   var crafterId = localStorage.getItem("crafter")

@@ -4,7 +4,7 @@ import ButtonSecondary from "../button/secondary/ButtonSecondary"
 import ButtonPrimary from "../button/primary/ButtonPrimary"
 import axios from "axios"
 import RequestModal from "../modal/requestModal/RequestModal"
-const RequsetCard = (params) => {
+const OrderCard = (params) => {
     let baseUrl = 'http://localhost:5265/orderrequest/'
     const [showButtons, setShowButtons] = useState(true);
     const [btnMessage, setBtnMessage] = useState('');
@@ -95,4 +95,4 @@ const RequsetCard = (params) => {
 }
 
 
-export default RequsetCard
+export default OrderCard

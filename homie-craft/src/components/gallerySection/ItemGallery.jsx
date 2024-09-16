@@ -44,15 +44,7 @@ const ItemGallery = (props) => {
             <img src={i} alt="" />
           </div>
           })}
-       {/* <div >
-        <img  src="https://th.bing.com/th/id/OIP.0oxXnJ17HjSmlMkYE6I9-QHaEo?rs=1&pid=ImgDetMain"  alt="" />
-       </div>
-       <div>
-        <img  src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2019/04/30/12/sustainable-fashion-brands-women-indybest-0.jpg"  alt="" />
-       </div>
-       <div >
-        <img  src="https://static.remove.bg/sample-gallery/graphics/bird-thumbnail.jpg"  alt="" />
-       </div> */}
+      
        </Slider>
     </div>:
     <>No Images found</>
