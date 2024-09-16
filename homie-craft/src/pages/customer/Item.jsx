@@ -4,6 +4,9 @@ import ButtonSecondary from '../../components/button/secondary/ButtonSecondary'
 import ButtonPrimary from '../../components/button/primary/ButtonPrimary'
 import ItemGallery from '../../components/gallerySection/ItemGallery'
 import axios from 'axios'
+import { Fab, TextField } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Add';
 
 function Item() {
     let {id} = useParams()
@@ -13,6 +16,11 @@ function Item() {
         setCraft(res.data)
       })
     },[])
+    const [quantity,setQuantity] = useState(0)
+    const quantityHandler=(newQuanity)=>{
+      if(newQuanity>=0 && newQuanity<=craft[0].quantity)
+        setQuantity(newQuanity)
+    }
   return (craft.length>0?
     <div>
       <div class="mt-3" style={{display:'flex'}}>
@@ -32,6 +40,17 @@ function Item() {
           <ButtonSecondary name='Wishlist Item'  />
         </div>
         <h6 class="mt-2">{craft[0].description}</h6>
+        <div class="d-flex gap-4 p-2">
+          <h6>Select Quantity:</h6>
+          <h4>{quantity}</h4>
+          <Fab size="small"  aria-label="add" onClick={()=>{quantityHandler(quantity+1)}}>
+            <AddIcon />
+          </Fab>
+          <Fab size="small" aria-label="remove" onClick={()=>{quantityHandler(quantity-1)}}>
+            <RemoveIcon/>
+          </Fab>
+        </div>
+        <p>Max quantity: {craft[0].quantity}</p>
       </div>
     </div>:
 
