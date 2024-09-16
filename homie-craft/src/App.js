@@ -12,10 +12,12 @@ import Orders from './pages/customer/Orders'
 import Login from './pages/customer/Login';
 import Signin from './pages/customer/Signin';
 import IndexHandler from './routes/IndexHandler';
+import { CssBaseline } from '@mui/material';
 
 function App() {
   return (
     <ThemeProvider theme={OrangeTheme}>
+      <CssBaseline/>
       <IndexHandler/>
     </ThemeProvider>
   );
