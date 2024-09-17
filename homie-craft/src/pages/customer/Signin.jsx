@@ -25,19 +25,19 @@ const Signin = () => {
             <div class="mb-3">
                 <TextField fullWidth id="name" label="Name" variant="outlined" value={formik.values.name}  onChange={formik.handleChange}
                     error={formik.touched.name}
-                    helperText={formik.touched.name && formik.errors.name}
+                    helperText={formik.errors.name}
                 />
             </div>
             <div class="mb-3">
                 <TextField fullWidth id="mobile" label="Mobile" type='tel' variant="outlined" value={formik.values.mobile} onChange={formik.handleChange}
-                    error={formik.touched.mobile && Boolean(formik.errors.monile)}
-                    helperText={formik.touched.mobile && formik.errors.mobile}
+                    error={formik.touched.mobile && Boolean(formik.errors.mobile)}
+                    helperText={formik.errors.mobile}
                 />
             </div>
             <div class="mb-3">
                 <TextField fullWidth id="password" label="Password" type='password' variant="outlined" value={formik.values.password} onChange={formik.handleChange}
                     error={formik.touched.password}
-                    helperText={formik.touched.password && formik.errors.password}
+                    helperText={ formik.errors.password}
                 />
             </div>
             <div class="mb-3">
@@ -64,7 +64,7 @@ const Signin = () => {
             </div>
             <div class="d-flex gap-5 ms-5">
                 <ButtonSecondary name='Cancel' />
-                <ButtonPrimary name='Submit' onClick={formik.handleSubmit} />
+                <ButtonPrimary name='Submit' type='submit' onClick={formik.handleSubmit} />
             </div>
         </div>
     </div>
