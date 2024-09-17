@@ -9,6 +9,7 @@ import Dashboard from '../../components/dashboard/Dashboard';
 import RequsetCard from '../../components/RequestCard/RequestCard';
 import dayjs from 'dayjs';
 import OrderCard from '../../components/OrderCard/OrderCard';
+import { useNavigate } from 'react-router-dom';
 
 function CrafterHome() {
   
@@ -19,7 +20,12 @@ function CrafterHome() {
 
   const [orderRequests, setOrderRequests] = useState([])
   const [orders, setOrders] = useState([])
+  
+  const navhook= useNavigate()
 
+  const addHandler=()=>{
+    navhook("add-craft/"+crafterId)
+  }
   const formattedDate = (createdDate) => dayjs(createdDate).format('DD/MM/YYYY');
   
   useEffect(() => {
@@ -67,7 +73,7 @@ function CrafterHome() {
                     : <Typography>-No crafts found-</Typography>
                 }
                 <Container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                  <ButtonPrimary name="Add Crafts" />
+                  <ButtonPrimary action={addHandler} name="Add Crafts" />
                 </Container>
               </div>
             </Container>
