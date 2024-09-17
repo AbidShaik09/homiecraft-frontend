@@ -8,8 +8,11 @@ import ButtonPrimary from '../../components/button/primary/ButtonPrimary';
 import Dashboard from '../../components/dashboard/Dashboard';
 import RequsetCard from '../../components/RequestCard/RequestCard';
 import dayjs from 'dayjs';
+import OrderCard from '../../components/OrderCard/OrderCard';
+import { useNavigate } from 'react-router-dom';
 
 function CrafterHome() {
+  
   const salesData = [0, 0, 10000, 0, 0, 0, 0, 1200, 1700, 0, 0, 1000];
   var baseUrl = 'http://localhost:5265/'
   var crafterId = localStorage.getItem("crafter")
@@ -17,7 +20,12 @@ function CrafterHome() {
 
   const [orderRequests, setOrderRequests] = useState([])
   const [orders, setOrders] = useState([])
+  
+  const navhook= useNavigate()
 
+  const addHandler=()=>{
+    navhook("add-craft/"+crafterId)
+  }
   const formattedDate = (createdDate) => dayjs(createdDate).format('DD/MM/YYYY');
   
   useEffect(() => {
@@ -32,9 +40,8 @@ function CrafterHome() {
     })
     console.log(baseUrl + "/OrderRequest/crafter/" + crafterId)
     axios.get("http://localhost:5265/Order/" + crafterId).then(res => {
-      console.log("Crafter here: ")
-
-      console.log(res.data); setOrders(res.data);
+      let x= res.data
+      console.log(x); setOrders(x);
     })
 
 
@@ -66,7 +73,7 @@ function CrafterHome() {
                     : <Typography>-No crafts found-</Typography>
                 }
                 <Container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                  <ButtonPrimary name="Add Crafts" />
+                  <ButtonPrimary action={addHandler} name="Add Crafts" />
                 </Container>
               </div>
             </Container>
@@ -85,8 +92,7 @@ function CrafterHome() {
                   orders.length > 0 ?
                     orders.map(c => {
                       return (
-                        <>{orders.length}</>
-                        //<RequsetCard orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={crafts.find(p => p.id == c.craftId).name} />
+                            <OrderCard orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} expectedPickup={formattedDate(c.expectedPickup)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} status={c.status} type={c.type} paymentType = {c.paymentType} />
                       )
                     }
                     )
@@ -107,7 +113,7 @@ function CrafterHome() {
                   orderRequests.length > 0 ?
                     orderRequests.map(c => {
                       return (
-                        <RequsetCard orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={crafts.find(p => p.id == c.craftId).name} />
+                        <RequsetCard crafterId = {crafterId} orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={crafts.find(p => p.id == c.craftId).name} />
                       )
                     }
                     )

@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import CrafterHome from "../pages/crafter/CrafterHome";
 import React from 'react'
 import Navbar from "../components/navbar/Navbar";
+import AddCraft from "../pages/crafter/AddCraft";
 
 function CrafterRoute() {
   return (
@@ -9,6 +10,7 @@ function CrafterRoute() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<CrafterHome/>}/>
+          <Route path='add-craft/:crafterId' element={<AddCraft/>}/>
           <Route path='*' element={<h1>404 Not Found </h1>}/>
         </Routes>
 

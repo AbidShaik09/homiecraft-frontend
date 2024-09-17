@@ -44,6 +44,7 @@ const ItemGallery = (props) => {
             <img src={i} alt="" />
           </div>
           })}
+      
        </Slider>
     </div>:
     <>No Images found</>
