@@ -1,5 +1,5 @@
-import { Box, Button, Checkbox, FormControlLabel, Container, TextField } from '@mui/material';
-import React from 'react'
+import { Box, Button, Checkbox, FormControlLabel, Container, TextField, ImageListItem, ImageList } from '@mui/material';
+import React, { useState } from 'react'
 import { useFormik, FieldArray,  } from 'formik';
 import * as Yup from "yup"
 import axios from 'axios';
@@ -9,12 +9,48 @@ function AddCraft() {
   let {crafterId}= useParams()
   let baseURL = "http://localhost:5265"
   const navhook = useNavigate();
+  const [imageFiles, setImageFiles] = useState([]);
+
+  const handleFileChange = (event) => {
+    setImageFiles(event.target.files);
+  };
+  const handleSubmit = async () => {
+    const formData = new FormData();
+
+    for (let i = 0; i < imageFiles.length; i++) {
+      formData.append('images', imageFiles[i]);
+    }
+    
+
+    formData.append('name',formik.values.name);
+    formData.append('price',formik.values.price);
+    formData.append('material',formik.values.material);
+    formData.append('description',formik.values.description);
+    formData.append('quantity',formik.values.quantity);
+    formData.append('pickUpFromCrafter',formik.values.pickUpFromCrafter);
+
+    try {
+      axios.post(baseURL+"/crafts/",formData).then(
+        alert("Item Added Successfully"),
+        navhook("/")
+        
+      ).then(
+        console.log('Files and data uploaded successfully')
+      )
+      
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+  };
+
+  
   const formik = useFormik({
     initialValues: {
       crafterId: crafterId,
       name: '',
       price: '',
-      images: ["https://th.bing.com/th/id/OIP.zh__drP1cMFjtk8nkN3d7wHaHa?rs=1&pid=ImgDetMain"],
+      images: [],
       material: '',
       description: '',
       quantity: '',
@@ -31,25 +67,60 @@ function AddCraft() {
       pickUpFromCrafter: Yup.boolean(),
       
     }),
-    onSubmit: (values) => {
-      axios.post(baseURL+"/crafts/",values).then(
-        alert("Item Added Successfully"),
-        navhook("/")
+    onSubmit: (values)=>{
+      const formData = new FormData();
+      for (let i = 0; i < imageFiles.length; i++) {
+        formData.append('images', imageFiles[i]);
+      }
+      
+  
+      formData.append('crafterId',crafterId);
+      formData.append('name',values.name);
+      formData.append('price',values.price);
+      formData.append('material',values.material);
+      formData.append('description',values.description);
+      formData.append('quantity',values.quantity);
+      formData.append('pickUpFromCrafter',values.pickUpFromCrafter);
+      formData.append('isavailable',true);
+      
+      console.log("Form Data:")
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      try {
+        axios.post(baseURL+"/crafts/",formData,{
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(
+          console.log(formData),
+          alert("Item Added Successfully"),
+          navhook("/")
+          
+        )
         
-      )
-    },
+      } catch (error) {
+        console.error('Error:', error);
+      }
+  
+    }
   });
 
-  return (
-
-
-
-
-
+  return  (
     <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 3 }}>
 
       <Container>
-        
+      <div>
+            <label htmlFor="files">Upload Files</label>
+            <input
+              name="files"
+              type="file"
+              multiple
+              onChange={(event) => {
+                handleFileChange(event)
+              }}
+            />
+          </div>
       </Container>
 
 
