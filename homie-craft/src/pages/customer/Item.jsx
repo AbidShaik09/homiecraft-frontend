@@ -5,9 +5,9 @@ import ButtonPrimary from '../../components/button/primary/ButtonPrimary'
 import ItemGallery from '../../components/gallerySection/ItemGallery'
 import Button from '@mui/material/Button';
 import axios from 'axios'
-import { Fab, TextField } from '@mui/material'
+import { Alert, Fab, Snackbar, TextField } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -20,14 +20,13 @@ function Item() {
     const [price,setPrice] = useState()
     const [crafter,setCrafter] = useState({})
     const [open, setOpen] = useState(false)
-    var purchaseMode=''
     const handleClickOpenHome = () => {
       setOpen(true);
       setPurchaseMode('Home Delivery')
     };
     const handleClickOpenPick = () => {
       setOpen(true);
-      setPurchaseMode('Pick from craffter')
+      setPurchaseMode('Pick from crafter')
     };
   
     const handleClose = () => {
@@ -35,7 +34,7 @@ function Item() {
     };
     useEffect(()=>{
       axios.get(`http://localhost:5265/crafts/${id}`).then((res)=>{
-
+        console.log(res.data)
         setCraft(res.data)
         setPrice(res.data[0].price)
         axios.get(`http://localhost:5265/crafter/${res.data[0].crafterId}`).then((res)=>{
@@ -46,24 +45,39 @@ function Item() {
     },[])
     const [quantity,setQuantity] = useState(0)
     const [userMessage,setUserMessage] = useState()
-    const [puschaseMode,setPurchaseMode] = useState()
+    const [purchaseMode,setPurchaseMode] = useState()
     const quantityHandler=(newQuanity)=>{
       if(newQuanity>=0 && newQuanity<=craft[0].quantity)
         setQuantity(newQuanity)
     }
 
     const orderRequestHandler=()=>{
-        axios.post(`http://localhost:5625/orderrequest`,{
-          craftId:craft[0].Id,
+        axios.post(`http://localhost:5265/orderrequest`,{
+          
           userId:localStorage.getItem('customer'),
-          user:localStorage.getItem('token'),
+          craftId:id,
           crafterId:craft[0].crafterId,
           purchaseMode:purchaseMode,
           quantity:quantity,
+          status:"requested",
           price:craft[0].price * quantity,
           userMessage:userMessage
-        }).then((res)=>{alert('Order Request Successful')})
+        }).then(()=>{handleClick()});
+        setOpen(false);
     }
+    const [openSnack, setSnackOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setSnackOpen(true);
+  };
+
+  const handleSnackClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackOpen(false);
+  };
   return (craft.length>0?
     <div>
       <div class="mt-3" style={{display:'flex'}}>
@@ -72,7 +86,7 @@ function Item() {
           <h3>Delivery Options</h3>
           <div class="d-flex mt-3 gap-5">
             <ButtonPrimary name='Home Delivery' action={handleClickOpenHome}/>
-            <ButtonPrimary name='Pick from Crafter' action={handleClickOpenPick}/>
+            {craft[0].pickUpFromCrafter==true?<ButtonPrimary name='Pick from Crafter' action={handleClickOpenPick}/>:<>in person not available</>}
           </div>
         </div>
       </div>
@@ -84,7 +98,6 @@ function Item() {
             <ButtonSecondary name='Wishlist Item'  onClick={()=>{alert('Hello')}}/>
           </div>
           <h6 class="mt-2">{craft[0].description}</h6>
-          <p>Max quantity: {craft[0].quantity}</p>
         </div>
         <div style={{marginLeft:'15vw',display:'flex',flexDirection:'column', boxShadow:'0px 0px 10px 0px()',padding:'10px'}}>
           <div><h3>Crafter Details:</h3></div>
@@ -92,8 +105,7 @@ function Item() {
             <div>
               <div class="d-flex">Crafter Name:<h5><b>{crafter.name}</b></h5></div>
               <div class="d-flex">House Number:<h5><b>{crafter.houseNumber}</b></h5></div>
-              <div class="d-flex">Latitude:<h5><b>{crafter.lattitude}</b></h5></div>
-              <div class="d-flex">Longitude:<h5><b>{crafter.longitude}</b></h5></div>
+              <div class="d-flex">View Location</div>
             </div>
             <div><img style={{width:'20vw', height:'20vh',maxHeight:'125px',maxWidth:'125px',objectFit:'cover',borderRadius:'50%',padding:'1px'}} src={crafter.profilePicUrl} alt="" class="w-10 h-10"/></div>
           </div>
@@ -131,6 +143,18 @@ function Item() {
           </Button>
         </DialogActions>
       </Dialog>
+      <div>
+      <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleSnackClose}>
+        <Alert
+          onClose={handleSnackClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          Your order request is successful!
+        </Alert>
+      </Snackbar>
+    </div>
     </div>:
 
     <>
