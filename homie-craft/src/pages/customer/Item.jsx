@@ -54,7 +54,7 @@ function Item() {
     const orderRequestHandler=()=>{
         axios.post(`http://localhost:5265/orderrequest`,{
           
-          userId:localStorage.getItem('customer'),
+          userId:localStorage.getItem("id"),
           craftId:id,
           crafterId:craft[0].crafterId,
           purchaseMode:purchaseMode,
@@ -137,10 +137,8 @@ function Item() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button autoFocus onClick={orderRequestHandler}>
-            Submit
-          </Button>
+          <ButtonSecondary onClick={handleClose} name='Cancel'/>
+          <ButtonPrimary autoFocus onClick={orderRequestHandler} name='Submit'/>
         </DialogActions>
       </Dialog>
       <div>

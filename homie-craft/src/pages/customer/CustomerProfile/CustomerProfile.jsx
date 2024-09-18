@@ -13,9 +13,10 @@ function CustomerProfile() {
   let [userData,setUserData] = useState({})
  
   useEffect(()=>{
-   
 
-    getUser().then(res =>{
+   var id = localStorage.getItem("id")
+
+    getUser(id).then(res =>{
       setUserData(res)
      
 
