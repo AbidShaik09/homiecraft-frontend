@@ -1,13 +1,16 @@
 import React from 'react'
 import CustomerRoute from './customerRoute'
 import CrafterRoute from './crafterRoute'
+import axios from 'axios'
 
 
 
 
 
 function IndexHandler() {
-    var userType = localStorage.getItem("token")
+    var userType = localStorage.getItem("userType")
+    var id = localStorage.getItem("id")
+    
     
     if(userType == "customer"){
         return <CustomerRoute/>
@@ -16,7 +19,10 @@ function IndexHandler() {
         return <CrafterRoute/>
     }
     else{
-        
+        localStorage.removeItem("token")
+        localStorage.removeItem("userType")
+        if(userType!=null)
+        localStorage.removeItem("id")
         return <CustomerRoute/>
     }
 }

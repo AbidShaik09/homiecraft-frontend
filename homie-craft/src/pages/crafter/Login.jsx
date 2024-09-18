@@ -40,7 +40,7 @@ const Login = () => {
   };
   return (
     <div class="w-50 mt-5 m-auto">
-        <h4>Customer Login</h4>
+        <h4>User Login</h4>
         <div class="mb-3">
             <TextField fullWidth id="filled-basic" label="Mobile" variant="outlined" value={mobile} onChange={(e)=>{setMobile(e.target.value)}}/>
         </div>

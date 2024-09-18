@@ -1,9 +1,9 @@
 import { Alert } from '@mui/material'
 import axios from 'axios'
 import React from 'react'
-var baseUrl = "http://localhost:5265/user"
-const getUser= async()=>{
-    var res= await axios.get(baseUrl+'/7670858952')
+var baseUrl = "http://localhost:5265/user/"
+const getUser= async(id)=>{
+    var res= await axios.get(baseUrl+id)
     return res.data
 }
 const updateUser = async(userData) =>{
