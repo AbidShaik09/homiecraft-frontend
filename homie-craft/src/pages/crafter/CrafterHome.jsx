@@ -73,7 +73,7 @@ function CrafterHome() {
                       return (
                         <>
 
-                          <CraftCard craft={c} quantity={c.quantity} image={c.images[0]} name={c.name} price={c.price} />
+                         {c!=null? <CraftCard craft={c} quantity={c.quantity} image={c.images[0]} name={c.name} price={c.price} />:<></>}
 
                         </>
                       )
@@ -122,7 +122,7 @@ function CrafterHome() {
                   orderRequests.length > 0 ?
                     orderRequests.map(c => {
                       return (
-                        <RequsetCard crafterId = {crafterId} orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={crafts.find(p => p.id == c.craftId).name} />
+                        <RequsetCard crafterId = {crafterId} orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} />
                       )
                     }
                     )

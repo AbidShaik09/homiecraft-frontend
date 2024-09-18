@@ -1,32 +1,37 @@
 import React, { useEffect, useState } from 'react'
-import './CustomerProfile.css'
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, Container, FormControlLabel, TextField, Typography } from '@mui/material';
 import * as Yup from "yup";
 import 'yup-phone-lite';
-import { getUser,updateUser } from '../../../repository/userRepository/userRepository';
 import { useFormik } from 'formik';
 import axios from 'axios';
 
-function CustomerProfile() {
+function CrafterProfile() {
 
   const [userData,setUserData] = useState({})
   const [isloaded,setIsLoaded] = useState(false)
   let userId = localStorage.getItem("id") 
   const navhook = useNavigate()
+  
+  const baseURL = "http://localhost:5265/"
 
   useEffect(()=>{
     
     var id = localStorage.getItem("id")
-    getUser(id).then(d=>setUserData(d),console.log(userData))
+    axios.get(baseURL+"crafter/"+id).then(data=>{
+      var d = data.data
+      setUserData(d)
+      console.log("crafter: ")
+      console.log(userData)
+    })
     
      
    },[])
   const [image, setImage] = useState([]);
+  const [isEdit,setIsEdit] = useState(false)
   const handleFileChange = (event) => {
     setImage(event.target.files);
   };
-  const baseURL = "http://localhost:5265/"
   //const defaultPic = 'https://th.bing.com/th/id/OIP.0YmnhQc7kf0h3EEYRAkgjQAAAA?rs=1&pid=ImgDetMain'
 
    const formik = useFormik({
@@ -39,7 +44,8 @@ function CustomerProfile() {
       state : userData.state,
       pinCode : userData.pinCode,
       latitude: userData.latitude,
-      longitude: userData.longitude
+      longitude: userData.longitude,
+      PickUpFromLocation: userData.pickUpFromLocation
     },
     enableReinitialize:true,
     validationSchema: Yup.object({
@@ -55,19 +61,20 @@ function CustomerProfile() {
     onSubmit: (values)=>{
       const formData = new FormData();
       for (let i = 0; i < image.length; i++) {
-        formData.append('profilePic', image[i]);
+        formData.append('ProfilePic', image[i]);
       }
-      formData.append('name',values.name);
+      formData.append('Name',values.name);
       formData.append('Mobile',values.mobile);
       formData.append('Password',"********");
-      formData.append('houseNumber',values.houseNumber);
-      formData.append('city',values.city);
-      formData.append('state',values.state);
-      formData.append('pinCode',values.pinCode);
-      formData.append('longitude',values.longitude);
-      formData.append('latitude',values.latitude);
+      formData.append('HouseNumber',values.houseNumber);
+      formData.append('City',values.city);
+      formData.append('State',values.state);
+      formData.append('PinCode',values.pinCode);
+      formData.append('Longitude',values.longitude);
+      formData.append('Latitude',values.latitude);
+      formData.append('PickUpFromLocation',values.PickUpFromLocation);
       try {
-        axios.put(baseURL+"user/"+userId,formData,{
+        axios.put(baseURL+"crafter/"+userId,formData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -94,11 +101,11 @@ function CustomerProfile() {
       <Container sx={{marginTop:"20px"}}>
       <Container>
       <Typography variant='h4' >
-      Profile
+      Crafter Profile
     </Typography>
       <div className="container profilePicArea">
         <div className='circleWrapper'>
-          <img className='userProfile' src={userData.profilePicURL}  />
+          <img className='userProfile' src={userData.profilePicUrl}  />
 
         </div>
 
@@ -107,7 +114,7 @@ function CustomerProfile() {
       </Container>
     
 
-      <Container sx={{display:"flex",justifyContent:"space-around",alignItems:"center", marginTop:"10px"}}>
+        <Container  sx={{display:"flex",justifyContent:"space-around",alignItems:"center", marginTop:"10px"}}>
             <label htmlFor="files">Update Profile Pic?</label>
             <TextField
               name="files"
@@ -240,7 +247,20 @@ function CustomerProfile() {
           />
         
         </Container>
-        
+        <Container>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="PickUpFromLocation"
+                name="PickUpFromLocation"
+                checked={formik.values.PickUpFromLocation}
+                onChange={formik.handleChange}
+                
+              />
+            }
+            label="Pick up from Location "
+          />
+        </Container>
         
       </Container>
       <Container>
@@ -260,4 +280,4 @@ function CustomerProfile() {
   )
 }
 
-export default CustomerProfile
+export default CrafterProfile

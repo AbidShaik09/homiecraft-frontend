@@ -10,8 +10,12 @@ import ButtonSecondary from '../button/secondary/ButtonSecondary';
 import ButtonPrimary from '../button/primary/ButtonPrimary';
 import { useState } from 'react';
 import { CheckBox } from '@mui/icons-material';
+import { useFormik } from 'formik';
+import axios from 'axios';
 
 export default function CraftCard(params) {
+  var baseURL = "http://localhost:5265/"
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -26,12 +30,49 @@ export default function CraftCard(params) {
     p: 4,
   };
   let c =params.craft
-  const [craft,setCraft] = useState(c)
-  
-  console.log(craft);
+  const craft=c
+  const [isEdit,setIsEdit] = useState(false)
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const setEditTrue=()=>{
+    setIsEdit(true)
+    console.log(isEdit)
+  }
+  const setEditFalse=()=>{
+    setIsEdit(false)
+  }
+  
+  
+  const formik = useFormik({
+    initialValues:{
+      name: craft.name,
+      price: craft.price,
+      quantity : craft.quantity,
+      pickUpFromCrafter: craft.pickUpFromCrafter,
+      description: craft.description,
+      isAvailable: craft.isAvailable
+    },
+    onSubmit:(values)=>{
+      axios.put(baseURL+"crafts/"+craft.id,values).then(
+        craft.name = values.name,
+        craft.price = values.price,
+        craft.quantity = values.quantity,
+        craft.pickUpFromCrafter = values.pickUpFromCrafter,
+        craft.description=values.description,
+        craft.isAvailable = values.isAvailable
+      )
+      handleClose()
+    }
+
+    
+  })
+
+
+  
+
+
   return (
     <div  >
       <Card className='btn' onClick={handleOpen} sx={{ width: 200 }}>
@@ -42,10 +83,10 @@ export default function CraftCard(params) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>₹{params.price}</div> <div style={{ fontSize: '1rem', alignSelf: 'center' }}>Qty: <span style={{ color: 'green' }}>{params.quantity}</span></div>
+            <div>₹{craft.price}</div> <div style={{ fontSize: '1rem', alignSelf: 'center' }}>Qty: <span style={{ color: 'green' }}>{craft.quantity}</span></div>
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', overflow: 'hidden' }}>
-            {params.name}
+            {craft.name}
           </Typography>
 
         </CardContent>
@@ -66,7 +107,14 @@ export default function CraftCard(params) {
                 Craft Name
               </td>
               <td>
-                <TextField sx={{width:'100%'}} type="text" disabled={true} value={craft.name}  />
+                <TextField sx={{width:'100%'}}
+                id="name"
+                name="name"
+                 type="text" 
+                 disabled={!isEdit} 
+                 value={formik.values.name}
+                 onChange={formik.handleChange}
+                 />
               </td>
             </tr>
             <tr className=' '>
@@ -74,23 +122,27 @@ export default function CraftCard(params) {
                 Price
               </td>
               <td>
-                <TextField sx={{width:'100%'}} type="text" disabled={true} value={craft.price}  />
+                <TextField sx={{width:'100%'}} 
+                id="price"
+                name="price"
+                type="text" 
+                disabled={!isEdit} 
+                value={formik.values.price}
+                onChange={formik.handleChange}  />
               </td>
             </tr>
-            <tr className=' '>
-              <td className='bold  grey '>
-                Material
-              </td>
-              <td>
-                <TextField sx={{width:'100%'}} type="text" disabled={true} value={craft.material}  />
-              </td>
-            </tr>
+            
             <tr className=' '>
               <td className='bold  grey '>
                 Description
               </td>
               <td>
-                <TextField multiline sx={{width:'100%'}} type="text" disabled={true} value={craft.description}  />
+                <TextField multiline sx={{width:'100%'}} type="text" 
+                id="description"
+                name="description"
+                disabled={!isEdit} 
+                value={formik.values.description}
+                onChange={formik.handleChange}  />
               </td>
             </tr>
             <tr className=' '>
@@ -98,7 +150,13 @@ export default function CraftCard(params) {
                 Stock
               </td>
               <td>
-                <TextField type="text" sx={{width:'100%'}}  disabled={true} value={craft.quantity}  />
+                <TextField type="text"
+                id="quantity"
+                name="quantity"
+                sx={{width:'100%'}}  
+                disabled={!isEdit} 
+                value={formik.values.quantity} 
+                onChange={formik.handleChange} />
               </td>
             </tr>
             <tr className=' '>
@@ -108,8 +166,9 @@ export default function CraftCard(params) {
               <Checkbox
                 id="pickUpFromCrafter"
                 name="pickUpFromCrafter"
-                checked={craft.pickUpFromCrafter}
-                disabled= {true}
+                 onChange={formik.handleChange}
+                checked={formik.values.pickUpFromCrafter}
+                disabled= {!isEdit}
               />
             }
             label="Pick up from crafter"
@@ -121,8 +180,9 @@ export default function CraftCard(params) {
               <Checkbox
                 id="isAvailable"
                 name="isAvailable"
-                checked={craft.isAvailable}
-                disabled= {true}
+                checked={formik.values.isAvailable}
+                onChange={formik.handleChange}
+                disabled= {!isEdit}
               />
             }
             label="Is Available"
@@ -136,7 +196,8 @@ export default function CraftCard(params) {
 
               </td>
               <td>
-            <ButtonPrimary sx={{width:'100%'}} name={"Edit"} />
+
+                {!isEdit ?<ButtonPrimary  sx={{width:'100%'}} action={setEditTrue} name={"Edit"} />:<ButtonPrimary  sx={{width:'100%'}} action={formik.handleSubmit} name={"Update"} />} 
 
               </td>
             </tr>
