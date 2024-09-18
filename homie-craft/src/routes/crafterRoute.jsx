@@ -3,6 +3,7 @@ import CrafterHome from "../pages/crafter/CrafterHome";
 import React from 'react'
 import Navbar from "../components/navbar/Navbar";
 import AddCraft from "../pages/crafter/AddCraft";
+import CrafterProfile from "../pages/crafter/CrafterProfile";
 
 function CrafterRoute() {
   return (
@@ -11,6 +12,7 @@ function CrafterRoute() {
         <Routes>
           <Route path='/' element={<CrafterHome/>}/>
           <Route path='add-craft/:crafterId' element={<AddCraft/>}/>
+          <Route path="/profile" element= {<CrafterProfile/>}/>
           <Route path='*' element={<h1>404 Not Found </h1>}/>
         </Routes>
 
