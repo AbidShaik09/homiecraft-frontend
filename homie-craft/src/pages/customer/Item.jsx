@@ -20,13 +20,24 @@ function Item() {
     const [price,setPrice] = useState()
     const [crafter,setCrafter] = useState({})
     const [open, setOpen] = useState(false)
+    const navigate = useNavigate()
     const handleClickOpenHome = () => {
-      setOpen(true);
-      setPurchaseMode('Home Delivery')
+      if(localStorage.getItem("userType")=="customer"){
+        setOpen(true);
+        setPurchaseMode('Home Delivery')
+      }
+      else{
+        navigate('/signup')
+      }
     };
     const handleClickOpenPick = () => {
-      setOpen(true);
-      setPurchaseMode('Pick from crafter')
+      if(localStorage.getItem("userType")=="customer"){
+        setOpen(true);
+        setPurchaseMode('Pick from crafter')
+      }
+      else{
+        navigate('/signup')
+      }
     };
   
     const handleClose = () => {
@@ -95,7 +106,6 @@ function Item() {
           <h2>{craft[0].name}</h2>
           <div class="d-flex gap-5">
             <h4>{'₹ '+craft[0].price}</h4>
-            <ButtonSecondary name='Wishlist Item'  onClick={()=>{alert('Hello')}}/>
           </div>
           <h6 class="mt-2">{craft[0].description}</h6>
         </div>
@@ -137,8 +147,8 @@ function Item() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <ButtonSecondary onClick={handleClose} name='Cancel'/>
-          <ButtonPrimary autoFocus onClick={orderRequestHandler} name='Submit'/>
+          <ButtonSecondary action={handleClose} name='Cancel'/>
+          <ButtonPrimary autoFocus action={orderRequestHandler} name='Submit'/>
         </DialogActions>
       </Dialog>
       <div>
