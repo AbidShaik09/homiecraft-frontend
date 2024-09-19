@@ -147,7 +147,7 @@ function Navbar() {
         <p>View Profile</p>
       </MenuItem>
       <MenuItem onClick={handleLogout}>
-        <IconButton
+        {/* <IconButton
           size="large"
           aria-label="logout"
           aria-controls="primary-search-account-menu"
@@ -155,7 +155,7 @@ function Navbar() {
           color="inherit"
         >
           <AccountCircle />
-        </IconButton>
+        </IconButton> */}
         <p>Logout</p>
       </MenuItem>
     </Menu>

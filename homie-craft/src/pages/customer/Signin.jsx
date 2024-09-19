@@ -96,7 +96,8 @@ function AddCraft() {
         }).then(
           console.log(formData),
           alert("User Registered Successfully"),
-          navigate("/")
+          navigate("/indexHandler")
+          
           
         )
         

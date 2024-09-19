@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { Alert,  Snackbar } from '@mui/material'
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import CrafterRoute from '../../routes/crafterRoute'
 
 
 const Login = () => {
@@ -25,14 +26,15 @@ const Login = () => {
       localStorage.setItem("token",JSON.stringify(res.data.token))
       localStorage.setItem("userType",alignment)
       localStorage.setItem("id", JSON.stringify(res.data.id))
-      handleClick()
+      
+      
+      navigate("/")
     })
   }
   const [openSnack, setSnackOpen] = React.useState(false);
 
   const handleClick = () => {
     setSnackOpen(true);
-    navigate('/')
   };
 
   const handleSnackClose = (event, reason) => {

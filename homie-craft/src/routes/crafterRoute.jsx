@@ -6,11 +6,13 @@ import AddCraft from "../pages/crafter/AddCraft";
 
 import CrafterProfile from "../pages/crafter/CrafterProfile";
 import { Login } from "@mui/icons-material";
+import IndexHandler from "./IndexHandler";
 function CrafterRoute() {
   return (
-      <Router>
-        <Navbar/>
+      
         <Routes>
+          
+        {/* <Route path='/indexHandler' element= {<IndexHandler/>}/> */}
           <Route path='/' element={<CrafterHome/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='add-craft/:crafterId' element={<AddCraft/>}/>
@@ -18,7 +20,6 @@ function CrafterRoute() {
           <Route path='*' element={<h1>404 Not Found </h1>}/>
         </Routes>
 
-      </Router>
   );
 }
 

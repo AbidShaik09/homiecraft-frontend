@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ButtonPrimary from '../../components/button/primary/ButtonPrimary'
 import ButtonSecondary from '../../components/button/secondary/ButtonSecondary'
 import { TextField } from '@mui/material'
@@ -7,13 +7,14 @@ import { useNavigate } from 'react-router-dom'
 import { Alert,  Snackbar } from '@mui/material'
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import IndexHandler from '../../routes/IndexHandler'
+import { UserContext } from '../../context/UserContext'
 
 
 const Login = () => {
   const [mobile,setMobile] = useState()
   const [password,setPassword] = useState()
   const [data,setData] = useState()
-  const navigate= useNavigate()
   const handleSubmit=()=>{
     var url=""
     if(alignment=="customer"){url="http://localhost:5265/api/auth"}
@@ -25,6 +26,8 @@ const Login = () => {
       localStorage.setItem("token",JSON.stringify(res.data.token))
       localStorage.setItem("userType",alignment)
       localStorage.setItem("id", JSON.stringify(res.data.id))
+      console.log("resetting userType")
+      alert("user Type: "+userType)
       handleClick()
     })
   }
@@ -32,7 +35,8 @@ const Login = () => {
 
   const handleClick = () => {
     setSnackOpen(true);
-    navigate('/')
+    
+    
   };
 
   const handleSnackClose = (event, reason) => {

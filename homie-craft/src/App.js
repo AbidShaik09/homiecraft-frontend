@@ -16,11 +16,20 @@ import { CssBaseline } from '@mui/material';
 
 function App() {
   return (
-    <ThemeProvider theme={OrangeTheme}>
-      <CssBaseline/>
-      <IndexHandler/>
-    </ThemeProvider>
-  );
+    <Router>
+      <Navbar/>
+      <Routes>
+        
+      {/* <Route path='/indexHandler' element= {<IndexHandler/>}/> */}
+        
+        <Route path='/signup' element={<Signin/>}/>
+        <Route path="/login" element= {<Login/>}/>
+        <Route path='*' element={<IndexHandler/>}/>
+                                  
+      </Routes>
+
+    </Router>
+);
 }
 
 export default App;
