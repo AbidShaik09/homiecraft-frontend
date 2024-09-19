@@ -1,16 +1,16 @@
 import { Container, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import ButtonPrimary from '../../components/button/primary/ButtonPrimary'
 import OrderDetails from '../../components/orderdetails/OrderDetails'
-import CustomerOrder from '../../components/customerOrder/CustomerOrder'
 
-function Orders() {
+function OrderHistory() {
     const baseURL = "http://localhost:5265/"
     const [orders, setOrders] = useState([])
     let id = localStorage.getItem("id")
     useEffect(() => {
-        axios.get(baseURL + "order/customer/" + id).then(e => {
-            var o = e.data.sort((a, b) => b.isActive - a.isActive);
+        axios.get(baseURL + "order/crafter/" + id).then(e => {
+            var o = e.data.sort((a, b) => b.isActive - a.isActive);;
             setOrders(o);
             console.log(orders);
 
@@ -31,7 +31,7 @@ function Orders() {
                 {
                     orders.length > 0 ?
                         orders.map(order => {
-                            return <CustomerOrder order={order }/>
+                            return <OrderDetails order={order }/>
                         }) : <Container>-No Order History-</Container>
                 }
 
@@ -44,4 +44,4 @@ function Orders() {
     )
 }
 
-export default Orders
+export default OrderHistory

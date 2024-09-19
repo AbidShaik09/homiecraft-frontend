@@ -10,6 +10,7 @@ import RequsetCard from '../../components/RequestCard/RequestCard';
 import dayjs from 'dayjs';
 import OrderCard from '../../components/OrderCard/OrderCard';
 import { useNavigate } from 'react-router-dom';
+import ButtonSecondary from '../../components/button/secondary/ButtonSecondary';
 
 function CrafterHome() {
   
@@ -29,8 +30,10 @@ function CrafterHome() {
 
   const [orderRequests, setOrderRequests] = useState([])
   const [orders, setOrders] = useState([])
+  const historyHandler =()=>{
+    navhook("orderHistory")
+  }
   
-
   const addHandler=()=>{
     navhook("add-craft/"+crafterId)
   }
@@ -47,7 +50,7 @@ function CrafterHome() {
       console.log(res.data); setOrderRequests(res.data.filter(f => f.status == "requested"));
     })
     console.log(baseUrl + "/OrderRequest/crafter/" + crafterId)
-    axios.get("http://localhost:5265/Order/" + crafterId).then(res => {
+    axios.get("http://localhost:5265/Order/crafter/" + crafterId).then(res => {
       let x= res.data
       console.log(x); setOrders(x);
     })
@@ -67,6 +70,9 @@ function CrafterHome() {
             <h4>Active Crafts</h4>
             <Container sx={{ display: 'flex', justifyContent: 'center', padding: '20px 0px' }}>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
+                <>
+                
+                
                 {
                   crafts.length > 0 ?
                     crafts.map(c => {
@@ -81,7 +87,9 @@ function CrafterHome() {
                     )
                     : <Typography>-No crafts found-</Typography>
                 }
-                <Container sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+
+              </>
+                <Container sx={{ maxWidth:"300px", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <ButtonPrimary action={addHandler} name="Add Crafts" />
                 </Container>
               </div>
@@ -109,7 +117,11 @@ function CrafterHome() {
                 }
 
               </div>
+              
             </Container>
+            <Container sx={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+                <ButtonSecondary action={historyHandler} name="Order History"/>
+              </Container>
           </Card>
 
           <Card sx={{ color: 'white', marginTop: '50px', padding: '40px 0px', width: '100%', backgroundColor: '#2d545e', border: '1px solid grey', borderRadius: '2px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -131,6 +143,7 @@ function CrafterHome() {
 
               </div>
             </Container>
+            
 
           </Card>
 
