@@ -3,6 +3,7 @@ import CrafterHome from "../pages/crafter/CrafterHome";
 import React from 'react'
 import Navbar from "../components/navbar/Navbar";
 import AddCraft from "../pages/crafter/AddCraft";
+import { Login } from "@mui/icons-material";
 
 function CrafterRoute() {
   return (
@@ -10,6 +11,7 @@ function CrafterRoute() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<CrafterHome/>}/>
+          <Route path='/login' element={<Login/>}/>
           <Route path='add-craft/:crafterId' element={<AddCraft/>}/>
           <Route path='*' element={<h1>404 Not Found </h1>}/>
         </Routes>

@@ -10,9 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
 import OrangeTheme from '../../themes/OrangeTheme';
 
@@ -62,9 +60,10 @@ function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  // Check if user is logged in as customer
   const userType = localStorage.getItem('userType');
-  const isLoggedIn = userType === 'customer';
+  const userId = localStorage.getItem('id');
+  const isCustomer = userType === 'customer';
+  const isCrafter = userType === 'crafter';
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -85,8 +84,10 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem('userType');
-    handleMenuClose()
-    navigate('/');
+    localStorage.removeItem('id');
+    localStorage.removeItem('token');
+    handleMenuClose();
+    navigate('/')
   };
 
   const menuId = 'primary-search-account-menu';
@@ -111,7 +112,7 @@ function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => {navigate('/profile'); handleMenuClose()}}>View Profile</MenuItem>
+      <MenuItem onClick={() => {navigate('/profile'); handleMenuClose();}}>View Profile</MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
@@ -140,7 +141,6 @@ function Navbar() {
           aria-controls="primary-search-account-menu"
           aria-haspopup="false"
           color="inherit"
-          
         >
           <AccountCircle />
         </IconButton>
@@ -160,6 +160,12 @@ function Navbar() {
       </MenuItem>
     </Menu>
   );
+
+  React.useEffect(() => {
+    if (isCrafter) {
+      navigate(`/`);
+    }
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -186,18 +192,22 @@ function Navbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex', gap: '20px' } }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="orders"
-              aria-controls={menuId}
-              aria-haspopup="false"
-              onClick={() => navigate('/orders')}
-              color="inherit"
-            >
-              <LocalShippingIcon />
-            </IconButton>
-            {isLoggedIn ? (
+            {isCustomer && (
+              <>
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="orders"
+                  aria-controls={menuId}
+                  aria-haspopup="false"
+                  onClick={() => navigate('/orders')}
+                  color="inherit"
+                >
+                  <LocalShippingIcon />
+                </IconButton>
+              </>
+            )}
+            {isCustomer || isCrafter ? (
               <IconButton
                 size="large"
                 edge="end"
@@ -210,25 +220,13 @@ function Navbar() {
                 <AccountCircle />
               </IconButton>
             ) : (
-              <MenuItem onClick={() => navigate('/signup')}>
+              <MenuItem onClick={() => navigate('/login')}>
                 <Typography variant="h6" noWrap component="div">
-                  Sign Up
+                  Login
                 </Typography>
               </MenuItem>
             )}
           </Box>
-          {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box> */}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
