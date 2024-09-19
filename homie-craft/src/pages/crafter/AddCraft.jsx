@@ -14,35 +14,7 @@ function AddCraft() {
   const handleFileChange = (event) => {
     setImageFiles(event.target.files);
   };
-  const handleSubmit = async () => {
-    const formData = new FormData();
-
-    for (let i = 0; i < imageFiles.length; i++) {
-      formData.append('images', imageFiles[i]);
-    }
-    
-
-    formData.append('name',formik.values.name);
-    formData.append('price',formik.values.price);
-    formData.append('material',formik.values.material);
-    formData.append('description',formik.values.description);
-    formData.append('quantity',formik.values.quantity);
-    formData.append('pickUpFromCrafter',formik.values.pickUpFromCrafter);
-
-    try {
-      axios.post(baseURL+"/crafts/",formData).then(
-        alert("Item Added Successfully"),
-        navhook("/")
-        
-      ).then(
-        console.log('Files and data uploaded successfully')
-      )
-      
-    } catch (error) {
-      console.error('Error:', error);
-    }
-
-  };
+ 
 
   
   const formik = useFormik({
@@ -94,7 +66,6 @@ function AddCraft() {
           }
         }).then(
           console.log(formData),
-          alert("Item Added Successfully"),
           navhook("/")
           
         )

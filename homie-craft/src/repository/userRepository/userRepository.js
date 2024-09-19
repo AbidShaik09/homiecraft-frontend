@@ -4,7 +4,7 @@ import React from 'react'
 var baseUrl = "http://localhost:5265/user/"
 const getUser= async(id)=>{
     var res= await axios.get(baseUrl+id)
-    return res.data
+    return await res.data
 }
 const updateUser = async(userData) =>{
     console.log("userData Before Update");
