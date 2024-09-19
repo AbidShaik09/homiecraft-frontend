@@ -50,7 +50,7 @@ const Login = () => {
     setAlignment(newAlignment);
   };
   return (
-    <div class="w-50 mt-5 m-auto">
+    <div class="w-50 mt-5 m-auto" style={{padding:'15px',borderRadius:'10px',boxShadow:'0 0 13px 0px rgba(0, 0, 0, 0.5)',backgroundColor:'white'}}>
         <h4 style={{marginLeft:'20vw'}}>Login</h4>
         <div style={{alignItems:'center',padding:'10px'}}>
             <ToggleButtonGroup
