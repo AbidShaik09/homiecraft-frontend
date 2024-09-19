@@ -16,7 +16,7 @@ const RequsetCard = (params) => {
     
     } ).then(e => {  
            setIsHidden(true);
-           axios.get(baseUrl + 'order/'+params.crafterId).then(x=>
+           axios.get(baseUrl + 'order/crafter/'+params.crafterId).then(x=>
                 
            params.setOrders(x.data)
            )
