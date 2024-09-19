@@ -1,103 +1,86 @@
-import { Box, Button, Checkbox, FormControlLabel, Container, TextField, ImageListItem, ImageList } from '@mui/material';
-import React, { useState } from 'react'
-import { useFormik, FieldArray,  } from 'formik';
-import * as Yup from "yup"
+import React, { useEffect, useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom';
+import { Box, Button, Checkbox, Container, FormControlLabel, TextField, ToggleButton, Typography } from '@mui/material';
+import * as Yup from "yup";
+import 'yup-phone-lite';
+import { useFormik } from 'formik';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
-import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-function AddCraft() {
-  let {crafterId}= useParams()
-  let baseURL = "http://localhost:5265"
-  const navigate = useNavigate();
-  const [imageFiles, setImageFiles] = useState();
+function CrafterProfile() {
 
-  const handleFileChange = (event) => {
-    setImageFiles(event.target.files);
+  const [userData,setUserData] = useState({})
+  const [isloaded,setIsLoaded] = useState(false)
+  let userId = localStorage.getItem("id") 
+  const navhook = useNavigate()
+  const [alignment, setAlignment] = React.useState('customer');
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
   };
-//   const handleSubmit = async () => {
-//     const formData = new FormData();
-
-//     formData.append('images', imageFiles);
-//     formData.append('name',formik.values.name);
-//     formData.append('mobile',formik.values.mobile);
-//     formData.append('password',formik.values.password);
-//     formData.append('houseno',formik.values.houseno);
-//     formData.append('city',formik.values.city);
-//     formData.append('pin',formik.values.pin);
-//     formData.append('state',formik.values.state);
-//     formData.append('latitude',formik.values.latitude);
-//     formData.append('longitude',formik.values.longitude);
-
-//     try {
-//       axios.post(baseURL+"/crafts/",formData).then(
-//         alert("Item Added Successfully"),
-//         navigate("/")
-        
-//       ).then(
-//         console.log('Files and data uploaded successfully')
-//       )
-      
-//     } catch (error) {
-//       console.error('Error:', error);
-//     }
-
-//   };
-
   
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      mobile: '',
-      images: [],
-      password: '',
-      houseno: '',
-      city: '',
-     state:'',
-     pin:'',
-     latitude:'',
-     longitude:''
+  const baseURL = "http://localhost:5265/"
+  const navigate = useNavigate()
+
+  const [image, setImage] = useState([]);
+  const handleFileChange = (event) => {
+    setImage(event.target.files);
+  };
+  //const defaultPic = 'https://th.bing.com/th/id/OIP.0YmnhQc7kf0h3EEYRAkgjQAAAA?rs=1&pid=ImgDetMain'
+
+   const formik = useFormik({
+    initialValues : {
+      name : "",
+      mobile : "",
+      password:"",
+      houseNumber : "",
+      city : "",
+      state :"",
+      pinCode : "",
+      latitude: "",
+      longitude: "",
     },
+    enableReinitialize:true,
     validationSchema: Yup.object({
-      name: Yup.string().required('Required'),
-      mobile: Yup.string().matches(/^[6-9]\d{9}$/, "Mobile number must be 10 digits").required('Mobile number is required'),
-      password: Yup.string().min(8, 'Password must be at least 8 characters long').required('Password is required'),
-      hoseno: Yup.string().required('Required'),
-      city: Yup.string().required('Required'),
-      state: Yup.string().required('Required'),
-      pin: Yup.string().required('Required'),
-      longitude: Yup.string().required('Required'),
-      latitude: Yup.string().required('Required'),
-      
+      name : Yup.string().required("Name is Required"),
+      mobile: Yup.string().phone(/^[6-9]\d{9}$/,true,"Enter a valid phone number").required("Mobile number is required"),
+      password:Yup.string().min(8,"Password should have minimum 8 characters").required("Password is required"),
+      houseNumber : Yup.string().required("House Number is Required"),
+      city: Yup.string().required("City is Required"),
+      state: Yup.string().required("State is Required"),
+      pinCode: Yup.number().required("Pincode is required").min(100000,"Enter a valid Pincode").max(999999,"Enter a valid Pincode"),
+      latitude: Yup.number().required('Latitude is required').min(-90, 'Latitude must be between -90 and 90').max(90, 'Latitude must be between -90 and 90'),
+      longitude: Yup.number().required('Longitude is required').min(-180, 'Longitude must be between -180 and 180').max(180, 'Longitude must be between -180 and 180')
     }),
     onSubmit: (values)=>{
       const formData = new FormData();
-    formData.append('images', imageFiles);  
+      for (let i = 0; i < image.length; i++) {
+        formData.append('ProfilePic', image[i]);
+      }
       formData.append('name',values.name);
       formData.append('mobile',values.mobile);
       formData.append('password',values.password);
-      formData.append('houseno',values.houseno);
+      formData.append('houseNumber',values.houseNumber);
       formData.append('city',values.city);
       formData.append('state',values.state);
-      formData.append('pin',values.pin);
-      formData.append('latitude',values.latitude);
+      formData.append('pinCode',values.pinCode);
       formData.append('longitude',values.longitude);
-      
-      console.log("Form Data:")
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
+      formData.append('latitude',values.latitude);
+      if(alignment=="crafter"){
+        
+      formData.append('PickUpFromLocation',values.PickUpFromLocation);
       }
+      var u=""
+      if(alignment=='customer'){u="user"}
+      else{u=alignment}
       try {
-        axios.post(baseURL+`/${alignment}/`,formData,{
+        axios.post(baseURL+u,formData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }).then(
           console.log(formData),
-          alert("User Registered Successfully"),
-          navigate("/indexHandler")
-          
+          navhook("/login")
           
         )
         
@@ -107,180 +90,211 @@ function AddCraft() {
   
     }
   });
-  const [alignment, setAlignment] = React.useState('customer');
 
-  const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
-  };
-  return  (
+  return (
+    <>
+
     <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 3 }}>
-        <h2 style={{marginLeft:'35vw'}}>Sign Up</h2>
-        <div style={{marginLeft:'30vw',padding:'10px'}}>
-                <ToggleButtonGroup
-                    color="primary"
-                    value={alignment}
-                    exclusive
-                    onChange={handleChange}
-                    aria-label="Platform"
-                    class="m-auto"
-                    >
-                    <ToggleButton value="customer">Customer</ToggleButton>
-                    <ToggleButton value="crafter">Crafter</ToggleButton>
-                </ToggleButtonGroup>
-            </div>
+      
+      <Container sx={{marginTop:"20px"}}>
+      <Container>
+      <Typography variant='h4' sx={{marginLeft:'35vw'}}>
+      Sign Up
+    </Typography>
+
+      </Container>
+  
+      </Container>
+
 
       <Container sx={{padding:"5px"}} spacing={2}>
-        <Container item xs={12} sx={{padding:"5px"}}>
+      <div style={{marginLeft:"15vw"}}>
+            <ToggleButtonGroup
+                color="primary"
+                value={alignment}
+                exclusive
+                onChange={handleChange}
+                aria-label="Platform"
+                class="m-auto"
+                >
+                <ToggleButton value="customer">Customer</ToggleButton>
+                <ToggleButton value="crafter">Crafter</ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+      <Container item xs={8} sx={{padding:"5px"}}>
+        
+      <label htmlFor="name">Full Name</label>
           <TextField
             fullWidth
             id="name"
             name="name"
-            label="Name"
             value={formik.values.name}
             onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
+            error={Boolean((formik.errors.name)) && (formik.errors.name) }
+            helperText={Boolean((formik.errors.name)) && formik.errors.name}
           />
         
         </Container>
+
         <Container item xs={12} sx={{padding:"5px"}}>
+          
+      <label htmlFor="mobile">Mobile No</label>
           <TextField
             fullWidth
             id="mobile"
             name="mobile"
-            label="Mobile"
-            type="tel"
             value={formik.values.mobile}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.mobile && Boolean(formik.errors.mobile)}
-            helperText={formik.touched.mobile && formik.errors.mobile}
+            error={formik.errors.mobile}
+            helperText={formik.errors.mobile}
           />
-        </Container>
-        <Container item xs={12} sx={{padding:"5px"}}>
-          
-        </Container>
         
+        </Container>
         <Container item xs={12} sx={{padding:"5px"}}>
+        
+      <label htmlFor="password">Password</label>
           <TextField
             fullWidth
             id="password"
             name="password"
-            label="Password"
-            type='password'
             value={formik.values.password}
             onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
+            error={Boolean((formik.errors.password)) && (formik.errors.password) }
+            helperText={Boolean((formik.errors.password)) && formik.errors.password}
           />
+        
         </Container>
         <Container item xs={12} sx={{padding:"5px"}}>
+          
+      <label htmlFor="houseNumber">H. No</label>
           <TextField
             fullWidth
-            id="houseno"
-            name="houseno"
-            label="House Number"
-            value={formik.values.houseno}
+            id="houseNumber"
+            name="houseNumber"
+            value={formik.values.houseNumber}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.houseno && Boolean(formik.errors.houseno)}
-            helperText={formik.touched.houseno && formik.errors.houseno}
+            error={formik.touched.houseNumber && Boolean(formik.errors.houseNumber)}
+            helperText={formik.touched.houseNumber && formik.errors.houseNumber}
           />
+        
         </Container>
-        <Container item xs={12} sx={{padding:"5px"}}>
+        
+        <Container item sx={{xs:12,md:6,padding:"5px"}} >
+          
+      <label htmlFor="city">City</label>
           <TextField
             fullWidth
             id="city"
             name="city"
-            label="City"
             value={formik.values.city}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             error={formik.touched.city && Boolean(formik.errors.city)}
             helperText={formik.touched.city && formik.errors.city}
           />
+        
         </Container>
+
         <Container item xs={12} sx={{padding:"5px"}}>
+          
+      <label htmlFor="state">State</label>
           <TextField
             fullWidth
             id="state"
             name="state"
-            label="State"
             value={formik.values.state}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             error={formik.touched.state && Boolean(formik.errors.state)}
             helperText={formik.touched.state && formik.errors.state}
           />
+        
         </Container>
         <Container item xs={12} sx={{padding:"5px"}}>
+          
+      <label htmlFor="pincode">Pincode</label>
           <TextField
             fullWidth
-            id="pin"
-            name="pin"
-            label="Pin Code"
-            value={formik.values.pin}
+            id="pinCode"
+            name="pinCode"
+            type="number"
+            value={formik.values.pinCode}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.pin && Boolean(formik.errors.pin)}
-            helperText={formik.touched.pin && formik.errors.pin}
+            error={formik.touched.pinCode && Boolean(formik.errors.pinCode)}
+            helperText={formik.touched.pinCode && formik.errors.pinCode}
           />
+        
         </Container>
+
         <Container item xs={12} sx={{padding:"5px"}}>
+          
+      <label htmlFor="latitude">Latitude</label>
           <TextField
             fullWidth
             id="latitude"
             name="latitude"
-            label="Latitude"
+            type="number"
             value={formik.values.latitude}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             error={formik.touched.latitude && Boolean(formik.errors.latitude)}
             helperText={formik.touched.latitude && formik.errors.latitude}
           />
+        
         </Container>
-        <Container item xs={5} sx={{padding:"5px"}}>
+        <Container item xs={12} sx={{padding:"5px"}}>
+          
+      <label htmlFor="longitude">Longitude</label>
           <TextField
             fullWidth
             id="longitude"
             name="longitude"
-            label="Longitude"
+            type="number"
             value={formik.values.longitude}
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             error={formik.touched.longitude && Boolean(formik.errors.longitude)}
             helperText={formik.touched.longitude && formik.errors.longitude}
           />
+        
         </Container>
-        <Container>
-      <div>
-            <label htmlFor="files">Upload Files</label>
-            <input
+        {alignment=="crafter" && <Container>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="PickUpFromLocation"
+                name="PickUpFromLocation"
+                checked={formik.values.PickUpFromLocation}
+                onChange={formik.handleChange}
+                
+              />
+            }
+            label="Pick up from Location "
+          />
+        </Container>}
+        
+        <Container  sx={{display:"flex",justifyContent:"center",gap:"30px",alignItems:"center", marginTop:"10px"}}>
+            <label htmlFor="files">Update Profile Pic?</label>
+            <TextField
               name="files"
               type="file"
-              multiple
               onChange={(event) => {
                 handleFileChange(event)
               }}
             />
-          </div>
-      </Container>
+          </Container>
         
       </Container>
       <Container>
 
-      <Button type="submit" onSubmit={formik.handleSubmit} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
         Submit
       </Button>
-
-      <div class="d-flex gap-3 mt-4" style={{marginLeft:'30vw'}}>
-                <h5>Already a user?</h5>
-                <h5 type="button" onClick={()=>navigate('/login')} style={{color:'chocolate'}}><u>Login</u></h5>
-            </div>
+      <div class="d-flex gap-3 mt-4"><h5>Already a user?</h5><h5 type="button" onClick={()=>navigate('/login')} style={{color:'chocolate'}}><u>Login</u></h5></div>
       </Container>
       
     </Box>
-  );
-};
+    
+    
+    </>
+    
+  )
+}
 
-export default AddCraft
+export default CrafterProfile
