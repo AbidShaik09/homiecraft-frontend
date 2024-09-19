@@ -20,13 +20,24 @@ function Item() {
     const [price,setPrice] = useState()
     const [crafter,setCrafter] = useState({})
     const [open, setOpen] = useState(false)
+    const navigate = useNavigate()
     const handleClickOpenHome = () => {
-      setOpen(true);
-      setPurchaseMode('Home Delivery')
+      if(localStorage.getItem("userType")=="customer"){
+        setOpen(true);
+        setPurchaseMode('Home Delivery')
+      }
+      else{
+        navigate('/login')
+      }
     };
     const handleClickOpenPick = () => {
-      setOpen(true);
-      setPurchaseMode('Pick from crafter')
+      if(localStorage.getItem("userType")=="customer"){
+        setOpen(true);
+        setPurchaseMode('Pick from crafter')
+      }
+      else{
+        navigate('/login')
+      }
     };
   
     const handleClose = () => {
@@ -95,7 +106,6 @@ function Item() {
           <h2>{craft[0].name}</h2>
           <div class="d-flex gap-5">
             <h4>{'₹ '+craft[0].price}</h4>
-            <ButtonSecondary name='Wishlist Item'  onClick={()=>{alert('Hello')}}/>
           </div>
           <h6 class="mt-2">{craft[0].description}</h6>
         </div>
@@ -116,29 +126,34 @@ function Item() {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        fullWidth
       >
         <DialogTitle id="alert-dialog-title">
-          {"Logistics"}
+          {"Request for order"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <div class="d-flex gap-4 p-2">
-              <h6>Select Quantity:</h6>
-              <h4>{quantity}</h4>
-              {/* <Fab size="small"  aria-label="add" > */}
+            <div class="gap-4 p-2">
+              <div class="d-flex">
+              <div class="d-flex gap-2 p-3">
+                <h5>Select Quantity:</h5>
+                <h4>{quantity}</h4>
+              </div>
+              <div style={{display:'flex',flexDirection:'column',border:'1px solid black',borderRadius:'20px'}}>
                 <AddIcon type="submit" onClick={()=>{quantityHandler(quantity+1)}}/>
-              {/* </Fab> */}
-              {/* <Fab size="small" aria-label="remove" onClick={()=>{quantityHandler(quantity-1)}}> */}
                 <RemoveIcon type="button" onClick={()=>{quantityHandler(quantity-1)}}/>
-              {/* </Fab> */}<br/>
-              <h5>Payable Amount:{price * quantity}</h5>
+              </div>
+              <p style={{marginLeft:'10vw'}}>Max Quantity: {craft[0].quantity}</p>
+              </div>
+              <h5 class="mt-3 ms-3">Payable Amount:{price * quantity}</h5>
+
             </div>
             <TextField fullWidth id="outlined-basic" label="Enter customization details" variant="outlined" value={userMessage} onChange={(e)=>{setUserMessage(e.target.value)}}/>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <ButtonSecondary onClick={handleClose} name='Cancel'/>
-          <ButtonPrimary autoFocus onClick={orderRequestHandler} name='Submit'/>
+          <ButtonSecondary action={handleClose} name='Cancel'/>
+          <ButtonPrimary autoFocus action={orderRequestHandler} name='Submit'/>
         </DialogActions>
       </Dialog>
       <div>

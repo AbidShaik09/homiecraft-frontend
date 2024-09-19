@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -7,19 +6,14 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import OrangeTheme from '../../themes/OrangeTheme';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import { useNavigate } from 'react-router-dom';
+import OrangeTheme from '../../themes/OrangeTheme';
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -40,7 +34,6 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
   position: 'absolute',
-
   pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
@@ -51,7 +44,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -61,29 +53,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
- function Navbar() {
+function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const navhook=useNavigate()
+  const navigate = useNavigate();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const userType = localStorage.getItem('userType');
+  const userId = localStorage.getItem('id');
+  const isCustomer = userType === 'customer';
+  const isCrafter = userType === 'crafter';
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const openProfile=()=>{
-    navhook('/profile')
-  }
-  const openOrders=()=>{
-    navhook('/orders')
-  }
-  const openWishlist=()=>{
-    navhook('/wishlist')
-  }
 
-  const openHome =()=>{
-    navhook('/')
-  }
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -95,6 +80,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('userType');
+    localStorage.removeItem('id');
+    localStorage.removeItem('token');
+    handleMenuClose();
+    navigate('/')
   };
 
   const menuId = 'primary-search-account-menu';
@@ -113,15 +106,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       }}
       sx={{
         '& .MuiPaper-root': {
-          backgroundColor: OrangeTheme.palette.primary.main, 
+          backgroundColor: OrangeTheme.palette.primary.main,
         },
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={openProfile}>Profile</MenuItem>
-      <MenuItem onClick={openWishlist}>Wishlist</MenuItem>
-      <MenuItem onClick={openOrders}>Orders</MenuItem>
+      <MenuItem onClick={() => {navigate('/profile'); handleMenuClose();}}>View Profile</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 
@@ -133,7 +125,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         vertical: 'top',
         horizontal: 'right',
       }}
-      
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
@@ -143,9 +134,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      
-      
-      <MenuItem onClick={openProfile}>
+      <MenuItem onClick={() => navigate('/profile')}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -155,60 +144,43 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
-      </MenuItem><MenuItem onClick={openWishlist}>
-        <IconButton
+        <p>View Profile</p>
+      </MenuItem>
+      <MenuItem onClick={handleLogout}>
+        {/* <IconButton
           size="large"
-          aria-label="account of current user"
+          aria-label="logout"
           aria-controls="primary-search-account-menu"
           aria-haspopup="false"
           color="inherit"
         >
-          <FavoriteOutlinedIcon/>
-        </IconButton>
-        <p>Wishlist</p>
-      </MenuItem><MenuItem onClick={openOrders}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="false"
-          color="inherit"
-        >
-          <LocalShippingIcon/>
-        </IconButton>
-        <p>Orders</p>
+          <AccountCircle />
+        </IconButton> */}
+        <p>Logout</p>
       </MenuItem>
     </Menu>
   );
+
+  React.useEffect(() => {
+    if (isCrafter) {
+      navigate(`/`);
+    }
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-           
-          </IconButton>
-          <MenuItem onClick={openHome}>
           <Typography
             variant="h6"
             noWrap
             component="div"
+            type="button"
             sx={{ display: { xs: 'none', sm: 'block' } }}
+            onClick={() => navigate('/')}
           >
             Homie Craft
           </Typography>
-          
-         
-          
-          </MenuItem>
-          
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -219,55 +191,41 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex', gap:'20px' } }}>
-           
-            
-          <IconButton
-              size="large"
-              edge="end"
-              aria-label="profile of current user"
-              aria-controls={menuId}
-              aria-haspopup="false"
-              onClick={openOrders}
-              color="inherit"
-            >
-              <LocalShippingIcon/>
-             
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="profile of current user"
-              aria-controls={menuId}
-              aria-haspopup="false"
-              onClick={openWishlist}
-              color="inherit"
-            >
-              <FavoriteOutlinedIcon/>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="profile of current user"
-              aria-controls={menuId}
-              aria-haspopup="false"
-              onClick={openProfile}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
+          <Box sx={{ display: { xs: 'none', md: 'flex', gap: '20px' } }}>
+            {isCustomer && (
+              <>
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="orders"
+                  aria-controls={menuId}
+                  aria-haspopup="false"
+                  onClick={() => navigate('/orders')}
+                  color="inherit"
+                >
+                  <LocalShippingIcon />
+                </IconButton>
+              </>
+            )}
+            {isCustomer || isCrafter ? (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            ) : (
+              <MenuItem onClick={() => navigate('/login')}>
+                <Typography variant="h6" noWrap component="div">
+                  Login
+                </Typography>
+              </MenuItem>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
@@ -277,6 +235,4 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   );
 }
 
-
-
-export default Navbar
+export default Navbar;
