@@ -15,8 +15,8 @@ function CustomerOrder(params) {
     return( 
     <Container>
         <Typography sx={{backgroundColor:"#a8dadc",color:"#1d3557",margin:"20px" ,padding: "10px", borderRadius: "3px", border: "1px solid black" }}>
-        <div style={ order.isActive ?{ color: "green" }:{ color: "red" }}>
-                {order.isActive ? "Active" : "Inactive"}</div>
+        <div style={ order.isActive ?{ fontWeight:'bold',color: "chocolate" }:{ fontWeight:'bold',color :'green' }}>
+                {order.isActive ? "Ordered" : "Delivered"}</div>
             <div>
                 OrderID: {order.orderID}
             </div>
