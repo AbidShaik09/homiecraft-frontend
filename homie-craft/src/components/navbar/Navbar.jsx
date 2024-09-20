@@ -13,6 +13,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { useNavigate } from 'react-router-dom';
 import OrangeTheme from '../../themes/OrangeTheme';
+import axios from 'axios';
+import ShowSearch from '../ShowSearch';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -59,11 +61,25 @@ function Navbar() {
   const navigate = useNavigate();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [showSearch,setShowSearch] = React.useState(false)
 
   const userType = localStorage.getItem('userType');
   const userId = localStorage.getItem('id');
   const isCustomer = userType === 'customer';
   const isCrafter = userType === 'crafter';
+  const [search,setSearch] = React.useState()
+  const [data,setData] = React.useState()
+  const handleSearch=(e)=>{
+    setSearch(e.target.value)
+    if(search!=""){
+    axios.get(`http://localhost:5265/search/${search}`).then((res)=>{
+      setData(res.data)
+      setShowSearch(true)
+      console.log(JSON.stringify(data))
+  }).catch((err)=>{console.log(err)})}
+  else{setShowSearch(false)}
+  }
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -89,6 +105,18 @@ function Navbar() {
     handleMenuClose();
     navigate('/')
   };
+  // React.useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (!event.target.closest('.showSearch') && !event.target.closest('.search')) {
+  //       setShowSearch(false);
+  //     }
+  //   };
+
+  //   document.addEventListener('mousedown', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, []);
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -147,15 +175,6 @@ function Navbar() {
         <p>View Profile</p>
       </MenuItem>
       <MenuItem onClick={handleLogout}>
-        {/* <IconButton
-          size="large"
-          aria-label="logout"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="false"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton> */}
         <p>Logout</p>
       </MenuItem>
     </Menu>
@@ -188,7 +207,10 @@ function Navbar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              value={search}
+              onChange={(e)=>handleSearch(e)}
             />
+            {showSearch && <ShowSearch suggestions={data} onSelect={() => {setShowSearch(false); setSearch('');}}/>}
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex', gap: '20px' } }}>
