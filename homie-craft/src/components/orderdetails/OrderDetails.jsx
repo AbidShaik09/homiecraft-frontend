@@ -15,7 +15,7 @@ function OrderDetails(params) {
     <Container>
         <Typography sx={{backgroundColor:"#a8dadc",color:"#1d3557",margin:"20px" ,padding: "10px", borderRadius: "3px", border: "1px solid black" }}>
         <div style={ order.isActive ?{ color: "green" }:{ color: "red" }}>
-                {order.isActive ? "Active" : "Inactive"}</div>
+                {order.isActive ? "In Progress" : "Delivered"}</div>
             <div>
                 OrderID: {order.orderID}
             </div>

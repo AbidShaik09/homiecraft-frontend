@@ -30,6 +30,7 @@ function CrafterHome() {
 
   const [orderRequests, setOrderRequests] = useState([])
   const [orders, setOrders] = useState([])
+  const [activeOrders, setActiveOrders] = useState([])
   const historyHandler =()=>{
     navhook("orderHistory")
   }
@@ -58,7 +59,8 @@ function CrafterHome() {
         'Authorization': `Bearer ${token}`
       }}).then(res => {
       let x= res.data
-      console.log(x); setOrders(x);
+      setOrders(x);
+      setActiveOrders(x.filter(o=>o.isActive==true))
     })
 
 
@@ -112,8 +114,8 @@ function CrafterHome() {
             <Container sx={{ display: 'flex', justifyContent: 'center', padding: '20px 5px' }}>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
                 {
-                  orders.length > 0 ?
-                    orders.map(c => {
+                  activeOrders.length > 0 ?
+                    activeOrders.map(c => {
                       return (
                             <OrderCard orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} expectedPickup={formattedDate(c.expectedPickup)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} status={c.status} type={c.type} paymentType = {c.paymentType} />
                       )
