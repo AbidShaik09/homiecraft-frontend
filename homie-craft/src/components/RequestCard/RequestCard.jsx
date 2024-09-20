@@ -9,12 +9,15 @@ const RequsetCard = (params) => {
     const [showButtons, setShowButtons] = useState(true);
     const [btnMessage, setBtnMessage] = useState('');
     const [isHidden, setIsHidden] = useState(false);
-    
+    let token = localStorage.getItem("token")
     const acceptOrderHandler = () => {
 
         axios.post(baseUrl + 'orderrequest/approve/' +params.orderId,{"message":btnMessage.toString()
     
-    } ).then(e => {  
+    },{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }} ).then(e => {  
            setIsHidden(true);
            axios.get(baseUrl + 'order/crafter/'+params.crafterId).then(x=>
                 
@@ -25,7 +28,10 @@ const RequsetCard = (params) => {
            setShowButtons(false) })
     }
     const rejectOrderHandler = () => {
-        axios.post(baseUrl + 'orderrequest/reject/' + params.orderId, {"message":btnMessage.toString()}).then(e => { setIsHidden(true); setShowButtons(false) })
+        axios.post(baseUrl + 'orderrequest/reject/' + params.orderId, {"message":btnMessage.toString()},{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }}).then(e => { setIsHidden(true); setShowButtons(false) })
     }
 
     return (
