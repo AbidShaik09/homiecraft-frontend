@@ -23,6 +23,7 @@ function Item() {
     const [crafter,setCrafter] = useState({})
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
+    let token = localStorage.getItem("token")
     const handleClickOpenHome = () => {
       if(localStorage.getItem("userType")=="customer"){
         setOpen(true);
@@ -79,7 +80,10 @@ function Item() {
           status:"requested",
           price:craft[0].price * quantity,
           userMessage:userMessage
-        }).then(()=>{handleClick()});
+        },{
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }}).then(()=>{handleClick()});
         setOpen(false);
         setQuantity(0)
         setPrice(0)

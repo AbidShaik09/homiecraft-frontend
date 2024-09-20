@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import ButtonSecondary from '../../components/button/secondary/ButtonSecondary';
 
 function CrafterHome() {
-  
+  let token = localStorage.getItem("token")
   const salesData = [0, 0, 10000, 0, 0, 0, 0, 1200, 1700, 0, 0, 1000];
   
   const navhook= useNavigate()
@@ -44,13 +44,19 @@ function CrafterHome() {
       console.log(res.data); setCrafts(res.data);
     })
     console.log(baseUrl + "/OrderRequest/crafter/" + crafterId)
-    axios.get("http://localhost:5265/OrderRequest/crafter/" + crafterId).then(res => {
+    axios.get("http://localhost:5265/OrderRequest/crafter/" + crafterId,{
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }}).then(res => {
       console.log("Data here: ")
 
       console.log(res.data); setOrderRequests(res.data.filter(f => f.status == "requested"));
     })
     console.log(baseUrl + "/OrderRequest/crafter/" + crafterId)
-    axios.get("http://localhost:5265/Order/crafter/" + crafterId).then(res => {
+    axios.get("http://localhost:5265/Order/crafter/" + crafterId,{
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }}).then(res => {
       let x= res.data
       console.log(x); setOrders(x);
     })
