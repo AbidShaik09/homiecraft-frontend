@@ -43,7 +43,7 @@ function CrafterProfile() {
     enableReinitialize:true,
     validationSchema: Yup.object({
       name : Yup.string().required("Name is Required"),
-      mobile: Yup.string().phone().required("Mobile number is required"),
+      mobile: Yup.string().required("Mobile number is required"),
       password:Yup.string().min(8,"Password should have minimum 8 characters").required("Password is required"),
       houseNumber : Yup.string().required("House Number is Required"),
       city: Yup.string().required("City is Required"),
