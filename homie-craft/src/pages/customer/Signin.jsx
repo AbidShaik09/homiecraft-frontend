@@ -82,7 +82,7 @@ function CrafterProfile() {
           console.log(formData),
           navhook("/login")
           
-        )
+        ).catch(()=>{})
         
       } catch (error) {
         console.error('Error:', error);
