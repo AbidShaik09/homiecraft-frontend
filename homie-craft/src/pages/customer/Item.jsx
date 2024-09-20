@@ -13,6 +13,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
 
 function Item() {
     let {id} = useParams()
@@ -42,6 +44,9 @@ function Item() {
   
     const handleClose = () => {
       setOpen(false);
+      setQuantity(0)
+      setPrice(0)
+      setUserMessage()
     };
     useEffect(()=>{
       axios.get(`http://localhost:5265/crafts/${id}`).then((res)=>{
@@ -63,6 +68,7 @@ function Item() {
     }
 
     const orderRequestHandler=()=>{
+      if(quantity>0){
         axios.post(`http://localhost:5265/orderrequest`,{
           
           userId:localStorage.getItem("id"),
@@ -75,6 +81,13 @@ function Item() {
           userMessage:userMessage
         }).then(()=>{handleClick()});
         setOpen(false);
+        setQuantity(0)
+        setPrice(0)
+        setUserMessage()
+      }
+        else{
+
+        }
     }
     const [openSnack, setSnackOpen] = React.useState(false);
 
@@ -145,7 +158,7 @@ function Item() {
               </div>
               <p style={{marginLeft:'10vw'}}>Max Quantity: {craft[0].quantity}</p>
               </div>
-              <h5 class="mt-3 ms-3">Payable Amount:{price * quantity}</h5>
+              <h5 class="mt-3 ms-3">Payable Amount:{craft[0].price * quantity}</h5>
 
             </div>
             <TextField fullWidth id="outlined-basic" label="Enter customization details" variant="outlined" value={userMessage} onChange={(e)=>{setUserMessage(e.target.value)}}/>
@@ -171,7 +184,14 @@ function Item() {
     </div>:
 
     <>
-      Item Not Found;
+      <Stack spacing={1} width={'100vw'} height={'100vh'}>
+      {/* For variant="text", adjust the height via font-size */}
+      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+      {/* For other variants, adjust the size with `width` and `height` */}
+      <Skeleton variant="circular" width={40} height={40} />
+      <Skeleton variant="rectangular" width={210} height={60} />
+      <Skeleton variant="rounded" width={210} height={60} />
+    </Stack>
     </>
 
   )
