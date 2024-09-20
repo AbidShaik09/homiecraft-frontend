@@ -8,6 +8,9 @@ import { Alert,  Snackbar } from '@mui/material'
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import CrafterRoute from '../../routes/crafterRoute'
+import { useFormik } from 'formik'
+import * as Yup from "yup";
+import 'yup-phone-lite';
 
 
 const Login = () => {
@@ -29,13 +32,9 @@ const Login = () => {
       
       
       navigate("/")
-    })
+    }).catch((err)=>{setSnackOpen(true);})
   }
   const [openSnack, setSnackOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setSnackOpen(true);
-  };
 
   const handleSnackClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -49,6 +48,14 @@ const Login = () => {
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
+  const formik = useFormik({
+    initialValues:{monile:'',password:''},
+    enableReinitialize:true,
+    validationSchema:Yup.object({
+      mobile: Yup.string().phone().required("Mobile number is required"),
+      password:Yup.string().min(8,"Password should have minimum 8 characters").required("Password is required")
+    })
+  })
   return (
     <div class="w-50 mt-5 m-auto" style={{padding:'15px',borderRadius:'10px',boxShadow:'0 0 13px 0px rgba(0, 0, 0, 0.5)',backgroundColor:'white'}}>
         <h4 style={{marginLeft:'20vw'}}>Login</h4>
@@ -66,7 +73,9 @@ const Login = () => {
             </ToggleButtonGroup>
           </div>
         <div class="mb-3">
-            <TextField fullWidth id="filled-basic" label="Mobile" variant="outlined" value={mobile} onChange={(e)=>{setMobile(e.target.value)}}/>
+            <TextField fullWidth id="filled-basic" label="Mobile" variant="outlined" value={mobile} onChange={(e)=>{setMobile(e.target.value)}}
+               error={formik.errors.mobile}
+               helperText={formik.errors.mobile}/>
         </div>
         <div class="mb-3">
             <TextField fullWidth id="filled-basic" label="Password" type='password' variant="outlined" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
@@ -75,6 +84,18 @@ const Login = () => {
             <ButtonPrimary name='Submit'  action={handleSubmit}/>
         </div>
         <div class="d-flex gap-3 mt-4"><p>Don't have an account?</p><p type="button" onClick={()=>navigate('/signup')} style={{color:'chocolate'}}><u>Sign up</u></p></div>
+        <div>
+      <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleSnackClose}>
+        <Alert
+          onClose={handleSnackClose}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          User Not Found!
+        </Alert>
+      </Snackbar>
+    </div>
     </div>
   )
 }
