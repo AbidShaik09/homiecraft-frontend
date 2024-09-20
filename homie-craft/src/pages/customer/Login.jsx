@@ -23,9 +23,9 @@ const Login = () => {
       mobile:mobile,
       password:password
     }).then((res)=>{setData(res.data)
-      localStorage.setItem("token",JSON.stringify(res.data.token))
+      localStorage.setItem("token",(res.data.token))
       localStorage.setItem("userType",alignment)
-      localStorage.setItem("id", JSON.stringify(res.data.id))
+      localStorage.setItem("id",(res.data.id))
       
       
       navigate("/")
