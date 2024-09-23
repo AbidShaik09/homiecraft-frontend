@@ -19,6 +19,7 @@ const Login = () => {
   const [data,setData] = useState()
   const navigate= useNavigate()
   const handleSubmit=()=>{
+    if(alignment!=null){
     var url=""
     if(alignment=="customer"){url="http://localhost:5265/api/auth"}
     else{url="http://localhost:5265/api/auth/crafter"}
@@ -32,7 +33,10 @@ const Login = () => {
       
       
       navigate("/")
-    }).catch((err)=>{setSnackOpen(true);})
+    }).catch((err)=>{setSnackOpen(true);})}
+    else{
+      setAlignment('customer')
+    }
   }
   const [openSnack, setSnackOpen] = React.useState(false);
 
