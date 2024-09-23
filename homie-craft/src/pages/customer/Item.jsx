@@ -125,7 +125,13 @@ function Item() {
           res=>{
             var x = res.data;
             return x;
-          }
+          },
+          axios.get('http://localhost:5122/Comment/'+id).then(res=>
+          {
+            var x= res.data
+            setComments(x)
+          })
+          
         )
         var nc={
           id:userId+100,
@@ -139,7 +145,6 @@ function Item() {
           var x= res.data
           setNewComment("")
           var c = comments
-          setComments(...comments,nc)
         })
         }
         catch{
@@ -218,7 +223,7 @@ function Item() {
             </Typography>
           </Container>
             {comments.length>0 && comments.map(comment=>{
-              return <Comment comment={comment}/>
+              return <Comment setComments={setComments} comment={comment}/>
             }) }
         </Container>
         <Container sx={{margin:"40px 20px"}}>
