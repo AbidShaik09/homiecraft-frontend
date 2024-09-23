@@ -43,7 +43,7 @@ function CrafterProfile() {
     enableReinitialize:true,
     validationSchema: Yup.object({
       name : Yup.string().required("Name is Required"),
-      mobile: Yup.string().required("Mobile number is required"),
+      mobile: Yup.string().phone('IN',true,"Must be valid Mobile Number").required("Mobile number is required"),
       password:Yup.string().min(8,"Password should have minimum 8 characters").required("Password is required"),
       houseNumber : Yup.string().required("House Number is Required"),
       city: Yup.string().required("City is Required"),
@@ -53,40 +53,83 @@ function CrafterProfile() {
       longitude: Yup.number().required('Longitude is required').min(-180, 'Longitude must be between -180 and 180').max(180, 'Longitude must be between -180 and 180')
     }),
     onSubmit: (values)=>{
-      const formData = new FormData();
-      for (let i = 0; i < image.length; i++) {
-        formData.append('ProfilePic', image[i]);
-      }
-      formData.append('name',values.name);
-      formData.append('mobile',values.mobile);
-      formData.append('password',values.password);
-      formData.append('houseNumber',values.houseNumber);
-      formData.append('city',values.city);
-      formData.append('state',values.state);
-      formData.append('pinCode',values.pinCode);
-      formData.append('longitude',values.longitude);
-      formData.append('latitude',values.latitude);
-      if(alignment=="crafter"){
-        
-      formData.append('PickUpFromLocation',values.PickUpFromLocation);
-      }
-      var u=""
-      if(alignment=='customer'){u="user"}
-      else{u=alignment}
-      try {
-        axios.post(baseURL+u,formData,{
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(
-          console.log(formData),
-          navhook("/login")
+      if(alignment=='customer'){
+        const formData = new FormData();
+        for (let i = 0; i < image.length; i++) {
+          formData.append('ProfilePic', image[i]);
+        }
+        formData.append('name',values.name);
+        formData.append('mobile',values.mobile);
+        formData.append('password',values.password);
+        formData.append('houseNumber',values.houseNumber);
+        formData.append('city',values.city);
+        formData.append('state',values.state);
+        formData.append('pinCode',values.pinCode);
+        formData.append('longitude',values.longitude);
+        formData.append('latitude',values.latitude);
+      
+        var u=""
+        if(alignment=='customer'){u="user"}
+        else{u=alignment}
+        try {
+          axios.post(baseURL+u,formData,{
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(
+            console.log(formData),
+            navhook("/login")
+            
+          )
           
-        )
-        
-      } catch (error) {
-        console.error('Error:', error);
+        } catch (error) {
+          console.error('Error:', error);
+        }
       }
+
+      else{
+        const formData = new FormData();
+        for (let i = 0; i < image.length; i++) {
+          formData.append('ProfilePic', image[i]);
+        }
+        formData.append('Name',values.name);
+        formData.append('Mobile',values.mobile);
+        formData.append('Password',values.password);
+        formData.append('HouseNumber',values.houseNumber);
+        formData.append('City',values.city);
+        formData.append('State',values.state);
+        formData.append('PinCode',values.pinCode);
+        formData.append('Longitude',values.longitude);
+        formData.append('Latitude',values.latitude);
+        let isChecked = false
+        if( values.PickUpFromLocation=="on"){
+          isChecked =true
+        }
+      formData.append('PickUpFromLocation',isChecked);
+        var u=""
+        if(alignment=='customer'){u="user"}
+        else{u=alignment}
+
+        console.log("Form Data:")
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+        try {
+          axios.post(baseURL+u,formData,{
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(
+            console.log(formData),
+            navhook("/login")
+            
+          )
+          
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+      
   
     }
   });
@@ -157,6 +200,7 @@ function CrafterProfile() {
             fullWidth
             id="password"
             name="password"
+            type='password'
             value={formik.values.password}
             onChange={formik.handleChange}
             error={Boolean((formik.errors.password)) && (formik.errors.password) }
