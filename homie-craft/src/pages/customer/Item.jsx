@@ -134,7 +134,7 @@ function Item() {
           
         )
         var nc={
-          id:userId+100,
+          id:"random",
           userId: userId,
           craftId: id,
           comment: newComment,
@@ -145,6 +145,11 @@ function Item() {
           var x= res.data
           setNewComment("")
           var c = comments
+          axios.get('http://localhost:5122/Comment/'+id).then(res=>
+            {
+              var x= res.data
+              setComments(x)
+            })
         })
         }
         catch{

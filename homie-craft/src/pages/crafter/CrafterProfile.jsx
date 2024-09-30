@@ -12,7 +12,7 @@ function CrafterProfile() {
   const [isloaded,setIsLoaded] = useState(false)
   let userId = localStorage.getItem("id") 
   const navhook = useNavigate()
-  
+  const token = localStorage.getItem("token");
   const baseURL = "http://localhost:5265/"
 
   useEffect(()=>{
@@ -45,7 +45,7 @@ function CrafterProfile() {
       pinCode : userData.pinCode,
       latitude: userData.latitude,
       longitude: userData.longitude,
-      PickUpFromLocation: userData.pickUpFromLocation
+      PickUpFromLocation: true
     },
     enableReinitialize:true,
     validationSchema: Yup.object({
@@ -72,10 +72,11 @@ function CrafterProfile() {
       formData.append('PinCode',values.pinCode);
       formData.append('Longitude',values.longitude);
       formData.append('Latitude',values.latitude);
-      formData.append('PickUpFromLocation',values.PickUpFromLocation);
       try {
         axios.put(baseURL+"crafter/"+userId,formData,{
           headers: {
+            
+        'Authorization': `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
           }
         }).then(
@@ -246,20 +247,6 @@ function CrafterProfile() {
             helperText={formik.touched.longitude && formik.errors.longitude}
           />
         
-        </Container>
-        <Container>
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="PickUpFromLocation"
-                name="PickUpFromLocation"
-                checked={formik.values.PickUpFromLocation}
-                onChange={formik.handleChange}
-                
-              />
-            }
-            label="Pick up from Location "
-          />
         </Container>
         
       </Container>
