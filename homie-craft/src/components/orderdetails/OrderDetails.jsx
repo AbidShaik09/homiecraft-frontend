@@ -22,7 +22,7 @@ function OrderDetails(params) {
             <div>
                 type: {order.type}</div>
             <div>
-                status: {order.status == "Active" ? "Accepted" : order.status}</div>
+                status: {order.status == "Active" ? "Accepted" : setIsPicked ? "Picked Up By Corrier":order.status}</div>
             
             <Container sx={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
                 <div>

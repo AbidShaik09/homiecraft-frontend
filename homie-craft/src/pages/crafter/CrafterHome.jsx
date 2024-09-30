@@ -42,7 +42,7 @@ function CrafterHome() {
   
   useEffect(() => {
     axios.get(baseUrl + "crafts/crafter/" + crafterId).then(res => {
-      console.log(res.data); setCrafts(res.data);
+       setCrafts(res.data);
     })
     console.log(baseUrl + "/OrderRequest/crafter/" + crafterId)
     axios.get("http://localhost:5265/OrderRequest/crafter/" + crafterId,{
@@ -128,7 +128,7 @@ function CrafterHome() {
               
             </Container>
             <Container sx={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-                <ButtonSecondary action={historyHandler} name="Order History"/>
+                <ButtonSecondary action={historyHandler} name="All Orders"/>
               </Container>
           </Card>
 
@@ -142,7 +142,7 @@ function CrafterHome() {
                   orderRequests.length > 0 ?
                     orderRequests.map(c => {
                       return (
-                        <RequsetCard crafterId = {crafterId} orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} />
+                        <RequsetCard setCrafts = {setCrafts} crafterId = {crafterId} orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} craftId = {c.craftId} setActiveOrders= {setActiveOrders} />
                       )
                     }
                     )

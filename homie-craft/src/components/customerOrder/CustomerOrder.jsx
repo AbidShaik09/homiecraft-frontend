@@ -16,7 +16,7 @@ function CustomerOrder(params) {
     <Container>
         <Typography sx={{backgroundColor:"#a8dadc",color:"#1d3557",margin:"20px" ,padding: "10px", borderRadius: "3px", border: "1px solid black" }}>
         <div style={ order.isActive ?{ fontWeight:'bold',color: "chocolate" }:{ fontWeight:'bold',color :'green' }}>
-                {order.isActive ? "Ordered" : "Delivered"}</div>
+                {order.isActive && !isDelivered ? "Ordered" : ""}</div>
             <div>
                 OrderID: {order.orderID}
             </div>
