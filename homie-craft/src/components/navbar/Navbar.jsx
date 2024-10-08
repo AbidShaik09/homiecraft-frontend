@@ -80,7 +80,6 @@ function Navbar() {
   else{setShowSearch(false)}
   }
 
-
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -245,11 +244,18 @@ function Navbar() {
                 <AccountCircle />
               </IconButton>
             ) : (
-              <MenuItem onClick={() => navigate('/login')}>
-                <Typography variant="h6" noWrap component="div">
-                  Login
-                </Typography>
-              </MenuItem>
+              // <MenuItem onClick={() => navigate('/login')}>
+              //   <Typography variant="h6" noWrap component="div">
+              //     Login
+              //   </Typography>
+              // </MenuItem>
+              <MenuItem onClick={() => window.location.href = 'https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000&scope=openid&response_type=code&prompt=login'
+              }>
+  <Typography variant="h6" noWrap component="div">
+    Login/Signup
+  </Typography>
+</MenuItem>
+
             )}
           </Box>
         </Toolbar>
