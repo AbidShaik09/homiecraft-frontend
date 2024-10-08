@@ -53,36 +53,30 @@ function Item() {
       setPrice(0)
       setUserMessage()
     };
-    useEffect(()=>{
-      try{
-        axios.get(`http://localhost:5265/crafts/${id}`).then((res)=>{
-        console.log(res.data)
-        setCraft(res.data)
-        setPrice(res.data[0].price)
-        axios.get(`http://localhost:5265/crafter/${res.data[0].crafterId}`).then((res)=>{
-          setCrafter(res.data)
+    useEffect(() => {
+      try {
+        axios.get(`http://localhost:5265/crafts/${id}`).then((res) => {
+          if (res.data.length > 0) {
+            setCraft(res.data);
+            setPrice(res.data[0].price);
+            axios.get(`http://localhost:5265/crafter/${res.data[0].crafterId}`).then((res) => {
+              setCrafter(res.data);
+            }).catch((e) => console.log(e));
+          } else {
+            navigate('/Item-Not-Found');
+          }
+        });
+        axios.get(`http://localhost:5122/Comment/${id}`).then((res) => {
+          const commentsData = res.data;
+          setComments(commentsData);
+        }).catch((e) => console.log(e));
+      } catch (error) {
+        console.log("Error occurred:", error);
+      }
+    }, []);
+    
 
-        }).catch(e=>console.log(e))
-      })
-      }
-      catch{
-        console.log("Error Occured")
-      }
 
-      try{
-        
-      axios.get('http://localhost:5122/Comment/'+id).then(res=>
-      {
-        var x= res.data
-        setComments(x)
-      })
-      }
-      catch{
-        console.log("Error Occured")
-      }
-      
-
-    },[])
     const [quantity,setQuantity] = useState(0)
     const [userMessage,setUserMessage] = useState()
     const [purchaseMode,setPurchaseMode] = useState()

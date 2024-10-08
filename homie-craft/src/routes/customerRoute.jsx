@@ -13,6 +13,7 @@ import Login from '../pages/customer/Login';
 import Signup from '../pages/customer/Signin';
 import IndexHandler from './IndexHandler';
 import CrafterRoute from './crafterRoute';
+import ItemNotFound from '../pages/customer/ItemNotFound';
 function CustomerRoute() {
   useEffect(()=>{
     let userType = localStorage.getItem("userType");
@@ -29,6 +30,7 @@ function CustomerRoute() {
             <Route path='/orders' element={<Orders/>}/>
             <Route path='/categories/:id' element={<Categories/>}/>
             <Route path='/item/:id' element={<Item/>}/>
+            <Route path="/Item-Not-Found" element={<ItemNotFound/>} />
             <Route path='/signup' element={<Signup/>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='*' element={<h1>404 Not Found </h1>}/>
