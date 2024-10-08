@@ -32,7 +32,7 @@ const OrderCard = (params) => {
 
                 <CardContent sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: { xs: 'center', sm: 'end' } }}>
                     <Container>
-                            <Typography gutterBottom variant="h5" sx={{whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis',}} >
+                            <Typography gutterBottom variant="h5" noWrap sx={{whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis',}} >
                                 {params.craftName}
                             </Typography>
                             <Typography sx={{

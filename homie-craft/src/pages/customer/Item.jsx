@@ -168,11 +168,10 @@ function Item() {
 
     setSnackOpen(false);
   };
-  return (craft.length>0?
+  return (craft.length>0?<>
     <Container sx={{ marginTop:5}}>
       <Container  sx={{display:'flex',flexDirection:{xs:"column",md:"row"},padding:{xs:0, sm:1,md:2,lg:3,xl:4},alignItems:"center"}}>
-        <Container sx={{ maxWidth:{xs:"100%", lg:"50%"}}}>
-          <ItemGallery images={craft[0].images}/>
+        <Container sx={{ maxWidth:{xs:"100%", lg:"50%"}}}><ItemGallery images={craft[0].images}/>
         </Container>
         <Container sx={{maxWidth:{xs:"100%", lg:"50%"},display:"flex",flexDirection:"column",alignItems:"center"}} >
           
@@ -296,7 +295,7 @@ function Item() {
         </Alert>
       </Snackbar>
     </div>
-    </Container>:
+    </Container></>:
 
     <>
       <Stack spacing={1} width={'100vw'} height={'100vh'}>

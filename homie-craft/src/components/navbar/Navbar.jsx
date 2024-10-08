@@ -59,10 +59,10 @@ function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const navigate = useNavigate();
+  const iscustomer =localStorage.getItem('userType')!="crafter" 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [showSearch,setShowSearch] = React.useState(false)
-
   const userType = localStorage.getItem('userType');
   const userId = localStorage.getItem('id');
   const isCustomer = userType === 'customer';
@@ -200,21 +200,24 @@ function Navbar() {
           >
             Homie Craft
           </Typography>
-          <Search>
+          {iscustomer ? <><Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
+            
             <StyledInputBase
+              
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               value={search}
               onChange={(e)=>handleSearch(e)}
             />
+            
             {showSearch && <ShowSearch suggestions={data} onSelect={() => {setShowSearch(false); setSearch('');}}/>}
-          </Search>
+          </Search></>:""}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex', gap: '20px' } }}>
-            {isCustomer && (
+            {iscustomer && (
               <>
                 <IconButton
                   size="large"

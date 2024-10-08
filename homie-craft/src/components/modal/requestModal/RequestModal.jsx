@@ -4,7 +4,9 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import ButtonPrimary from '../../button/primary/ButtonPrimary';
 import ButtonSecondary from '../../button/secondary/ButtonSecondary';
-import { TextField } from '@mui/material';
+import { CircularProgress, TextField } from '@mui/material';
+
+
 
 const style = {
   position: 'absolute',
@@ -25,6 +27,7 @@ export default function RequestModal(params) {
   const handleClose = () => setOpen(false);
 
   return (
+    
     <div>
       <ButtonPrimary sx={{with:'100%'}} action={handleOpen} name={params.name}/>
       <Modal
@@ -33,7 +36,9 @@ export default function RequestModal(params) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        {params.btnClicked? <Box sx={style}>
+      <CircularProgress />
+    </Box>:<Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Message for Customer
           </Typography>
@@ -43,7 +48,8 @@ export default function RequestModal(params) {
                 <ButtonSecondary action={params.action} name={params.name}/>
 
           </Typography>
-        </Box>
+        </Box>}
+        
       </Modal>
     </div>
   );
