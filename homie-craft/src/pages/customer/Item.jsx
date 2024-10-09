@@ -167,45 +167,74 @@ function Item() {
       <Container  sx={{display:'flex',flexDirection:{xs:"column",md:"row"},padding:{xs:0, sm:1,md:2,lg:3,xl:4},alignItems:"center"}}>
         <Container sx={{ maxWidth:{xs:"100%", lg:"50%"}}}><ItemGallery images={craft[0].images}/>
         </Container>
-        <Container sx={{maxWidth:{xs:"100%", lg:"50%"},display:"flex",flexDirection:"column",alignItems:"center"}} >
-          
-        <h3>Purchase Options</h3>
-          <Container sx={{gap : "20px",display:'flex',flexDirection:{ xs:"column",sm:"row",lg:"row",xl:"row"},alignItems:"center",justifyContent:"space-around"}}>
-            <ButtonPrimary style={{width:"100%"}} name='Home Delivery' action={handleClickOpenHome}/>
-            {craft[0].pickUpFromCrafter==true?<ButtonPrimary style={{width:"100%"}} name='Pick from Crafter' action={handleClickOpenPick}/>:<Typography>in person not available</Typography>}
-          </Container>
-        </Container>
-        
+
+<Container>
+  <h3>Purchase Options</h3>
+  <Container>
+    <ButtonPrimary style={{ width: '100%' }} name="Home Delivery" action={handleClickOpenHome} />
+    {craft[0].pickUpFromCrafter ? (
+      <ButtonPrimary style={{ width: '100%' }} name="Pick from Crafter" action={handleClickOpenPick} />
+    ) : (
+      <Typography>in person not available</Typography>
+    )}
+  </Container>
+</Container>
+
       </Container>
+
+
       <Container sx={{display:"flex",flexDirection:{xs:"column",md:"row"}}}>
-      <Container>
+      
+
+ <Container>
           <h2>{craft[0].name}</h2>
           <div class="d-flex gap-5">
             <h4>{'₹ '+craft[0].price}</h4>
           </div>
           <h6 class="mt-2">{craft[0].description}</h6>
-        </Container>
+        </Container> 
+        
+<Container
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        boxShadow: '0px 4px 10px rgba(0, 0, 10, 0.1)', 
+        borderRadius: '12px', 
+        padding: '20px',
+      }}
+      className="Crafter-Details"
+    >
+      <Typography variant="h4" sx={{ fontFamily: 'Arial', fontWeight: 'bold', marginBottom: '16px' }}>
+        Crafter Details
+      </Typography>
+      <img
+        style={{
+          width: '100px',
+          height: '100px',
+          maxHeight: '125px',
+          maxWidth: '125px',
+          objectFit: 'cover',
+          borderRadius: '50%',
+          padding: '1px',
+          marginBottom: '16px', 
+        }}
+        src={crafter.profilePicUrl}
+        alt="Crafter Profile"
+        className="w-10 h-10"
+      />
+      <Typography variant="h6">
+        Crafter Name: <span style={{ fontWeight: 'normal' }}>{crafter.name}</span>
+      </Typography>
+      <Typography variant="h6">
+        City: <span style={{ fontWeight: 'normal' }}>{crafter.city}</span>
+      </Typography>
+      <div>View Location</div>
+    </Container>
+        
 
 
-        <Container>
-            <h3>Crafter Details:</h3>
-        <Container sx={{display:'flex',flexDirection:{xs:'column-reverse' , sm:'row', md:"row"}, boxShadow:'0px 0px 10px 0px()',padding:'10px'}}>
-          
-          
-          <Container class="d-flex gap-3">
-            <div>
-              <div class="d-flex">Crafter Name:<h5><b>{crafter.name}</b></h5></div>
-              <div class="d-flex">City:<h5><b>{crafter.city}</b></h5></div>
-              <div class="d-flex">View Location</div>
-            </div>
-            
-          
-          </Container>
-          
-          <Container sx={{alignSelf:"center"}}><img style={{width:'100px', height:'100px',maxHeight:'125px',maxWidth:'125px',objectFit:'cover',borderRadius:'50%',padding:'1px'}} src={crafter.profilePicUrl} alt="" class="w-10 h-10"/>
-          </Container>
-        </Container>
-        </Container>
+
         
 
 
