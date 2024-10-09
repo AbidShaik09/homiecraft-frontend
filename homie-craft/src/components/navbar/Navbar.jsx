@@ -107,7 +107,13 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem('userType');
     localStorage.removeItem('id');
+    localStorage.removeItem('customerId');
+    localStorage.removeItem('crafterId');
     localStorage.removeItem('token');
+    setId(null)
+    setUserType(null)
+    setToken(null)
+    
     handleMenuClose();
     navigate('/')
   };
@@ -232,10 +238,10 @@ function Navbar() {
           </Search></>:""}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex', gap: '20px' } }}>
-            {!isCustomer && !isCrafter && (
+            {userType!=null && (
               <>
              
-              <Button 
+            <Button 
             onClick={handleToggleUserType} 
             variant="outlined" 
             sx={{ margin: '0 5px', color:"white", border: '2px solid #4b2e2e', 
@@ -243,7 +249,7 @@ function Navbar() {
               '&:hover': {
                 backgroundColor: '#a0522d', }}}
           >
-            Switch to {userType=="crafter" ? 'Crafter' : 'Customer'}
+            Switch to {userType=="customer" ? 'Crafter' : 'Customer'}
           </Button>
                 <IconButton
                   size="large"
