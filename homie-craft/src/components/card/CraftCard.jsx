@@ -85,7 +85,7 @@ export default function CraftCard(params) {
           <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <div>₹{craft.price}</div> <div style={{ fontSize: '1rem', alignSelf: 'center' }}>Qty: <span style={{ color: 'green' }}>{craft.quantity}</span></div>
           </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary', overflow: 'hidden' }}>
+          <Typography noWrap variant="body2" sx={{ color: 'text.secondary', overflow: 'hidden' }}>
             {craft.name}
           </Typography>
 
