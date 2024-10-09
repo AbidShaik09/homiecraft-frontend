@@ -2,15 +2,35 @@ import React, { useEffect } from 'react'
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useHomieCraftContext } from '../../context/HomieCraftContext';
 
 const Auth = () => {
-    const code=useParams()
-    useEffect(()=>{
-        axios.get(`http://localhost:5265/api/Auth/${code}`).then((res)=>{
-            localStorage.setItem('token',res.data.token)
-        })
-    },[])
+    const codeHolder = new URLSearchParams(window.location.search)
+    const navigate = useNavigate()
+    const {token,setToken,id,setId,userType,setUserType} = useHomieCraftContext()
+    const code = codeHolder.get("code")
+    console.log("code: ");
+    console.log(codeHolder);
+    if(codeHolder.get('code') )
+    {
+      axios.get(`http://localhost:5265/api/Auth/${codeHolder.get('code')}`).then((res)=>{
+        localStorage.setItem('token',res.data.id_token)
+        localStorage.setItem('id',res.data.id)
+        localStorage.setItem('customerId',res.data.customerId)
+        localStorage.setItem('crafterId',res.data.crafterId)
+        localStorage.setItem("userType","customer")
+        setToken(res.data.id_token)
+        setUserType("customer")
+        setId(res.data.id)
+
+    })
+
+    navigate('/')
+
+
+    }
+            
   return (
     <div
     style={{ 
