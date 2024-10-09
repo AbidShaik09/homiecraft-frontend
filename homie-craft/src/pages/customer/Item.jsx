@@ -34,7 +34,8 @@ function Item() {
         setPurchaseMode('Home Delivery')
       }
       else{
-        navigate('/login')
+        window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
+        
       }
     };
     const handleClickOpenPick = () => {
@@ -54,19 +55,24 @@ function Item() {
       setUserMessage()
     };
     useEffect(()=>{
-      try{
-        axios.get(`http://localhost:5265/crafts/${id}`).then((res)=>{
-        console.log(res.data)
-        setCraft(res.data)
-        setPrice(res.data[0].price)
-        axios.get(`http://localhost:5265/crafter/${res.data[0].crafterId}`).then((res)=>{
-          setCrafter(res.data)
-
-        }).catch(e=>console.log(e))
-      })
-      }
-      catch{
-        console.log("Error Occured")
+      try {
+        axios.get(`http://localhost:5265/crafts/${id}`).then((res) => {
+          if (res.data.length > 0) {
+            setCraft(res.data);
+            setPrice(res.data[0].price);
+            axios.get(`http://localhost:5265/crafter/${res.data[0].crafterId}`).then((res) => {
+              setCrafter(res.data);
+            }).catch((e) => console.log(e));
+          } else {
+            navigate('/ItemNotFound');
+          }
+        });
+        axios.get(`http://localhost:5122/Comment/${id}`).then((res) => {
+          const commentsData = res.data;
+          setComments(commentsData);
+        }).catch((e) => console.log(e));
+      } catch (error) {
+        console.log("Error occurred:", error);
       }
 
       try{

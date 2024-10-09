@@ -122,10 +122,14 @@ function Navbar() {
     if(userType=='customer'){
       setUserType('crafter')
       setId(localStorage.getItem('crafterId'))
+      setUserType("crafter")
+      navigate("/")
     }
     else{
       setUserType('customer')
       setId(localStorage.getItem('customerId'))
+      setUserType("customer")
+      navigate("/")
     }
   };
   const [alignment, setAlignment] = React.useState('web');
@@ -238,7 +242,7 @@ function Navbar() {
           </Search></>:""}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex', gap: '20px' } }}>
-            {userType!=null && (
+            {userType!=null && userType!="" && (
               <>
              
             <Button 
@@ -251,7 +255,7 @@ function Navbar() {
           >
             Switch to {userType=="customer" ? 'Crafter' : 'Customer'}
           </Button>
-                <IconButton
+                {userType=="customer" && <IconButton
                   size="large"
                   edge="end"
                   aria-label="orders"
@@ -261,7 +265,7 @@ function Navbar() {
                   color="inherit"
                 >
                   <LocalShippingIcon />
-                </IconButton>
+                </IconButton>}
               </>
             )}
             {isCustomer || isCrafter ? (

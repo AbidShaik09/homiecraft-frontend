@@ -12,25 +12,28 @@ const Auth = () => {
     const code = codeHolder.get("code")
     console.log("code: ");
     console.log(codeHolder);
-    if(codeHolder.get('code') )
-    {
-      axios.get(`http://localhost:5265/api/Auth/${codeHolder.get('code')}`).then((res)=>{
-        localStorage.setItem('token',res.data.id_token)
-        localStorage.setItem('id',res.data.id)
-        localStorage.setItem('customerId',res.data.customerId)
-        localStorage.setItem('crafterId',res.data.crafterId)
-        localStorage.setItem("userType","customer")
-        setToken(res.data.id_token)
-        setUserType("customer")
-        setId(res.data.id)
-
-    })
-
-    navigate('/')
-
-
-    }
-            
+   
+      if(codeHolder.get('code') )
+        {
+          axios.get(`http://localhost:5265/api/Auth/${codeHolder.get('code')}`).then((res)=>{
+            localStorage.setItem('token',res.data.id_token)
+            localStorage.setItem('id',res.data.id)
+            localStorage.setItem('customerId',res.data.customerId)
+            localStorage.setItem('crafterId',res.data.crafterId)
+            localStorage.setItem("userType","customer")
+            setToken(res.data.id_token)
+            setUserType("customer")
+            setId(res.data.id)
+    
+        })
+    
+        navigate('/')
+    
+    
+        }
+                
+   
+    
   return (
     <div
     style={{ 
