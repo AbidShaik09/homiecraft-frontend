@@ -11,17 +11,18 @@ import dayjs from 'dayjs';
 import OrderCard from '../../components/OrderCard/OrderCard';
 import { useNavigate } from 'react-router-dom';
 import ButtonSecondary from '../../components/button/secondary/ButtonSecondary';
+import { useHomieCraftContext } from '../../context/HomieCraftContext';
 
 function CrafterHome() {
-  let token = localStorage.getItem("token")
-  const salesData = [0, 0, 10000, 0, 0, 0, 0, 1200, 1700, 0, 0, 1000];
+  
+  const {token, setToken,userType,setUserType,id,setId} = useHomieCraftContext()
+  const salesData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   
   const navhook= useNavigate()
   var baseUrl = 'http://localhost:5265/'
   
-  var crafterId = localStorage.getItem("id")
+  var crafterId = id
   
-  var userType = localStorage.getItem("userType")
   if(userType=="customer"){
     navhook("/")
 
@@ -75,7 +76,7 @@ function CrafterHome() {
 
           <Card sx={{ display: 'flex', marginTop: '50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '40px 0px' }}>
 
-            <h4>Active Crafts</h4>
+            <h4>My Crafts</h4>
             <Container sx={{ display: 'flex', justifyContent: 'center', padding: '20px 0px' }}>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
                 <>

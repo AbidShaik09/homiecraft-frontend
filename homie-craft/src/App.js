@@ -13,9 +13,11 @@ import Login from './pages/customer/Login';
 import Signin from './pages/customer/Signin';
 import IndexHandler from './routes/IndexHandler';
 import { CssBaseline } from '@mui/material';
+import { HomieCraftContextProvider } from './context/HomieCraftContext';
 
 function App() {
   return (
+    <HomieCraftContextProvider>
     <Router>
       <Navbar/>
       <Routes>
@@ -25,10 +27,11 @@ function App() {
         <Route path='/signup' element={<Signin/>}/>
         <Route path="/login" element= {<Login/>}/>
         <Route path='*' element={<IndexHandler/>}/>
-                                  
+                       
       </Routes>
 
     </Router>
+    </HomieCraftContextProvider> 
 );
 }
 

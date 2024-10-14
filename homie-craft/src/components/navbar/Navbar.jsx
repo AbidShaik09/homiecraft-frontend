@@ -15,6 +15,10 @@ import { useNavigate } from 'react-router-dom';
 import OrangeTheme from '../../themes/OrangeTheme';
 import axios from 'axios';
 import ShowSearch from '../ShowSearch';
+import { Button } from '@mui/material';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { useHomieCraftContext } from '../../context/HomieCraftContext';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,17 +60,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Navbar() {
+  
+  const {token, setToken,userType,setUserType,id,setId} = useHomieCraftContext()
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const navigate = useNavigate();
-  const iscustomer =localStorage.getItem('userType')!="crafter" 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [showSearch,setShowSearch] = React.useState(false)
-  const userType = localStorage.getItem('userType');
-  const userId = localStorage.getItem('id');
-  const isCustomer = userType === 'customer';
-  const isCrafter = userType === 'crafter';
+  console.log("userType "+userType)
+  const isCustomer = userType == "customer";
+  const isCrafter = userType == 'crafter';
+  console.log("isCustomer: "+isCustomer)
+  console.log("isCrafter: "+isCrafter)
   const [search,setSearch] = React.useState()
   const [data,setData] = React.useState()
   const handleSearch=(e)=>{
@@ -80,10 +86,10 @@ function Navbar() {
   else{setShowSearch(false)}
   }
 
-
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -101,22 +107,38 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem('userType');
     localStorage.removeItem('id');
+    localStorage.removeItem('customerId');
+    localStorage.removeItem('crafterId');
     localStorage.removeItem('token');
+    setId(null)
+    setUserType(null)
+    setToken(null)
+    
     handleMenuClose();
     navigate('/')
   };
-  // React.useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (!event.target.closest('.showSearch') && !event.target.closest('.search')) {
-  //       setShowSearch(false);
-  //     }
-  //   };
 
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
+  const handleToggleUserType = () => {
+    if(userType=='customer'){
+      setUserType('crafter')
+      setId(localStorage.getItem('crafterId'))
+      setUserType("crafter")
+      navigate("/")
+    }
+    else{
+      setUserType('customer')
+      setId(localStorage.getItem('customerId'))
+      setUserType("customer")
+      navigate("/")
+    }
+  };
+  const [alignment, setAlignment] = React.useState('web');
+
+  const handleChange = (event, newAlignment) => {
+
+    setAlignment(newAlignment);
+  };
+  
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -200,7 +222,10 @@ function Navbar() {
           >
             Homie Craft
           </Typography>
-          {iscustomer ? <><Search>
+          
+          {isCustomer ? <>
+            
+          <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -217,9 +242,20 @@ function Navbar() {
           </Search></>:""}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex', gap: '20px' } }}>
-            {iscustomer && (
+            {userType!=null && userType!="" && (
               <>
-                <IconButton
+             
+            <Button 
+            onClick={handleToggleUserType} 
+            variant="outlined" 
+            sx={{ margin: '0 5px', color:"white", border: '2px solid #4b2e2e', 
+              backgroundColor: '#8b4513', 
+              '&:hover': {
+                backgroundColor: '#a0522d', }}}
+          >
+            Switch to {userType=="customer" ? 'Crafter' : 'Customer'}
+          </Button>
+                {userType=="customer" && <IconButton
                   size="large"
                   edge="end"
                   aria-label="orders"
@@ -229,7 +265,7 @@ function Navbar() {
                   color="inherit"
                 >
                   <LocalShippingIcon />
-                </IconButton>
+                </IconButton>}
               </>
             )}
             {isCustomer || isCrafter ? (
@@ -245,11 +281,18 @@ function Navbar() {
                 <AccountCircle />
               </IconButton>
             ) : (
-              <MenuItem onClick={() => navigate('/login')}>
-                <Typography variant="h6" noWrap component="div">
-                  Login
-                </Typography>
-              </MenuItem>
+              // <MenuItem onClick={() => navigate('/login')}>
+              //   <Typography variant="h6" noWrap component="div">
+              //     Login
+              //   </Typography>
+              // </MenuItem>
+              <MenuItem onClick={() => window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
+              }>
+  <Typography variant="h6" noWrap component="div">
+    Login/Signup
+  </Typography>
+</MenuItem>
+
             )}
           </Box>
         </Toolbar>

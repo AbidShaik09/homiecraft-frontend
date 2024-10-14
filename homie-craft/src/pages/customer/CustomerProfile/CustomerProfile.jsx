@@ -37,9 +37,7 @@ function CustomerProfile() {
       houseNumber : userData.houseNumber,
       city : userData.city,
       state : userData.state,
-      pinCode : userData.pinCode,
-      latitude: userData.latitude,
-      longitude: userData.longitude
+      pinCode : userData.pinCode
     },
     enableReinitialize:true,
     validationSchema: Yup.object({
@@ -49,9 +47,7 @@ function CustomerProfile() {
       city: Yup.string().required("City is Required"),
       state: Yup.string().required("State is Required"),
       pinCode: Yup.number().required("Pincode is required").min(100000,"Enter a valid Pincode").max(999999,"Enter a valid Pincode"),
-      latitude: Yup.number().required('Latitude is required').min(-90, 'Latitude must be between -90 and 90').max(90, 'Latitude must be between -90 and 90'),
-  longitude: Yup.number().required('Longitude is required').min(-180, 'Longitude must be between -180 and 180').max(180, 'Longitude must be between -180 and 180')
-    }),
+      }),
     onSubmit: (values)=>{
       const formData = new FormData();
       for (let i = 0; i < image.length; i++) {
@@ -59,13 +55,10 @@ function CustomerProfile() {
       }
       formData.append('name',values.name);
       formData.append('Mobile',values.mobile);
-      formData.append('Password',"********");
       formData.append('houseNumber',values.houseNumber);
       formData.append('city',values.city);
       formData.append('state',values.state);
       formData.append('pinCode',values.pinCode);
-      formData.append('longitude',values.longitude);
-      formData.append('latitude',values.latitude);
       try {
         axios.put(baseURL+"user/"+userId,formData,{
           headers: {
@@ -210,36 +203,6 @@ function CustomerProfile() {
         
         </Container>
 
-        <Container item xs={12} sx={{padding:"5px"}}>
-          
-      <label htmlFor="latitude">Latitude</label>
-          <TextField
-            fullWidth
-            id="latitude"
-            name="latitude"
-            type="number"
-            value={formik.values.latitude}
-            onChange={formik.handleChange}
-            error={formik.touched.latitude && Boolean(formik.errors.latitude)}
-            helperText={formik.touched.latitude && formik.errors.latitude}
-          />
-        
-        </Container>
-        <Container item xs={12} sx={{padding:"5px"}}>
-          
-      <label htmlFor="longitude">Longitude</label>
-          <TextField
-            fullWidth
-            id="longitude"
-            name="longitude"
-            type="number"
-            value={formik.values.longitude}
-            onChange={formik.handleChange}
-            error={formik.touched.longitude && Boolean(formik.errors.longitude)}
-            helperText={formik.touched.longitude && formik.errors.longitude}
-          />
-        
-        </Container>
         
         
       </Container>
