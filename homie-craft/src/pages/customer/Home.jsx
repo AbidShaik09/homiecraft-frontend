@@ -5,6 +5,7 @@ import { getCategories } from '../../repository/categoryRepository/categoryRepos
 import ItemHolder from '../../components/itemHolder/ItemHolder';
 import { getAllCrafts } from '../../repository/craftRepository/craftRepository';
 import axios from 'axios';
+import { Container } from '@mui/material';
 
 
 const Home = () => {
@@ -18,9 +19,9 @@ const Home = () => {
   const banner={img1:'http://localhost:5265/images/2_cropped.webp',"img2":'https://biblioottawalibrary.ca/sites/default/files/art_supplies.jpg'}
   return (
     <>
-    <div class=" m-auto mt-3 rounded">
+    <Container class=" m-auto mt-3 rounded">
       <Banner image='http://localhost:5265/images/b1.jpg'/>
-    </div>
+    </Container>
     <ItemHolder items ={crafts}/>
     </>
   )

@@ -180,9 +180,8 @@ function Item() {
         <Container sx={{ maxWidth:{xs:"100%", lg:"50%"}}}><ItemGallery images={craft[0].images}/>
         </Container>
         <Container sx={{maxWidth:{xs:"100%", lg:"50%"},display:"flex",flexDirection:"column",alignItems:"center"}} >
-          
-        <h3>Purchase Options</h3>
-          <Container sx={{gap : "20px",display:'flex',flexDirection:{ xs:"column",sm:"row",lg:"row",xl:"row"},alignItems:"center",justifyContent:"space-around"}}>
+            <Typography variant='h3'> Purchase Options</Typography>
+            <Container sx={{gap : "30px",display:'flex',flexDirection:{ xs:"column",sm:"row",lg:"row",xl:"row"},alignItems:"center",justifyContent:"space-around", marginTop:"30px",}}>
             <ButtonPrimary style={{width:"100%"}} name='Home Delivery' action={handleClickOpenHome}/>
             {craft[0].pickUpFromCrafter==true?<ButtonPrimary style={{width:"100%"}} name='Pick from Crafter' action={handleClickOpenPick}/>:<Typography>in person not available</Typography>}
           </Container>
@@ -191,32 +190,29 @@ function Item() {
       </Container>
       <Container sx={{display:"flex",flexDirection:{xs:"column",md:"row"}}}>
       <Container>
-          <h2>{craft[0].name}</h2>
-          <div class="d-flex gap-5">
-            <h4>{'₹ '+craft[0].price}</h4>
-          </div>
-          <h6 class="mt-2">{craft[0].description}</h6>
+          <Typography variant='h2'>{craft[0].name}</Typography>
+          <Container class="d-flex gap-5">
+            <Typography variant='h4'>{'₹ '+craft[0].price}</Typography>
+          </Container>
+          <Typography variant = 'h6'class="mt-2">{craft[0].description}</Typography>
         </Container>
 
 
         <Container>
-            <h3>Crafter Details:</h3>
-        <Container sx={{display:'flex',flexDirection:{xs:'column-reverse' , sm:'row', md:"row"}, boxShadow:'0px 0px 10px 0px()',padding:'10px'}}>
-          
-          
-          <Container class="d-flex gap-3">
-            <div>
-              <div class="d-flex">Crafter Name:<h5><b>{crafter.name}</b></h5></div>
-              <div class="d-flex">City:<h5><b>{crafter.city}</b></h5></div>
-              <div class="d-flex">View Location</div>
-            </div>
-            
-          
-          </Container>
-          
-          <Container sx={{alignSelf:"center"}}><img style={{width:'100px', height:'100px',maxHeight:'125px',maxWidth:'125px',objectFit:'cover',borderRadius:'50%',padding:'1px'}} src={crafter.profilePicUrl} alt="" class="w-10 h-10"/>
-          </Container>
-        </Container>
+            <Typography variant='h4'>Crafter Details:</Typography>
+            <Container sx={{display:'flex',flexDirection:{xs:'column-reverse' , sm:'row', md:"row"}, boxShadow:'0px 0px 10px 0px()',padding:'10px'}}>
+                  <Container class="d-flex gap-3">
+                     <Container>
+                          <Container class="d-flex">Crafter Name:<Typography variant='h5'>{crafter.name}</Typography></Container>
+                          <Container class="d-flex">City:<Typography variant='h5'>{crafter.city}</Typography></Container>
+                          <Container class="d-flex">View Location</Container>
+                     </Container>
+                  </Container>
+                  
+                  <Container
+                     sx={{alignSelf:"center"}}><img style={{width:'100px', height:'100px',maxHeight:'125px',maxWidth:'125px',objectFit:'cover',borderRadius:'50%',padding:'1px'}} src={crafter.profilePicUrl} alt="" class="w-10 h-10"/>
+                  </Container>
+           </Container>
         </Container>
         
 
@@ -227,10 +223,7 @@ function Item() {
       <Container>
         <Container>
           <Container >
-            <Typography variant='h5' >
-              
-            Comments
-            </Typography>
+            <Typography variant='h5' >Comments</Typography>
           </Container>
             {comments.length>0 && comments.map(comment=>{
               return <Comment setComments={setComments} comment={comment}/>
@@ -239,20 +232,17 @@ function Item() {
         <Container sx={{margin:"40px 20px"}}>
             {
               userType == "customer" && <Container>
-                
                 <Typography variant='h6'>Add Comment</Typography>
                 <Container sx={{display:'flex'}}>
-
-                  
-                <input placeholder='comment' value={newComment} onChange={e=>setNewComment(e.target.value)} style={{width:"80%"}}/>
-                <ButtonSecondary action={handleAddComment} name={'Comment'} />
+                  <input placeholder='comment' value={newComment} onChange={e=>setNewComment(e.target.value)} style={{width:"80%"}}/>
+                  <ButtonSecondary action={handleAddComment} name={'Comment'} />
                 </Container>
 
-              </Container>
+        </Container>
             }
-        </Container>
+    </Container>
 
-        </Container>
+  </Container>
       
       <Dialog
         open={open}
@@ -261,26 +251,24 @@ function Item() {
         aria-describedby="alert-dialog-description"
         fullWidth
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Request for order"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title"> {"Request for order"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <div class="gap-4 p-2">
-              <div class="d-flex">
-              <div class="d-flex gap-2 p-3">
-                <h5>Select Quantity:</h5>
-                <h4>{quantity}</h4>
-              </div>
-              <div style={{display:'flex',flexDirection:'column',border:'1px solid black',borderRadius:'20px'}}>
+            <Container class="gap-4 p-2">
+              <Container class="d-flex">
+              <Container class="d-flex gap-2 p-3">
+                <Typography variant='h5'>Select Quantity:</Typography>
+                <Typography variant='h4'>{quantity}</Typography>
+              </Container>
+              <Container style={{display:'flex',flexDirection:'column',border:'1px solid black',borderRadius:'20px'}}>
                 <AddIcon type="submit" onClick={()=>{quantityHandler(quantity+1)}}/>
                 <RemoveIcon type="button" onClick={()=>{quantityHandler(quantity-1)}}/>
-              </div>
-              <p style={{marginLeft:'10vw'}}>Max Quantity: {craft[0].quantity}</p>
-              </div>
-              <h5 class="mt-3 ms-3">Payable Amount:{craft[0].price * quantity}</h5>
+              </Container>
+              <Typography style={{marginLeft:'10vw'}}>Max Quantity: {craft[0].quantity}</Typography>
+              </Container>
+              <Typography variant='h5' class="mt-3 ms-3" >Payable Amount:{craft[0].price * quantity}</Typography>
 
-            </div>
+            </Container>
             <TextField fullWidth id="outlined-basic" label="Enter customization details" variant="outlined" value={userMessage} onChange={(e)=>{setUserMessage(e.target.value)}}/>
           </DialogContentText>
         </DialogContent>
@@ -289,7 +277,7 @@ function Item() {
           <ButtonPrimary autoFocus action={orderRequestHandler} name='Submit'/>
         </DialogActions>
       </Dialog>
-      <div>
+      <Container>
       <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleSnackClose}>
         <Alert
           onClose={handleSnackClose}
@@ -300,7 +288,7 @@ function Item() {
           Your order request is successful!
         </Alert>
       </Snackbar>
-    </div>
+    </Container>
     </Container></>:
 
     <>

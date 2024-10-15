@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Box, Button, Checkbox, Container, FormControlLabel, TextField, Typography } from '@mui/material';
+import {useHomieCraftContext} from '../../context/HomieCraftContext'
 import * as Yup from "yup";
 import 'yup-phone-lite';
 import { useFormik } from 'formik';
 import axios from 'axios';
 
 function CrafterProfile() {
-
+ const {token, setToken, userType,setUserType,id,setId} = useHomieCraftContext()
   const [userData,setUserData] = useState({})
   const [isloaded,setIsLoaded] = useState(false)
-  let userId = localStorage.getItem("id") 
+  
   const navhook = useNavigate()
-  const token = localStorage.getItem("token");
   const baseURL = "http://localhost:5265/"
 
   useEffect(()=>{
     
-    var id = localStorage.getItem("id")
     axios.get(baseURL+"crafter/"+id).then(data=>{
       var d = data.data
       setUserData(d)
@@ -66,7 +65,7 @@ function CrafterProfile() {
       formData.append('State',values.state);
       formData.append('PinCode',values.pinCode);
        try {
-        axios.put(baseURL+"crafter/"+userId,formData,{
+        axios.put(baseURL+"crafter/"+id,formData,{
           headers: {
             
         'Authorization': `Bearer ${token}`,
