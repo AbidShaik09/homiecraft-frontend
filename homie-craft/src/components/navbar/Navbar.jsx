@@ -19,7 +19,8 @@ import { Button } from '@mui/material';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useHomieCraftContext } from '../../context/HomieCraftContext';
-
+import MoreIcon from '@mui/icons-material/MoreVert';
+import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -63,10 +64,13 @@ function Navbar() {
   
   const {token, setToken,userType,setUserType,id,setId} = useHomieCraftContext()
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [searchAnchorEl, setSearchAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isSearchOpen = Boolean(searchAnchorEl);
+
   const [showSearch,setShowSearch] = React.useState(false)
   console.log("userType "+userType)
   const isCustomer = userType == "customer";
@@ -81,7 +85,6 @@ function Navbar() {
     axios.get(`http://localhost:5265/search/${search}`).then((res)=>{
       setData(res.data)
       setShowSearch(true)
-      console.log(JSON.stringify(data))
   }).catch((err)=>{console.log(err)})}
   else{setShowSearch(false)}
   }
@@ -100,8 +103,10 @@ function Navbar() {
     handleMobileMenuClose();
   };
 
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+    
   };
 
   const handleLogout = () => {
@@ -161,7 +166,8 @@ function Navbar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-    >
+    > 
+      <MenuItem onClick={handleToggleUserType} >Switch to {userType=="customer" ? 'Crafter' : 'Customer'}</MenuItem>
       <MenuItem onClick={() => {navigate('/profile'); handleMenuClose();}}>View Profile</MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
@@ -171,34 +177,37 @@ function Navbar() {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
+      
       id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
+      
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+       {userType!=null && userType!="" && (
+              <><MenuItem onClick={handleToggleUserType}>
+              <p className='align-self-center'>Switch To {userType=="customer" ? 'Crafter' : 'Customer'} </p>
+            </MenuItem></>
+       )
+       }
+       
+        {isCustomer || isCrafter ? (
+    <>
       <MenuItem onClick={() => navigate('/profile')}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="false"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>View Profile</p>
+        <p className='align-self-center'>View Profile</p>
       </MenuItem>
       <MenuItem onClick={handleLogout}>
         <p>Logout</p>
       </MenuItem>
+    </>)
+    :<>
+    <MenuItem onClick={() => window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
+              }>
+  <Typography variant="h6" noWrap component="div">
+    Login/Signup
+  </Typography>
+</MenuItem>
+    </>
+        }
     </Menu>
   );
 
@@ -235,6 +244,7 @@ function Navbar() {
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               value={search}
+              onClose={()=>{setShowSearch(false)}}
               onChange={(e)=>handleSearch(e)}
             />
             
@@ -245,16 +255,6 @@ function Navbar() {
             {userType!=null && userType!="" && (
               <>
              
-            <Button 
-            onClick={handleToggleUserType} 
-            variant="outlined" 
-            sx={{ margin: '0 5px', color:"white", border: '2px solid #4b2e2e', 
-              backgroundColor: '#8b4513', 
-              '&:hover': {
-                backgroundColor: '#a0522d', }}}
-          >
-            Switch to {userType=="customer" ? 'Crafter' : 'Customer'}
-          </Button>
                 {userType=="customer" && <IconButton
                   size="large"
                   edge="end"
@@ -266,6 +266,8 @@ function Navbar() {
                 >
                   <LocalShippingIcon />
                 </IconButton>}
+                
+            
               </>
             )}
             {isCustomer || isCrafter ? (
@@ -294,6 +296,18 @@ function Navbar() {
 </MenuItem>
 
             )}
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon/>
+            </IconButton>
           </Box>
         </Toolbar>
       </AppBar>

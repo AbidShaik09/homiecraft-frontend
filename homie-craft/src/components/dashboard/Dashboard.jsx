@@ -3,10 +3,13 @@ import React from "react";
 import SalesGraph from "../barGraph/SalesGraph";
 import DashboardCard from "../card/DashboardCard";
 import StarIcon from '@mui/icons-material/Star';
+import { Palette } from "@mui/icons-material";
+import { useTheme } from "@emotion/react";
 const Dashboard=(params)=>{
+  const theme = useTheme()
     
     
-    return <div style={{backgroundColor:'#ff9900'}}>
+    return <div style={{backgroundColor: theme.palette.primary.main}}>
     <Container sx={{padding:{xs:'0',sm:'auto'}}} >
         <Typography variant="h3" component='h4' sx={{display:'flex',justifyContent:{xs:'center',md:'start'}}}>
         DashBoard

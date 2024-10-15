@@ -4,6 +4,7 @@ import ButtonSecondary from "../button/secondary/ButtonSecondary"
 import ButtonPrimary from "../button/primary/ButtonPrimary"
 import axios from "axios"
 import RequestModal from "../modal/requestModal/RequestModal"
+import { useTheme } from "@emotion/react"
 const OrderCard = (params) => {
     let baseUrl = 'http://localhost:5265/orderrequest/'
     const [showButtons, setShowButtons] = useState(true);
@@ -24,11 +25,12 @@ const OrderCard = (params) => {
     }
     const rejectOrderHandler = () => {
     }
+    const theme = useTheme();
 
     return (
         <>
         {!isHidden && 
-            <Card  sx={{  backgroundColor: 'rgba(0, 0, 0, 0.5)', color: 'white',minWidth:'330px', width: '100%' }}>
+            <Card  sx={{  backgroundColor: theme.palette.secondary.main, color: theme.palette.secondary.contrastText,minWidth:'330px', width: '100%' }}>
 
                 <CardContent sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: { xs: 'center', sm: 'end' } }}>
                     <Container>
