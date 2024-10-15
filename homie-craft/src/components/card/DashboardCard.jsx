@@ -5,11 +5,13 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useTheme } from '@emotion/react';
 
 
 export default function DashboardCard(params) {
+  const theme = useTheme()
   return (
-    <Card sx={{ maxWidth: 270,backgroundColor:'#fff3b0' }}>
+    <Card sx={{ maxWidth: 270,backgroundColor:theme.palette.secondary.main }}>
       <CardContent sx={{display:'flex',justifyContent:'center',flexDirection:'column'}}>
         <Typography gutterBottom sx={{ color: 'text.secondary',textAlign:'center', fontSize: 14 }}>
           {params.heading}

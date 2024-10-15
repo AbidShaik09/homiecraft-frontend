@@ -11,13 +11,17 @@ function CrafterProfile() {
  const {token, setToken, userType,setUserType,id,setId} = useHomieCraftContext()
   const [userData,setUserData] = useState({})
   const [isloaded,setIsLoaded] = useState(false)
-  
+  let userId = localStorage.getItem("id") 
+
+  let crafterId = localStorage.getItem("crafterId") 
+
   const navhook = useNavigate()
   const baseURL = "http://localhost:5265/"
 
   useEffect(()=>{
     
-    axios.get(baseURL+"crafter/"+id).then(data=>{
+    var id = localStorage.getItem("id")
+    axios.get(baseURL+"crafter/"+crafterId).then(data=>{
       var d = data.data
       setUserData(d)
       console.log("crafter: ")
@@ -65,7 +69,7 @@ function CrafterProfile() {
       formData.append('State',values.state);
       formData.append('PinCode',values.pinCode);
        try {
-        axios.put(baseURL+"crafter/"+id,formData,{
+        axios.put(baseURL+"crafter/"+crafterId,formData,{
           headers: {
             
         'Authorization': `Bearer ${token}`,
