@@ -11,17 +11,18 @@ import dayjs from 'dayjs';
 import OrderCard from '../../components/OrderCard/OrderCard';
 import { useNavigate } from 'react-router-dom';
 import ButtonSecondary from '../../components/button/secondary/ButtonSecondary';
+import { useHomieCraftContext } from '../../context/HomieCraftContext';
 
 function CrafterHome() {
-  let token = localStorage.getItem("token")
-  const salesData = [0, 0, 10000, 0, 0, 0, 0, 1200, 1700, 0, 0, 1000];
+  
+  const {token, setToken,userType,setUserType,id,setId} = useHomieCraftContext()
+  const salesData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   
   const navhook= useNavigate()
   var baseUrl = 'http://localhost:5265/'
   
-  var crafterId = localStorage.getItem("id")
+  var crafterId = id
   
-  var userType = localStorage.getItem("userType")
   if(userType=="customer"){
     navhook("/")
 
@@ -30,6 +31,7 @@ function CrafterHome() {
 
   const [orderRequests, setOrderRequests] = useState([])
   const [orders, setOrders] = useState([])
+  const [activeOrders, setActiveOrders] = useState([])
   const historyHandler =()=>{
     navhook("orderHistory")
   }
@@ -41,7 +43,7 @@ function CrafterHome() {
   
   useEffect(() => {
     axios.get(baseUrl + "crafts/crafter/" + crafterId).then(res => {
-      console.log(res.data); setCrafts(res.data);
+       setCrafts(res.data);
     })
     console.log(baseUrl + "/OrderRequest/crafter/" + crafterId)
     axios.get("http://localhost:5265/OrderRequest/crafter/" + crafterId,{
@@ -58,7 +60,8 @@ function CrafterHome() {
         'Authorization': `Bearer ${token}`
       }}).then(res => {
       let x= res.data
-      console.log(x); setOrders(x);
+      setOrders(x);
+      setActiveOrders(x.filter(o=>o.isActive==true))
     })
 
 
@@ -73,7 +76,7 @@ function CrafterHome() {
 
           <Card sx={{ display: 'flex', marginTop: '50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '40px 0px' }}>
 
-            <h4>Active Crafts</h4>
+            <h4>My Crafts</h4>
             <Container sx={{ display: 'flex', justifyContent: 'center', padding: '20px 0px' }}>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
                 <>
@@ -112,8 +115,8 @@ function CrafterHome() {
             <Container sx={{ display: 'flex', justifyContent: 'center', padding: '20px 5px' }}>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
                 {
-                  orders.length > 0 ?
-                    orders.map(c => {
+                  activeOrders.length > 0 ?
+                    activeOrders.map(c => {
                       return (
                             <OrderCard orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} expectedPickup={formattedDate(c.expectedPickup)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} status={c.status} type={c.type} paymentType = {c.paymentType} />
                       )
@@ -126,7 +129,7 @@ function CrafterHome() {
               
             </Container>
             <Container sx={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-                <ButtonSecondary action={historyHandler} name="Order History"/>
+                <ButtonSecondary action={historyHandler} name="All Orders"/>
               </Container>
           </Card>
 
@@ -140,7 +143,7 @@ function CrafterHome() {
                   orderRequests.length > 0 ?
                     orderRequests.map(c => {
                       return (
-                        <RequsetCard crafterId = {crafterId} orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} />
+                        <RequsetCard setCrafts = {setCrafts} crafterId = {crafterId} orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} craftId = {c.craftId} setActiveOrders= {setActiveOrders} />
                       )
                     }
                     )

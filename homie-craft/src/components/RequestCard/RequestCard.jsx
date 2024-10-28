@@ -1,5 +1,5 @@
 import { Card, CardContent, CardMedia, Container, Typography } from "@mui/material"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import ButtonSecondary from "../button/secondary/ButtonSecondary"
 import ButtonPrimary from "../button/primary/ButtonPrimary"
 import axios from "axios"
@@ -9,23 +9,53 @@ const RequsetCard = (params) => {
     const [showButtons, setShowButtons] = useState(true);
     const [btnMessage, setBtnMessage] = useState('');
     const [isHidden, setIsHidden] = useState(false);
+    let token = localStorage.getItem("token");
+    const [craftQty,setCraftQty] = useState(0);
     
+    const [btnClicked,setBtnClicked] = useState(false);
+    useEffect(() => {
+        axios.get(baseUrl + "crafts/" + params.craftId).then(res => {
+            console.log("Qty: "+res.data[0].quantity);console.log(res.data);setCraftQty(res.data[0].quantity);
+        })
+    },[]);
+  var crafterId = localStorage.getItem("id")
     const acceptOrderHandler = () => {
-
+        setBtnClicked(true)
         axios.post(baseUrl + 'orderrequest/approve/' +params.orderId,{"message":btnMessage.toString()
     
-    } ).then(e => {  
+    },{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }} ).then(e => {  
            setIsHidden(true);
-           axios.get(baseUrl + 'order/crafter/'+params.crafterId).then(x=>
+           axios.get(baseUrl + 'order/crafter/'+params.crafterId).then(x=>{
+
+            axios.get("http://localhost:5265/Order/crafter/" + crafterId,{
+                headers: {
+                  'Authorization': `Bearer ${token}`
+                }}).then(res => {
+                let x= res.data
+                params.setOrders(x);
+                params.setActiveOrders(x.filter(o=>o.isActive==true))
+              })
+              axios.get(baseUrl + "crafts/crafter/" + crafterId).then(res => {
+                params.setCrafts(res.data);
+             })
+            
+           }
                 
-           params.setOrders(x.data)
+           
            )
            
            
            setShowButtons(false) })
     }
     const rejectOrderHandler = () => {
-        axios.post(baseUrl + 'orderrequest/reject/' + params.orderId, {"message":btnMessage.toString()}).then(e => { setIsHidden(true); setShowButtons(false) })
+        setBtnClicked(true)
+        axios.post(baseUrl + 'orderrequest/reject/' + params.orderId, {"message":btnMessage.toString()},{
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }}).then(e => { setIsHidden(true); setShowButtons(false) })
     }
 
     return (
@@ -65,8 +95,8 @@ const RequsetCard = (params) => {
                                     {showButtons ?
                                         <div style={{display:'flex',justifyContent:'space-evenly', gap: '5px' }}>
                                             
-                                            <RequestModal  message={btnMessage} setMessage ={setBtnMessage} action={acceptOrderHandler} name='Accept Order'/>
-                                            <RequestModal  message={btnMessage} setMessage = {setBtnMessage} action={rejectOrderHandler} name='Reject Order'/>
+                                            {params.quantity<=craftQty ? <RequestModal btnClicked ={btnClicked}   message={btnMessage} setMessage ={setBtnMessage} action={acceptOrderHandler} name='Accept Order'/>:"Update Stock"}
+                                            <RequestModal btnClicked ={btnClicked}   message={btnMessage} setMessage = {setBtnMessage} action={rejectOrderHandler} name='Reject Order'/>
                                             
                                         </div>
 

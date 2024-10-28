@@ -10,7 +10,7 @@ function AddCraft() {
   let baseURL = "http://localhost:5265"
   const navhook = useNavigate();
   const [imageFiles, setImageFiles] = useState([]);
-
+  
   const handleFileChange = (event) => {
     setImageFiles(event.target.files);
   };
@@ -55,20 +55,16 @@ function AddCraft() {
       formData.append('pickUpFromCrafter',values.pickUpFromCrafter);
       formData.append('isavailable',true);
       
-      console.log("Form Data:")
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
+      
       try {
         axios.post(baseURL+"/crafts/",formData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        }).then(
-          console.log(formData),
-          navhook("/")
+        }).then(navhook("/"))
+
           
-        )
+        
         
       } catch (error) {
         console.error('Error:', error);

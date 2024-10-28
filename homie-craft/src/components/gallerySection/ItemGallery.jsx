@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import './ItemGallery.css'
+import { Container } from '@mui/material';
 
 function NextArrow(props) {
   const { className, style, onClick } = props;
@@ -37,16 +38,16 @@ const ItemGallery = (props) => {
       // arrows:false
     }
   return (props.images.length >0 ?
-    <div className="image-container">
+    <Container  sx={{ width: 500, height: 300 ,objectFit:'cover' }}>
         <Slider {...settings}>
           {props.images.map(i=>{
             return <div>
-            <img src={i} alt="" />
+            <img style={{width: 450, height: 300}} src={i} alt="" />
           </div>
           })}
       
        </Slider>
-    </div>:
+    </Container>:
     <>No Images found</>
   )
 }

@@ -15,7 +15,9 @@ import { useNavigate } from 'react-router-dom';
 import OrangeTheme from '../../themes/OrangeTheme';
 import axios from 'axios';
 import ShowSearch from '../ShowSearch';
-
+import { useHomieCraftContext } from '../../context/HomieCraftContext';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import { ClickAwayListener } from '@mui/material';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -24,7 +26,7 @@ const Search = styled('div')(({ theme }) => ({
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
-  marginLeft: 0,
+  marginLeft: 5,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
@@ -56,17 +58,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function Navbar() {
+  
+  const {token, setToken,userType,setUserType,id,setId} = useHomieCraftContext()
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [searchAnchorEl, setSearchAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const [showSearch,setShowSearch] = React.useState(false)
+  const isSearchOpen = Boolean(searchAnchorEl);
 
-  const userType = localStorage.getItem('userType');
-  const userId = localStorage.getItem('id');
-  const isCustomer = userType === 'customer';
-  const isCrafter = userType === 'crafter';
+  const [showSearch,setShowSearch] = React.useState(false)
+  console.log("userType "+userType)
+  const isCustomer = userType == "customer";
+  const isCrafter = userType == 'crafter';
+  console.log("isCustomer: "+isCustomer)
+  console.log("isCrafter: "+isCrafter)
   const [search,setSearch] = React.useState()
   const [data,setData] = React.useState()
   const handleSearch=(e)=>{
@@ -75,15 +82,18 @@ function Navbar() {
     axios.get(`http://localhost:5265/search/${search}`).then((res)=>{
       setData(res.data)
       setShowSearch(true)
-      console.log(JSON.stringify(data))
   }).catch((err)=>{console.log(err)})}
   else{setShowSearch(false)}
   }
-
+  const handleClickAway=()=>{
+    setShowSearch(false)
+    setSearch('')
+  }
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -94,29 +104,48 @@ function Navbar() {
     handleMobileMenuClose();
   };
 
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+    
   };
 
   const handleLogout = () => {
     localStorage.removeItem('userType');
     localStorage.removeItem('id');
+    localStorage.removeItem('customerId');
+    localStorage.removeItem('crafterId');
     localStorage.removeItem('token');
+    setId(null)
+    setUserType(null)
+    setToken(null)
+    
     handleMenuClose();
     navigate('/')
   };
-  // React.useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (!event.target.closest('.showSearch') && !event.target.closest('.search')) {
-  //       setShowSearch(false);
-  //     }
-  //   };
 
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
+  const handleToggleUserType = () => {
+    if(userType=='customer'){
+      setUserType('crafter')
+      setId(localStorage.getItem('crafterId'))
+      setUserType("crafter")
+      navigate("/")
+    }
+    else{
+      setUserType('customer')
+      setId(localStorage.getItem('customerId'))
+      setUserType("customer")
+      navigate("/")
+    }
+    handleMenuClose()
+  };
+  const [alignment, setAlignment] = React.useState('web');
+
+  const handleChange = (event, newAlignment) => {
+
+    setAlignment(newAlignment);
+  };
+  
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -139,7 +168,8 @@ function Navbar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-    >
+    > 
+      <MenuItem onClick={handleToggleUserType} >Switch to {userType=="customer" ? 'Crafter' : 'Customer'}</MenuItem>
       <MenuItem onClick={() => {navigate('/profile'); handleMenuClose();}}>View Profile</MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
@@ -149,34 +179,37 @@ function Navbar() {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
+      
       id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
+      
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+       {userType!=null && userType!="" && (
+              <><MenuItem onClick={handleToggleUserType}>
+              <p className='align-self-center'>Switch To {userType=="customer" ? 'Crafter' : 'Customer'} </p>
+            </MenuItem></>
+       )
+       }
+       
+        {isCustomer || isCrafter ? (
+    <>
       <MenuItem onClick={() => navigate('/profile')}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="false"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>View Profile</p>
+        <p className='align-self-center'>View Profile</p>
       </MenuItem>
       <MenuItem onClick={handleLogout}>
         <p>Logout</p>
       </MenuItem>
+    </>)
+    :<>
+    <MenuItem onClick={() => window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
+              }>
+  <Typography variant="h6" noWrap component="div">
+    Login/Signup
+  </Typography>
+</MenuItem>
+    </>
+        }
     </Menu>
   );
 
@@ -200,23 +233,30 @@ function Navbar() {
           >
             Homie Craft
           </Typography>
+          
+          {isCustomer ? <>
+          <ClickAwayListener onClickAway={handleClickAway}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
+            
             <StyledInputBase
+              
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               value={search}
               onChange={(e)=>handleSearch(e)}
             />
+            
             {showSearch && <ShowSearch suggestions={data} onSelect={() => {setShowSearch(false); setSearch('');}}/>}
-          </Search>
+          </Search></ClickAwayListener></>:""}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex', gap: '20px' } }}>
-            {isCustomer && (
+            {userType!=null && userType!="" && (
               <>
-                <IconButton
+             
+                {userType=="customer" && <IconButton
                   size="large"
                   edge="end"
                   aria-label="orders"
@@ -226,7 +266,9 @@ function Navbar() {
                   color="inherit"
                 >
                   <LocalShippingIcon />
-                </IconButton>
+                </IconButton>}
+                
+            
               </>
             )}
             {isCustomer || isCrafter ? (
@@ -242,12 +284,26 @@ function Navbar() {
                 <AccountCircle />
               </IconButton>
             ) : (
-              <MenuItem onClick={() => navigate('/login')}>
+              <MenuItem onClick={() => window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
+              }>
                 <Typography variant="h6" noWrap component="div">
-                  Login
+                  Login/Signup
                 </Typography>
               </MenuItem>
+
             )}
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon/>
+            </IconButton>
           </Box>
         </Toolbar>
       </AppBar>

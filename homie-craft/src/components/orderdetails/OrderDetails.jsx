@@ -15,14 +15,14 @@ function OrderDetails(params) {
     <Container>
         <Typography sx={{backgroundColor:"#a8dadc",color:"#1d3557",margin:"20px" ,padding: "10px", borderRadius: "3px", border: "1px solid black" }}>
         <div style={ order.isActive ?{ color: "green" }:{ color: "red" }}>
-                {order.isActive ? "Active" : "Inactive"}</div>
+                {order.isActive ? "In Progress" : "Delivered"}</div>
             <div>
                 OrderID: {order.orderID}
             </div>
             <div>
                 type: {order.type}</div>
             <div>
-                status: {order.status == "Active" ? "Accepted" : order.status}</div>
+                status: {order.status == "Active" ? "Accepted" : setIsPicked ? "Picked Up By Corrier":order.status}</div>
             
             <Container sx={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
                 <div>

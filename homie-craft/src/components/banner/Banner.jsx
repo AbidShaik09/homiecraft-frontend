@@ -22,10 +22,10 @@ const Banner = (params) => {
               <img src={params.image} alt="" />
             </div>
             <div>
-              <img src={params.image} alt="" />
+              <img src={"http://localhost:5265/images/b2.jpg"} alt="" />
             </div>
             <div>
-              <img src={params.image} alt="" />
+              <img src={"http://localhost:5265/images/b3.webp"} alt="" />
             </div>
         </Slider>
     </div>
