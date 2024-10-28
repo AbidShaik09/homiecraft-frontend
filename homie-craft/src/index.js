@@ -8,6 +8,7 @@ import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import OrangeTheme from './themes/OrangeTheme';
 import { lightTheme } from './themes/LightTheme';
+import { darkTheme } from './themes/DarkTheme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
