@@ -38,11 +38,11 @@ const ItemGallery = (props) => {
       // arrows:false
     }
   return (props.images.length >0 ?
-    <Container  sx={{ width: 300, height: 300 ,objectFit:'cover' }}>
+    <Container  sx={{ width: 500, height: 300 ,objectFit:'cover' }}>
         <Slider {...settings}>
           {props.images.map(i=>{
             return <div>
-            <img style={{width: 250, height: 200}} src={i} alt="" />
+            <img style={{width: 450, height: 300}} src={i} alt="" />
           </div>
           })}
       

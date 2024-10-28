@@ -15,12 +15,9 @@ import { useNavigate } from 'react-router-dom';
 import OrangeTheme from '../../themes/OrangeTheme';
 import axios from 'axios';
 import ShowSearch from '../ShowSearch';
-import { Button } from '@mui/material';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useHomieCraftContext } from '../../context/HomieCraftContext';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
+import { ClickAwayListener } from '@mui/material';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -29,7 +26,7 @@ const Search = styled('div')(({ theme }) => ({
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
-  marginLeft: 0,
+  marginLeft: 5,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
@@ -88,6 +85,10 @@ function Navbar() {
   }).catch((err)=>{console.log(err)})}
   else{setShowSearch(false)}
   }
+  const handleClickAway=()=>{
+    setShowSearch(false)
+    setSearch('')
+  }
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -136,6 +137,7 @@ function Navbar() {
       setUserType("customer")
       navigate("/")
     }
+    handleMenuClose()
   };
   const [alignment, setAlignment] = React.useState('web');
 
@@ -233,7 +235,7 @@ function Navbar() {
           </Typography>
           
           {isCustomer ? <>
-            
+          <ClickAwayListener onClickAway={handleClickAway}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -244,12 +246,11 @@ function Navbar() {
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               value={search}
-              onClose={()=>{setShowSearch(false)}}
               onChange={(e)=>handleSearch(e)}
             />
             
             {showSearch && <ShowSearch suggestions={data} onSelect={() => {setShowSearch(false); setSearch('');}}/>}
-          </Search></>:""}
+          </Search></ClickAwayListener></>:""}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex', gap: '20px' } }}>
             {userType!=null && userType!="" && (
@@ -283,17 +284,12 @@ function Navbar() {
                 <AccountCircle />
               </IconButton>
             ) : (
-              // <MenuItem onClick={() => navigate('/login')}>
-              //   <Typography variant="h6" noWrap component="div">
-              //     Login
-              //   </Typography>
-              // </MenuItem>
               <MenuItem onClick={() => window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
               }>
-  <Typography variant="h6" noWrap component="div">
-    Login/Signup
-  </Typography>
-</MenuItem>
+                <Typography variant="h6" noWrap component="div">
+                  Login/Signup
+                </Typography>
+              </MenuItem>
 
             )}
           </Box>

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import ButtonSecondary from '../button/secondary/ButtonSecondary'
 import axios from 'axios'
 import ButtonPrimary from '../button/primary/ButtonPrimary'
+import { format } from 'date-fns'
 
 function CustomerOrder(params) {
     var baseURL = ("http://localhost:5265/")
@@ -13,53 +14,54 @@ function CustomerOrder(params) {
         axios.put(baseURL+"order/delivered/"+order.orderID).then(setIsDelivered(true))
     }
     return( 
-    <Container>
-        <Typography sx={{backgroundColor:"#a8dadc",color:"#1d3557",margin:"20px" ,padding: "10px", borderRadius: "3px", border: "1px solid black" }}>
-        <div style={ order.isActive ?{ fontWeight:'bold',color: "chocolate" }:{ fontWeight:'bold',color :'green' }}>
-                {order.isActive && !isDelivered ? "Ordered" : ""}</div>
-            <div>
+        <Container sx={{backgroundColor:"#a8dadc",color:"#1d3557",margin:"20px",padding:"10px", borderRadius: "10px", border: "2px solid black" }}>
+        <Typography variant='h6' style={ order.isActive ?{ fontWeight:'bold',color: "chocolate" }:{ fontWeight:'bold',color :'green' }}>
+                {order.isActive && !isDelivered ? "Ordered" : ""}</Typography>
+            <Typography>
                 OrderID: {order.orderID}
-            </div>
-            <div>
-                type: {order.type}</div>
-            <div>
-                status: {order.status == "Active" ? "Accepted" : order.status}</div>
+            </Typography>
+            <Typography>
+                Delivery Type: {order.type}
+            </Typography>
+            <Typography>
+                Status: {order.status == "Active" ? "Accepted" : order.status}
+            </Typography>
             
-            <Container sx={{ display: "flex", justifyContent: "space-evenly", alignItems: "center" }}>
-                <div>
-                    {"Return To"}:
+            <Container sx={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", marginTop:"10px" }}>
+                <Container>
+                    <Typography>Return to:</Typography>
                     <ul>
-                        <li>latitude : {order.latitudeFrom}</li>
-                        <li>longitude : {order.longitudeFrom}</li>
+                        <li>Latitude : {order.latitudeFrom}</li>
+                        <li>Longitude : {order.longitudeFrom}</li>
                         <li>City : {order.cityFrom}</li>
                         <li>State : {order.stateFrom}</li>
                         <li>Pincode: {order.pincodeFrom}</li>
-                        { <li>Expected Pickup: {order.expectedPickup} </li>}
+                        <li>Expected Pickup: {format(new Date(order.expectedPickup),'PP')} </li>
                     </ul>
                     
-                </div>
-                <div>
-                {!isDelivered ?"Shipping To":"Shipped To"}::
+                </Container>
+                <Container>
+                {!isDelivered ?"Shipping To":"Shipped To"}:
                     <ul>
-                        <li>latitude : {order.latitudeTo}</li>
-                        <li>longitude : {order.longitudeTo}</li>
+                        <li>Latitude : {order.latitudeTo}</li>
+                        <li>Longitude : {order.longitudeTo}</li>
                         <li>City : {order.cityTo}</li>
                         <li>State : {order.stateTo}</li>
                         <li>Pincode: {order.pincodeTo}</li>
-                        <li>{!isDelivered?"Expected Delivery":"Delevered "}: {order.expectedDelivery} </li>
+                        <li>{!isDelivered?"Expected Delivery":"Delevered "}: {format(new Date(order.expectedDelivery),'PP') } </li>
                     </ul>
                     {!isDelivered && isPicked && <ButtonPrimary action={corrierHandler} name="Mark As Recieved" />}
 
 
-                </div>
+                </Container>
 
 
             </Container>
 
 
 
-        </Typography>
-    </Container>)
+        </Container>
+        )
 
 }
 
