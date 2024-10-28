@@ -24,9 +24,7 @@ const Dashboard=(params)=>{
 
       <Container sx={{display:'flex',justifyContent:{xs:'space-between',sm:"space-around"},flexDirection:{xs:'column',sm:'row',md:'column',lg:'row'}}}>
 
-      <Box sx={{width:200, height:100, alignSelf:'center',margin:'7px'}}>
-            <DashboardCard heading='Crafter Rating'  content={ '✰'+params.rating}></DashboardCard>
-      </Box>
+      
       <Box sx={{width:200, height:100, alignSelf:'center',margin:'7px'}}>
       <DashboardCard heading='Earnings This Month' content={'₹'+params.earnings}/>
       </Box>
