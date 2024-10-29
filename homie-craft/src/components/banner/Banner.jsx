@@ -21,13 +21,13 @@ const Banner = (params) => {
     <div>
         <Slider {...settings}>
             <div>
-              <img src={params.image} alt="" />
+              <img src={params.image} style={{width:"96%"}} alt="" />
             </div>
             <div>
-              <img src={"http://localhost:5265/images/c2.jpg"} alt="" />
+              <img src={"http://localhost:5265/images/c2.jpg"}  style={{width:"96%"}}alt="" />
             </div>
             <div>
-              <img src={"http://localhost:5265/images/c3.jpg"}  alt="" />
+              <img src={"http://localhost:5265/images/c3.jpg"} style={{width:"96%"}}  alt="" />
             </div>
         </Slider>
     </div>
