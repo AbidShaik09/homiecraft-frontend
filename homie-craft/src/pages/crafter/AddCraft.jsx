@@ -12,12 +12,15 @@ function AddCraft() {
   const [imageFiles, setImageFiles] = useState([]);
 
   const handleFileChange = (event) => {
-    const files = event.target.files;
+    const files = Array.from(event.target.files);
     setImageFiles(files);
 
     // Reset the image error if enough images are uploaded
     if (files.length >= 2) {
       formik.setFieldError('images', undefined); // Clear the error
+      formik.setFieldValue('images', files); // Update the formik value
+    } else {
+      formik.setFieldValue('images', []); // Reset if less than 2 images
     }
   };
 
@@ -65,10 +68,11 @@ function AddCraft() {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      }).then(() => navhook("/"))
-        .catch((error) => {
-          console.error('Error:', error);
-        });
+      })
+      .then(() => navhook("/"))
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     }
   });
 
