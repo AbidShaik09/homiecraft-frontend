@@ -117,7 +117,7 @@ function CrafterHome() {
   
    function DataGridDemo() {
     return (
-      <Box sx={{ height: 350, width: '100%' }}>
+      <Box sx={{ height: 325, width: '100%' }}>
         <DataGrid
           rows={activeOrderRows}
           columns={activeOrderColumns}
@@ -137,7 +137,7 @@ function CrafterHome() {
   }
   return (
     <>
-      <Dashboard salesData={salesData} rating={4} earnings={earnings} />
+      <Dashboard salesData={salesData} rating={4} earnings={earnings} orderRequests = {orderRequests} />
       <Container sx={{  display: 'flex', flexDirection: { xl: 'row', l: 'row', s: 'row', xs:'column-reverse',md:'row',padding:'0' }}}>
       
         <Container sx={{ width: { xs: '100%', sm: '100%', md: '55%', xl: '60%' , padding:"0px"} }} >

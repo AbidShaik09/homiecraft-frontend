@@ -8,6 +8,7 @@ import CrafterProfile from "../pages/crafter/CrafterProfile";
 import { Login } from "@mui/icons-material";
 import IndexHandler from "./IndexHandler";
 import OrderHistory from "../pages/crafter/OrderHistory";
+import CrafterOrderRequests from "../pages/crafter/CrafterOrderRequests";
 function CrafterRoute() {
   return (
       
@@ -18,6 +19,8 @@ function CrafterRoute() {
           <Route path='/orderHistory' element={<OrderHistory/>}/>
           <Route path='add-craft/:crafterId' element={<AddCraft/>}/>
           <Route path="/profile" element= {<CrafterProfile/>}/>
+          
+          <Route path='/orderRequests' element={<CrafterOrderRequests/>}/>
           <Route path='*' element={<h1>404 Not Found </h1>}/>
         </Routes>
 

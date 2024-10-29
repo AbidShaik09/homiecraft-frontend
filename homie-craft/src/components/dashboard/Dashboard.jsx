@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import SalesGraph from "../barGraph/SalesGraph";
 import DashboardCard from "../card/DashboardCard";
 import StarIcon from '@mui/icons-material/Star';
@@ -26,7 +26,10 @@ const Dashboard=(params)=>{
 
       
       <Box sx={{width:200, height:100, alignSelf:'center',margin:'7px'}}>
-      <DashboardCard heading='Earnings This Month' content={'₹'+params.earnings}/>
+      <DashboardCard heading='Order Requests' content={params.orderRequests.length} link="/orderRequests"/>
+      </Box>
+      <Box sx={{width:200, height:100, alignSelf:'center',margin:'7px'}}>
+      <DashboardCard heading='Earnings This Month' content={"₹ "+params.earnings.toLocaleString('en-IN')}/>
       </Box>
       
 
