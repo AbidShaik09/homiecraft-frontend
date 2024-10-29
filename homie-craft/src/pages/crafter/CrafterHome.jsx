@@ -47,14 +47,12 @@ function CrafterHome() {
     axios.get(baseUrl + "crafts/crafter/" + crafterId).then(res => {
        setCrafts(res.data);
     })
-    console.log(baseUrl + "/OrderRequest/crafter/" + crafterId)
+    
     axios.get("http://localhost:5265/OrderRequest/crafter/" + crafterId,{
       headers: {
         'Authorization': `Bearer ${token}`
       }}).then(res => {
-      console.log("Data here: ")
-
-      console.log(res.data); setOrderRequests(res.data.filter(f => f.status == "requested"));
+       setOrderRequests(res.data.filter(f => f.status == "requested"));
     })
     console.log(baseUrl + "/OrderRequest/crafter/" + crafterId)
     axios.get("http://localhost:5265/Order/crafter/" + crafterId,{
@@ -110,8 +108,7 @@ function CrafterHome() {
   ];
   
   let activeOrderRows = []
-  console.log("Active Orders: ")
-  console.log(activeOrders[0])
+
   
   
   
@@ -140,7 +137,7 @@ function CrafterHome() {
       <Dashboard salesData={salesData} rating={4} earnings={earnings} orderRequests = {orderRequests} />
       <Container sx={{  display: 'flex', flexDirection: { xl: 'row', l: 'row', s: 'row', xs:'column-reverse',md:'row',padding:'0' }}}>
       
-        <Container sx={{ width: { xs: '100%', sm: '100%', md: '55%', xl: '60%' , padding:"0px"} }} >
+        <Container sx={{ width: { xs: '100%', sm: '100%', md: '55%', padding:"0px"} }} >
 
 
           <Card sx={{ display: 'flex', marginTop: '50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '40px 0px' }}>
@@ -177,7 +174,7 @@ function CrafterHome() {
 
         </Container>
 
-        <Container sx={{ width: { xs: '100%', sm: '100%', md: '45%', xl: '40%' } }} >
+        <Container sx={{ width: { xs: '100%', sm: '100%', md: '45%' } }} >
           <Card sx={{ marginTop: '50px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '40px 0px' }}>
             <Container sx={{display:'flex', width:"100%", justifyContent:"space-between"}}>
               
@@ -185,7 +182,7 @@ function CrafterHome() {
             <ButtonSecondary action={historyHandler} name="All Orders"/>
             </Container>
 
-            <Container sx={{ display: 'flex',flexDirection: "column", justifyContent: 'center', padding: '20px 5px' }}>
+            <Container sx={{ display: 'flex',flexDirection: "column", justifyContent: 'center', padding: '20px 5px 0px 5px' }}>
             <DataGridDemo/>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
 
@@ -203,7 +200,7 @@ function CrafterHome() {
 
                   )
                     
-                    : <Typography>-No Requests-</Typography>
+                    :<></>
                 }
 
               </div>
@@ -221,7 +218,10 @@ function CrafterHome() {
                 {
                   orderRequests.length > 0 ?
                     orderRequests.map(c => {
+                      console.log("orderRequests")
+                      console.log(orderRequests)
                       return (
+                        
                         <RequsetCard setCrafts = {setCrafts} crafterId = {crafterId} orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} createdDate={formattedDate(c.createdDate)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} craftId = {c.craftId} setActiveOrders= {setActiveOrders} />
                       )
                     }
