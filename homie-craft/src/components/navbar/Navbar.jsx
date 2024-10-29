@@ -18,6 +18,7 @@ import ShowSearch from '../ShowSearch';
 import { useHomieCraftContext } from '../../context/HomieCraftContext';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { ClickAwayListener } from '@mui/material';
+import { useTheme } from '@emotion/react';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -33,7 +34,6 @@ const Search = styled('div')(({ theme }) => ({
     width: 'auto',
   },
 }));
-
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
@@ -59,6 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function Navbar() {
   
+const theme = useTheme()
   const {token, setToken,userType,setUserType,id,setId} = useHomieCraftContext()
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [searchAnchorEl, setSearchAnchorEl] = React.useState(null);
@@ -163,7 +164,7 @@ function Navbar() {
       }}
       sx={{
         '& .MuiPaper-root': {
-          backgroundColor: OrangeTheme.palette.primary.main,
+          backgroundColor: OrangeTheme.palette.primary.text,
         },
       }}
       open={isMenuOpen}
@@ -220,7 +221,7 @@ function Navbar() {
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 ,backgroundColor: theme.palette.paper}}>
       <AppBar position="static">
         <Toolbar>
           <Typography
