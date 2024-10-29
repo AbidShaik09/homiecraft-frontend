@@ -2,28 +2,22 @@ import { createTheme,ThemeProvider } from '@mui/material/styles';
 
 // Import fonts from Google Fonts
 import '@fontsource/roboto'; // Defaults to weight 400
+/*
+import { ThemeOptions } from '@mui/material/styles';
 
+export const themeOptions: ThemeOptions = {
+ 
+};
+*/
 const OrangeTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#ff9900',
+      main: '#61cdf9',
     },
     secondary: {
-      main: '#e0e1dd',
+      main: '#949494',
     },
-    background: {
-      default: '#f5f5f5',
-    },
-    text: {
-      primary: '#0d1b2a',
-    },
-  },
-  typography: {
-    h6: {
-      fontFamily: 'Poppins',
-    },
-    fontFamily: 'Poppins',
   },
 });
 

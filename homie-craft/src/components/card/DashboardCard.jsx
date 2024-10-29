@@ -18,7 +18,7 @@ export default function DashboardCard(params) {
   return (
     
         
-    <Card sx={{ width: 200,backgroundColor:theme.palette.secondary.main }} className='btn' onClick={handleNavigate}>
+    <Card sx={{ width: 200,backgroundColor:theme.palette.secondary.paper }} className='btn' onClick={handleNavigate}>
       <CardContent sx={{display:'flex',justifyContent:'center',flexDirection:'column'}}>
         <Typography gutterBottom sx={{ color: 'text.secondary',textAlign:'center', fontSize: 14 }}>
           {params.heading}
