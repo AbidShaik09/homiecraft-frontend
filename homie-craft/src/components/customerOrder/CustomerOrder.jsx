@@ -1,4 +1,4 @@
-import { Container, Typography, Divider, Skeleton, Stack } from '@mui/material';
+import { Container, Typography, Divider, Skeleton, Stack, Alert, Snackbar } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ButtonPrimary from '../button/primary/ButtonPrimary';
 import axios from 'axios';
@@ -11,15 +11,24 @@ function CustomerOrder(params) {
     const [isDelivered, setIsDelivered] = useState(order.status === "Delivered");
     const [isPicked, setIsPicked] = useState(order.status === "Picked Up By Courier");
     const [craft, setCraft] = useState([]);
+    const [openSnack, setSnackOpen] = React.useState(false);
     const navigate = useNavigate()
-
+    
     const corrierHandler = () => {
-        axios.put(`${baseURL}order/delivered/${order.orderID}`).then(() => setIsDelivered(true));
+        axios.put(`${baseURL}order/delivered/${order.orderID}`).then(() => {setIsDelivered(true); setSnackOpen(true); });
     };
 
     const capitalize = {
         textTransform: 'capitalize'
     };
+
+    const handleSnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setSnackOpen(false);
+      };
 
     const itemRedirect=()=>{
         navigate(`/item/${craft[0].id}`)
@@ -76,7 +85,7 @@ function CustomerOrder(params) {
                     <>
                         <Typography variant='h6' style={capitalize}>Order Summary: </Typography>
                         <Typography>
-                            Status: {order.status === "Accepted" ? <span style={{ color: "orange" }}><b>Accepted</b></span> : <span style={{ color: "green" }}><b>Delivered</b></span>}
+                            Status: {order.status === "Accepted" ? <span style={{ color: "orange" }}><b>Accepted</b></span> : order.status === "Picked Up By Corrier" && !isDelivered ? <span style={{ color: "orange" }}><b>Out for delivery</b></span> : <span style={{ color: "green" }}><b>Delivered</b></span>}
                         </Typography>
                         <Typography style={capitalize}>Quantity: {order.quantity}</Typography>
                         <Typography style={capitalize}>Total Price: {'₹ '+craft[0].price*order.quantity}</Typography>
@@ -105,9 +114,21 @@ function CustomerOrder(params) {
                 </Container>
 
                 <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "10px" }}>
-                    {!isDelivered && isPicked && <ButtonPrimary action={corrierHandler} name="Mark As Received" />}
+                    {order.status === "Picked Up By Corrier" && !isDelivered ? <ButtonPrimary action={corrierHandler} name="Mark As Received" />:<></>}
                 </Container>
             </Container>
+            <div>
+            <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleSnackClose}>
+                <Alert
+                onClose={handleSnackClose}
+                severity="success"
+                variant="filled"
+                sx={{ width: '100%' }}
+                >
+                Your order is completed!
+                </Alert>
+            </Snackbar>
+            </div>
         </Container>
     );
 }

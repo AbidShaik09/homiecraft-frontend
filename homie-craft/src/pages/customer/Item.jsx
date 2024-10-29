@@ -166,7 +166,7 @@ function Item() {
   const handleClick = () => {
     setSnackOpen(true);
   };
-
+  console.log(JSON.stringify(crafter))
   const handleSnackClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -179,16 +179,16 @@ function Item() {
   }
   return (craft.length>0?<>
     <Container sx={{ marginTop:5}}>
-      <Container  sx={{display:'flex',flexDirection:{xs:"column",md:"row"},padding:{xs:0, sm:1,md:2,lg:3,xl:4},alignItems:"center"}}>
+      <Container  sx={{display:'flex',flexDirection:{xs:"column",md:"row"},borderBottom: "1px solid lightGray",padding:{xs:0, sm:1,md:2,lg:3,xl:4},marginBottom:"10px",alignItems:"center"}}>
         <Container sx={{ maxWidth:{xs:"100%", lg:"50%"},marginBottom:"20px"}}>
           <ItemGallery images={craft[0].images}/>
         </Container>
         <Container>
-          <h2 style={capitalize}>{craft[0].name}</h2>
+          <h3 style={capitalize}>{craft[0].name}</h3>
           <div class="d-flex gap-5">
-            <h4>{'₹ '+craft[0].price}</h4>
+            <h2>{'₹ '+craft[0].price}</h2>
           </div>
-          <h6 class="mt-2">{craft[0].description}</h6>
+          <h6 class="mt-2" style={{lineHeight:"1.5"}}>{craft[0].description}</h6>
         </Container>
         
       </Container>
@@ -204,20 +204,20 @@ function Item() {
 
 
         <Container >
-            <h3>Crafter Details:</h3>
-        <Container sx={{display:'flex',flexDirection:{xs:'column-reverse' , sm:'row', md:"row"}, boxShadow:'0px 0px 10px 0px()',padding:'10px'}}>
-          
+            <h3 style={{marginLeft:"40px"}}>Crafter Details:</h3>
+        <Container sx={{display:'flex',flexDirection:{xs:'column-reverse' , sm:'col', md:"col",lg:'col'},justifyContent:"center",alignItems:"center"}}>
           
           <Container>
             <div>
               <div class="d-flex "><p>Crafter Name:</p><h5 style={capitalize}>{crafter.name}</h5></div>
+              <div class="d-flex">House Number:<h5>{crafter.houseNumber}</h5></div>
               <div class="d-flex">City:<h5>{crafter.city}</h5></div>
+              <div class="d-flex">State:<h5>{crafter.state}</h5></div>
             </div>
-            
-          
           </Container>
           
-          <Container sx={{alignSelf:"center"}}><img style={{width:'100px', height:'100px',maxHeight:'125px',maxWidth:'125px',objectFit:'cover',borderRadius:'50%',padding:'1px'}} src={crafter.profilePicUrl} alt="" class="w-10 h-10"/>
+          <Container sx={{alignSelf:"center"}}>
+            {/* <img style={{width:'100px', height:'100px',maxHeight:'125px',maxWidth:'125px',objectFit:'cover',borderRadius:'50%',padding:'1px'}} src={crafter.profilePicUrl} alt="" class="w-10 h-10"/> */}
           </Container>
         </Container>
         </Container>
@@ -229,15 +229,26 @@ function Item() {
       <hr></hr>
       <Container>
         
-        <Container sx={{margin:"40px 20px"}}>
+        <Container sx={{margin:"40px"}}>
             {
               userType == "customer" && <Container>
                 
-                <Typography variant='h6'>Add Comment</Typography>
+                <Typography variant='h6' sx={{marginLeft:"30px", marginBottom:"10px"}}>Add Comment</Typography>
                 <Container sx={{display:'flex'}}>
 
                   
-                <input placeholder='Write your comments here...' value={newComment} onChange={e=>setNewComment(e.target.value)} style={{width:"80%",marginRight:"10px",boxShadow:"0px 0px 5px 0px",borderRadius:"10px"}}/>
+                <TextField
+      placeholder="Write your comments here..."
+      value={newComment}
+      onChange={(e) => setNewComment(e.target.value)}
+      variant="outlined"
+      fullWidth
+      sx={{
+        marginRight: "10px",
+        boxShadow: "0px 4px 4px -4px rgba(0, 0, 0, 0.5)",
+        borderRadius: "10px"
+      }}
+    />
                 <ButtonPrimary action={handleAddComment} name={'Comment'} />
                 </Container>
 

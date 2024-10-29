@@ -1,8 +1,9 @@
-import { Container, Typography } from '@mui/material'
+import { Container, Skeleton, Stack, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import OrderDetails from '../../components/orderdetails/OrderDetails'
 import CustomerOrder from '../../components/customerOrder/CustomerOrder'
+import { Fullscreen } from '@mui/icons-material'
 
 function Orders() {
     const baseURL = "http://localhost:5265/"
@@ -32,7 +33,21 @@ function Orders() {
                     orders.length > 0 ?
                         orders.map(order => {
                             return <CustomerOrder order={order }/>
-                        }) : <Container>-No Order History-</Container>
+                        }) : 
+                        <Container>
+                        <Skeleton
+                        sx={{ bgcolor: 'grey.210', borderRadius:"20px", marginBottom:"20px"}}
+                        variant="rectangular"
+                        width={1100}
+                        height={300}
+                      />
+                      <Skeleton
+                        sx={{ bgcolor: 'grey.210', borderRadius:"20px"}}
+                        variant="rectangular"
+                        width={1100}
+                        height={300}
+                      />
+                      </Container>
                 }
 
             </Container>
