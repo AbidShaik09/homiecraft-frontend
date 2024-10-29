@@ -38,7 +38,6 @@ export default function CraftCard(params) {
 
   const setEditTrue=()=>{
     setIsEdit(true)
-    console.log(isEdit)
   }
   const setEditFalse=()=>{
     setIsEdit(false)
@@ -125,7 +124,7 @@ export default function CraftCard(params) {
                 <TextField sx={{width:'100%'}} 
                 id="price"
                 name="price"
-                type="text" 
+                type="number" 
                 disabled={!isEdit} 
                 value={formik.values.price}
                 onChange={formik.handleChange}  />
@@ -150,7 +149,7 @@ export default function CraftCard(params) {
                 Stock
               </td>
               <td>
-                <TextField type="text"
+                <TextField type="number"
                 id="quantity"
                 name="quantity"
                 sx={{width:'100%'}}  
