@@ -13,7 +13,9 @@ const Banner = (params) => {
     speed: 3000,
     autoplaySpeed: 5000,
     cssEase: "linear",
-    arrows:false
+    arrows:false,
+    // width:"100%",
+    // height : 96,
   };
   return (
     <div>
@@ -22,10 +24,10 @@ const Banner = (params) => {
               <img src={params.image} alt="" />
             </div>
             <div>
-              <img src={"http://localhost:5265/images/b2.jpg"} alt="" />
+              <img src={"http://localhost:5265/images/c2.jpg"} alt="" />
             </div>
             <div>
-              <img src={"http://localhost:5265/images/b3.webp"} alt="" />
+              <img src={"http://localhost:5265/images/c3.jpg"}  alt="" />
             </div>
         </Slider>
     </div>
