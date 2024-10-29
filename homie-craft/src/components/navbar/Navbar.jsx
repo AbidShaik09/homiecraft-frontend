@@ -225,9 +225,8 @@ const theme = useTheme()
       <AppBar position="static">
         <Toolbar>
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
-            component="div"
             type="button"
             sx={{ display: { xs: 'none', sm: 'block' } }}
             onClick={() => navigate('/')}
@@ -235,7 +234,7 @@ const theme = useTheme()
             Homie Craft
           </Typography>
           
-          {isCustomer ? <>
+          {!isCrafter? <>
           <ClickAwayListener onClickAway={handleClickAway}>
           <Search>
             <SearchIconWrapper>
@@ -288,7 +287,7 @@ const theme = useTheme()
               <MenuItem onClick={() => window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
               }>
                 <Typography variant="h6" noWrap component="div">
-                  Login/Signup
+                  Login
                 </Typography>
               </MenuItem>
 

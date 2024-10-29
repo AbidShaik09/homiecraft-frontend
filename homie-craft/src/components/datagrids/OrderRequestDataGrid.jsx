@@ -1,15 +1,15 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Container } from '@mui/material';
+import { Button, Container, IconButton } from '@mui/material';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
 
+import CheckIcon from '@mui/icons-material/Check';
 
-
-
+import ClearIcon from '@mui/icons-material/Clear';
 export default function OrderRequestDataGrid(params) {
 
    let baseUrl = 'http://localhost:5265/'
@@ -65,11 +65,10 @@ export default function OrderRequestDataGrid(params) {
   };
   
 const col = [
-  { field: 'id', type: 'number', headerName: 'ID', width: 50 },
-
+  
   {
     field: 'craftName',
-    headerName: 'CraftName',
+    headerName: 'Craft Name',
     width: 100
   },{
     field: 'quantity',
@@ -99,21 +98,14 @@ const col = [
       
       params!=undefined &&
       <div style={{display:"flex"}}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleAccept(params.id)}
-        >
-          Accept
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => handleReject(params.id)}
-          style={{ marginLeft: 5 }}
-        >
-          Reject
-        </Button>
+        
+        <IconButton onClick={() => handleAccept(params.id)} aria-label="accept"  color="primary">
+            <CheckIcon />
+        </IconButton>
+        <IconButton onClick={() => handleReject(params.id)}aria-label="reject"  color="secondary">
+            <ClearIcon />
+        </IconButton>
+        
       </div>
     ),
   },
@@ -123,6 +115,12 @@ const col = [
   return (
     <Box sx={{ minHeight: 400, width: '100%' }}>
       <DataGrid
+      sx={{
+        ".MuiTablePagination-displayedRows, .MuiTablePagination-selectLabel": {
+          "margin-top": "1em",
+          "margin-bottom": "1em"
+        }
+      }}
         rows={params.rows}
         columns={col}
          initialState={{
@@ -133,7 +131,6 @@ const col = [
            },
          }}
         pageSizeOptions={[2,5,10,25,50,75]}
-        checkboxSelection
         disableRowSelectionOnClick
       />
     </Box>
