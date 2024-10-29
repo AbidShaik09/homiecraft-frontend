@@ -33,9 +33,12 @@ const ItemGallery = (props) => {
       infinite: true,
       slidesToShow: 1,
       slidesToScroll: 1,
+      autoplay: true,
+      speed: 2000,
+      autoplaySpeed: 4000,
+      cssEase: "linear",
       nextArrow: <NextArrow />,
       prevArrow: <PrevArrow />,
-      // arrows:false
     }
   return (props.images.length >0 ?
     <Container  sx={{ width: 500, height: 300 ,objectFit:'cover' }}>

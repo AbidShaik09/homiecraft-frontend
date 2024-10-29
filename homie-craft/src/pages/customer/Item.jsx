@@ -5,7 +5,7 @@ import ButtonPrimary from '../../components/button/primary/ButtonPrimary'
 import ItemGallery from '../../components/gallerySection/ItemGallery'
 import Button from '@mui/material/Button';
 import axios from 'axios'
-import { Alert, Container, Fab, Snackbar, TextField, Typography } from '@mui/material'
+import { Alert, capitalize, Container, Fab, Snackbar, TextField, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Dialog from '@mui/material/Dialog';
@@ -174,42 +174,44 @@ function Item() {
 
     setSnackOpen(false);
   };
+  const capitalize={
+    textTransform: 'capitalize'
+  }
   return (craft.length>0?<>
     <Container sx={{ marginTop:5}}>
       <Container  sx={{display:'flex',flexDirection:{xs:"column",md:"row"},padding:{xs:0, sm:1,md:2,lg:3,xl:4},alignItems:"center"}}>
-        <Container sx={{ maxWidth:{xs:"100%", lg:"50%"}}}>
+        <Container sx={{ maxWidth:{xs:"100%", lg:"50%"},marginBottom:"20px"}}>
           <ItemGallery images={craft[0].images}/>
         </Container>
-        <Container sx={{maxWidth:{xs:"100%", lg:"50%"},display:"flex",flexDirection:"column",alignItems:"center"}} >
-          
-        <h3>Purchase Options</h3>
-          <Container sx={{gap : "20px",display:'flex',flexDirection:{ xs:"column",sm:"row",lg:"row",xl:"row"},alignItems:"center",justifyContent:"space-around"}}>
-            <ButtonPrimary style={{width:"100%"}} name='Home Delivery' action={handleClickOpenHome}/>
-            {craft[0].pickUpFromCrafter==true?<ButtonPrimary style={{width:"100%"}} name='Pick from Crafter' action={handleClickOpenPick}/>:<Typography>in person not available</Typography>}
-          </Container>
-        </Container>
-        
-      </Container>
-      <Container sx={{display:"flex",flexDirection:{xs:"column",md:"row",lg:"row"},alignItems:"center",justifyContent:"space-around"}}>
-      <Container>
-          <h2>{craft[0].name}</h2>
+        <Container>
+          <h2 style={capitalize}>{craft[0].name}</h2>
           <div class="d-flex gap-5">
             <h4>{'₹ '+craft[0].price}</h4>
           </div>
           <h6 class="mt-2">{craft[0].description}</h6>
         </Container>
+        
+      </Container>
+      <Container sx={{display:"flex",flexDirection:{xs:"column",md:"row",lg:"row"},alignItems:"center",justifyContent:"space-around"}}>
+        <Container sx={{maxWidth:{xs:"100%", lg:"50%"},display:"flex",flexDirection:"column",alignItems:"center"}} >
+          
+        <h3>Purchase Options</h3>
+          <Container sx={{gap : "20px",display:'flex',flexDirection:{ xs:"column",sm:"row",lg:"row",xl:"row"},alignItems:"center",justifyContent:"space-around"}}>
+            <ButtonPrimary style={{width:"100%"}} name='Home Delivery' action={handleClickOpenHome}/>
+            {craft[0].pickUpFromCrafter==true?<ButtonPrimary  style={{width:"100%"}} name='Pick from Crafter' action={handleClickOpenPick}/>:<ButtonPrimary disabled name="Pick Up From Crafter"/>}
+          </Container>
+        </Container>
 
 
-        <Container>
+        <Container >
             <h3>Crafter Details:</h3>
         <Container sx={{display:'flex',flexDirection:{xs:'column-reverse' , sm:'row', md:"row"}, boxShadow:'0px 0px 10px 0px()',padding:'10px'}}>
           
           
-          <Container class="d-flex gap-3">
+          <Container>
             <div>
-              <div class="d-flex">Crafter Name:<h5><b>{crafter.name}</b></h5></div>
-              <div class="d-flex">City:<h5><b>{crafter.city}</b></h5></div>
-              <div class="d-flex">View Location</div>
+              <div class="d-flex "><p>Crafter Name:</p><h5 style={capitalize}>{crafter.name}</h5></div>
+              <div class="d-flex">City:<h5>{crafter.city}</h5></div>
             </div>
             
           
@@ -224,19 +226,9 @@ function Item() {
 
       </Container>
 
-      
+      <hr></hr>
       <Container>
-        <Container>
-          <Container >
-            <Typography variant='h5' >
-              
-            Comments
-            </Typography>
-          </Container>
-            {comments.length>0 && comments.map(comment=>{
-              return <Comment setComments={setComments} comment={comment}/>
-            }) }
-        </Container>
+        
         <Container sx={{margin:"40px 20px"}}>
             {
               userType == "customer" && <Container>
@@ -245,12 +237,25 @@ function Item() {
                 <Container sx={{display:'flex'}}>
 
                   
-                <input placeholder='comment' value={newComment} onChange={e=>setNewComment(e.target.value)} style={{width:"80%"}}/>
-                <ButtonSecondary action={handleAddComment} name={'Comment'} />
+                <input placeholder='Write your comments here...' value={newComment} onChange={e=>setNewComment(e.target.value)} style={{width:"80%",marginRight:"10px",boxShadow:"0px 0px 5px 0px",borderRadius:"10px"}}/>
+                <ButtonPrimary action={handleAddComment} name={'Comment'} />
                 </Container>
 
               </Container>
             }
+        </Container>
+        <Container sx={{borderRadius:"10px",boxShadow:"0px 0px 10px 0px",width:"70vw",marginBottom:"20px"}}>
+          <Container >
+            <Typography variant='h5' sx={{paddingTop:"10px",display:"flex",justifyContent:"center",alignItems:"center"}}>
+              
+            Comments
+            </Typography>
+          </Container>
+          <hr/>
+            {comments.length===0 ? (<Typography sx={{display:"flex",justifyContent:"center",alignItems:"center",height:"10vh"}}>--No Comments--</Typography>)  : 
+            comments.map(comment=>{
+              return <Comment setComments={setComments} comment={comment}/>
+            }) }
         </Container>
 
         </Container>
@@ -306,9 +311,7 @@ function Item() {
 
     <>
       <Stack spacing={1} width={'100vw'} height={'100vh'}>
-      {/* For variant="text", adjust the height via font-size */}
       <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-      {/* For other variants, adjust the size with `width` and `height` */}
       <Skeleton variant="circular" width={40} height={40} />
       <Skeleton variant="rectangular" width={210} height={60} />
       <Skeleton variant="rounded" width={210} height={60} />

@@ -20,13 +20,13 @@ function Orders() {
     }, [])
     
     return (
-        <Container>
+        <Container sx={{marginTop:"20px"}}>
             <Container  >
-                <Typography variant='h4'>
+                <Typography variant='h4' sx={{marginLeft:"20px"}}>
                 Orders
                 </Typography>
             </Container>
-            <Container>
+            <Container >
 
                 {
                     orders.length > 0 ?
