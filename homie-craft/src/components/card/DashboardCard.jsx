@@ -18,12 +18,12 @@ export default function DashboardCard(params) {
   return (
     
         
-    <Card sx={{ width: 200,backgroundColor:theme.palette.secondary.paper }} className='btn' onClick={handleNavigate}>
+    <Card sx={{ width: 230,backgroundColor:theme.palette.secondary.paper }} className='btn' onClick={handleNavigate}>
       <CardContent sx={{display:'flex',justifyContent:'center',flexDirection:'column'}}>
-        <Typography gutterBottom sx={{ color: 'text.secondary',textAlign:'center', fontSize: 14 }}>
+        <Typography gutterBottom  sx={{textAlign:'center'}} >
           {params.heading}
         </Typography>
-        <Typography variant="h5" component="div"sx={{textAlign:'center'}}>
+        <Typography variant="body1" component="div" sx={{ color: 'text.secondary',textAlign:'center'}}>
           {params.content}
         </Typography>
         
