@@ -13,10 +13,13 @@ import { useNavigate } from 'react-router-dom';
 import ButtonSecondary from '../../components/button/secondary/ButtonSecondary';
 import { useHomieCraftContext } from '../../context/HomieCraftContext';
 
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+
 function CrafterHome() {
   
   const {token, setToken,userType,setUserType,id,setId} = useHomieCraftContext()
-  const salesData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  const [salesData,setSalesData] = useState([]);
+  const [earnings,setEarnings] = useState(0);
   
   const navhook= useNavigate()
   var baseUrl = 'http://localhost:5265/'
@@ -28,14 +31,13 @@ function CrafterHome() {
 
   }
   const [crafts, setCrafts] = useState([])
-
+  //const [activeOrderRows,setactiveOrderRows] = useState([]);
   const [orderRequests, setOrderRequests] = useState([])
   const [orders, setOrders] = useState([])
   const [activeOrders, setActiveOrders] = useState([])
   const historyHandler =()=>{
     navhook("orderHistory")
   }
-  
   const addHandler=()=>{
     navhook("add-craft/"+crafterId)
   }
@@ -62,16 +64,83 @@ function CrafterHome() {
       let x= res.data
       setOrders(x);
       setActiveOrders(x.filter(o=>o.isActive==true))
+      
     })
 
+    axios.get("http://localhost:5265/Crafter/sales/"+crafterId ,{
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }}).then(res => {
+      let x= res.data
+      setSalesData(x.sales)
+      setEarnings(x.earningsThisMonth)
+      
+    })
 
   }, [])
+
+  const activeOrderColumns= [
+    { field: 'CraftName', headerName: 'Craft Name', width: 120 },
+    
+    {
+      field: 'Qty',
+      
+      headerName: 'Qty',
+      width: 30,
+      editable: false,
+    },{
+      field: 'Status',
+      headerName: 'Status',
+      width: 90,
+      editable: false,
+    },
+    {
+      field: 'Payment',
+      headerName: 'Payment',
+      width: 85,
+      editable: false,
+    }
+    ,{
+      field: 'Price',
+      headerName: 'Price',
+      width: 75,
+      editable: false,
+    }
+    
+  ];
+  
+  let activeOrderRows = []
+  console.log("Active Orders: ")
+  console.log(activeOrders[0])
+  
+  
+  
+   function DataGridDemo() {
+    return (
+      <Box sx={{ height: 325, width: '100%' }}>
+        <DataGrid
+          rows={activeOrderRows}
+          columns={activeOrderColumns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 4,
+              },
+            },
+          }}
+          pageSizeOptions={[4]}
+          
+          disableRowSelectionOnClick
+        />
+      </Box>
+    );
+  }
   return (
     <>
-      <Dashboard salesData={salesData} rating={4} earnings={salesData[salesData.length - 1]} />
+      <Dashboard salesData={salesData} rating={4} earnings={earnings} orderRequests = {orderRequests} />
       <Container sx={{  display: 'flex', flexDirection: { xl: 'row', l: 'row', s: 'row', xs:'column-reverse',md:'row',padding:'0' }}}>
-
-        <Container sx={{ width: { xs: '100%', sm: '100%', md: '50%', lg: '60%', xl: '60%' } }} >
+      
+        <Container sx={{ width: { xs: '100%', sm: '100%', md: '55%', xl: '60%' , padding:"0px"} }} >
 
 
           <Card sx={{ display: 'flex', marginTop: '50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '40px 0px' }}>
@@ -108,29 +177,39 @@ function CrafterHome() {
 
         </Container>
 
-        <Container sx={{ width: { xs: '100%', sm: '100%', md: '50%', lg: '40%', xl: '40%' } }} >
+        <Container sx={{ width: { xs: '100%', sm: '100%', md: '45%', xl: '40%' } }} >
           <Card sx={{ marginTop: '50px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '40px 0px' }}>
-
+            <Container sx={{display:'flex', width:"100%", justifyContent:"space-between"}}>
+              
             <h4>Active Orders</h4>
-            <Container sx={{ display: 'flex', justifyContent: 'center', padding: '20px 5px' }}>
+            <ButtonSecondary action={historyHandler} name="All Orders"/>
+            </Container>
+
+            <Container sx={{ display: 'flex',flexDirection: "column", justifyContent: 'center', padding: '20px 5px' }}>
+            <DataGridDemo/>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
+
                 {
-                  activeOrders.length > 0 ?
-                    activeOrders.map(c => {
-                      return (
-                            <OrderCard orders={orders} setOrders={setOrders} orderId={c.id} quantity={c.quantity} expectedPickup={formattedDate(c.expectedPickup)} price={c.price} purchaseMode={c.purchaseMode} craftName={c.craftName} status={c.status} type={c.type} paymentType = {c.paymentType} />
-                      )
+
+                  
+                  activeOrders.length > 0 ?(
+                    
+                    activeOrders.map((c,i) => {
+                      activeOrderRows.push({id:i+1,CraftName: c.craftName,PickUp:formattedDate(c.expectedPickup), Payment:c.purchaseMode, Qty:c.quantity,Price: c.price, Payment:c.paymentType, Status: c.status})
+  
+                    
                     }
                     )
+
+                  )
+                    
                     : <Typography>-No Requests-</Typography>
                 }
 
               </div>
               
             </Container>
-            <Container sx={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-                <ButtonSecondary action={historyHandler} name="All Orders"/>
-              </Container>
+            
           </Card>
 
           <Card sx={{ color: 'white', marginTop: '50px', padding: '40px 0px', width: '100%', backgroundColor: '#2d545e', border: '1px solid grey', borderRadius: '2px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
