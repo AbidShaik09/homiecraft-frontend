@@ -1,7 +1,7 @@
-import { Box, Button, Checkbox, FormControlLabel, Container, TextField } from '@mui/material';
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import * as Yup from "yup";
+import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -10,16 +10,6 @@ function AddCraft() {
   const baseURL = "http://localhost:5265";
   const navhook = useNavigate();
   const [imageFiles, setImageFiles] = useState([]);
-
-  const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    setImageFiles(files);
-
-    if (files.length >= 2) {
-      formik.setFieldError('images', undefined); 
-      formik.setFieldValue('images', files); 
-    }
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +20,7 @@ function AddCraft() {
       material: '',
       description: '',
       quantity: '',
-      pickUpFromCrafter: false,
+      pickUpFromCrafter: false, 
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Required'),
@@ -39,7 +29,6 @@ function AddCraft() {
       description: Yup.string().required('Required'),
       quantity: Yup.number().required('Required').positive('Must be positive').integer('Must be an integer'),
       images: Yup.array().min(2, 'At least 2 images must be uploaded'),
-      pickUpFromCrafter: Yup.boolean(),
     }),
     onSubmit: (values) => {
       if (imageFiles.length < 2) {
@@ -58,7 +47,7 @@ function AddCraft() {
       formData.append('material', values.material);
       formData.append('description', values.description);
       formData.append('quantity', values.quantity);
-      formData.append('pickUpFromCrafter', values.pickUpFromCrafter);
+      formData.append('pickUpFromCrafter', false);
       formData.append('isavailable', true);
 
       axios.post(`${baseURL}/crafts/`, formData, {
@@ -73,34 +62,27 @@ function AddCraft() {
     }
   });
 
+  const handleFileChange = (event) => {
+    const files = Array.from(event.target.files);
+    setImageFiles(files);
+    
+    if (files.length >= 2) {
+      formik.setFieldError('images', undefined); 
+      formik.setFieldValue('images', files); 
+    } else {
+      formik.setFieldValue('images', []); 
+    }
+  };
+
+  const errorColor = 'red'; // Define the error color
+
   return (
     <Container maxWidth="sm" sx={{ mt: 4, padding: 3 }}>
+      <Typography variant="h5" align="center" gutterBottom>
+        <b>Add Craft</b>
+      </Typography>
       <Box component="form" onSubmit={formik.handleSubmit} noValidate>
-        
-        {/* Image Upload Section */}
-        <Container 
-          item 
-          xs={12} 
-          sx={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center',
-          }}
-        >
-          <label htmlFor="files"><b>Upload Files</b></label>
-          <input
-            name="files"
-            type="file"
-            multiple
-            onChange={handleFileChange}
-            style={{display: 'block', marginTop: '8px', marginBottom: '8px' }}
-          />
-          {formik.touched.images && formik.errors.images && (
-            <div style={{ color: 'red' }}> {formik.errors.images}</div> 
-          )}
-        </Container>
 
-        {/* Other Input Fields */}
         <Container sx={{ padding: "5px" }} spacing={2}>
           <Container item xs={12} sx={{ padding: "5px" }}>
             <TextField
@@ -111,9 +93,17 @@ function AddCraft() {
               value={formik.values.name}
               onChange={formik.handleChange}
               error={formik.touched.name && Boolean(formik.errors.name)}
-              helperText={formik.touched.name && formik.errors.name && (
-                <span style={{ color: 'red' }}>{formik.errors.name}</span> // Consistent error color
-              )}
+              helperText={formik.touched.name && formik.errors.name}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: formik.touched.name && formik.errors.name ? errorColor : 'grey',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'blue',
+                  },
+                },
+              }}
             />
           </Container>
 
@@ -128,9 +118,17 @@ function AddCraft() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.price && Boolean(formik.errors.price)}
-              helperText={formik.touched.price && formik.errors.price && (
-                <span style={{ color: 'red' }}>{formik.errors.price}</span> // Consistent error color
-              )}
+              helperText={formik.touched.price && formik.errors.price}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: formik.touched.price && formik.errors.price ? errorColor : 'grey',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'blue',
+                  },
+                },
+              }}
             />
           </Container>
 
@@ -143,9 +141,17 @@ function AddCraft() {
               value={formik.values.material}
               onChange={formik.handleChange}
               error={formik.touched.material && Boolean(formik.errors.material)}
-              helperText={formik.touched.material && formik.errors.material && (
-                <span style={{ color: 'red' }}>{formik.errors.material}</span> // Consistent error color
-              )}
+              helperText={formik.touched.material && formik.errors.material}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: formik.touched.material && formik.errors.material ? errorColor : 'grey',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'blue',
+                  },
+                },
+              }}
             />
           </Container>
 
@@ -161,9 +167,17 @@ function AddCraft() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.description && Boolean(formik.errors.description)}
-              helperText={formik.touched.description && formik.errors.description && (
-                <span style={{ color: 'red' }}>{formik.errors.description}</span> // Consistent error color
-              )}
+              helperText={formik.touched.description && formik.errors.description}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: formik.touched.description && formik.errors.description ? errorColor : 'grey',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'blue',
+                  },
+                },
+              }}
             />
           </Container>
 
@@ -178,26 +192,41 @@ function AddCraft() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.quantity && Boolean(formik.errors.quantity)}
-              helperText={formik.touched.quantity && formik.errors.quantity && (
-                <span style={{ color: 'red' }}>{formik.errors.quantity}</span> // Consistent error color
-              )}
+              helperText={formik.touched.quantity && formik.errors.quantity}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: formik.touched.quantity && formik.errors.quantity ? errorColor : 'grey',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'blue',
+                  },
+                },
+              }}
             />
           </Container>
+        </Container>
 
-          <Container item xs={12} sx={{ padding: "5px" }}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  id="pickUpFromCrafter"
-                  name="pickUpFromCrafter"
-                  checked={formik.values.pickUpFromCrafter}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              }
-              label="Pick up from crafter"
-            />
-          </Container>
+        <Container 
+          item 
+          xs={12} 
+          sx={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center' 
+          }}
+        >
+          <label htmlFor="files"><b>Upload Files</b></label>
+          <input
+            name="files"
+            type="file"
+            multiple
+            onChange={handleFileChange}
+            style={{ display: 'block', marginTop: '8px', marginBottom: '8px' }}
+          />
+          {formik.touched.images && formik.errors.images && (
+            <div style={{ color: errorColor }}>{formik.errors.images}</div>
+          )}
         </Container>
 
         <Container>
