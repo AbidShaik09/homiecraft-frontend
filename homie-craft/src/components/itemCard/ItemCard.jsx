@@ -15,10 +15,8 @@ export default function ItemCard(params) {
 
   const DivWrapper = styled('div')(({ theme }) => ({
 
-    backgroundColor: alpha(theme.palette.secondary.main,1),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.secondary.main)
-    }
+    backgroundColor: theme.palette.secondary.main
+    
   }));
   const navhook = useNavigate()
   const navigateHandler =()=>{
