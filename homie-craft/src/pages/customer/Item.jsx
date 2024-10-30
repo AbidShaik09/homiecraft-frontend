@@ -254,6 +254,7 @@ function Item() {
                       fontWeight: "2px",
                       color: "black",
                       fontSize: "18px",
+                      
                     }}
                   >
                     Quantity:
@@ -261,7 +262,7 @@ function Item() {
                   <IconButton sx={{padding:"0px"}} color="secondary" size="small" onClick={() => {
                       quantityHandler(quantity - 1);
                     }}> 
-                  <RemoveIcon sx={{width:"15px"}}
+                  <RemoveIcon sx={{width:"12px"}}
                   />
                   </IconButton>
 
@@ -287,27 +288,25 @@ function Item() {
                 <Typography sx={{ fontSize: "12px", color: "gray" }}>
                   Max Quantity: {craft[0].quantity}
                 </Typography>
-              </div>
-              <div class="d-flex flex-column">
-                  <Typography
-                    sx={{
-                      fontWeight: "2px",
-                      color: "black",
-                      fontSize: "18px",
-                    }}
-                  >
-                    Payable: {craft[0].price * quantity}
-                  </Typography>
-                  <Typography sx={{ fontSize: "12px", color: "gray" }}>
-                  Payment Method: COD
+                <Typography sx={{ fontSize: "12px", color: "gray" }}>
+                Payable: {craft[0].price * quantity}
                 </Typography>
-                </div>
-              <ButtonPrimary
-                style={{ width: "100%" }}
-                name="Order"
-                action={orderRequestHandler}
+                <Typography sx={{ fontSize: "12px", color: "gray" }}>
+                Payment Method: Cash on delivery
+                </Typography>
+              </div>
+              <div className="d-flex align-items-end">
+
+              <Button
+              variant="contained"
+                sx={{padding: "5px 25px"}}
+                style={{ width: "100%", }}
+                onClick={orderRequestHandler}
                 disabled={quantity == 0}
-              />
+                >
+                Order
+                </Button>
+                </div>
             </Container>
           </Container>
         </Container>
