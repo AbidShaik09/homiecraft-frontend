@@ -20,10 +20,10 @@ const Dashboard = (params) => {
       <Container sx={{ 
         display: 'flex', flexDirection: {
           xs: 'column-reverse', lg: 'row'
-        }, justifyContent: 'space-between', padding: '50px 20px'
+        }, justifyContent: 'space-between', padding: '50px 0px 20px 0px'
       }}>
-        <Container>
-          <Container sx={{ display: 'flex', width: '100%' }}>
+        <Container sx={{display:"flex", flexDirection:{md:"row-reverse",sm:"column",lg:"column",xs:"column"}, width:{md:"100%", lg:"50%"}}}>
+          <Container sx={{ display: 'flex', width: {lg:'100%',sm:"100%",md:"50%",xs:"100%"}}}>
             <LineChart
               xAxis={[
                 {
@@ -45,14 +45,14 @@ const Dashboard = (params) => {
               }}
             />
           </Container>
-          <Container sx={{ display: 'flex', justifyContent: { xs: 'space-between', sm: "space-around" }, flexDirection: { xs: 'column', sm: 'row', md: 'column', lg: 'row' } }}>
-            <Box sx={{ alignSelf: 'center', margin: '7px' }}>
+          <Box sx={{ display: 'flex', justifyContent:{lg:"space-between",md:"space-around",sm:"space-between"}, width:{md:"50%",lg:"100%"}, flexDirection: { xs: 'column', sm: 'row', md: 'column', lg: 'row' }, padding:"7px 0px"}}>
+            <Box sx={{ alignSelf: 'center' }}>
               <DashboardCard heading='Order Requests' content={params.orderRequests.length} link="/orderRequests" />
             </Box>
-            <Box sx={{ alignSelf: 'center', margin: '2px' }}>
-              <DashboardCard heading='Earnings This Month' content={"₹ " + params.earnings.toLocaleString('en-IN')} />
+            <Box sx={{ alignSelf: 'center'}}>
+              <DashboardCard heading='Total Earnings' content={"₹ " + params.earnings.toLocaleString('en-IN')} />
             </Box>
-          </Container>
+          </Box>
 
         </Container>
 

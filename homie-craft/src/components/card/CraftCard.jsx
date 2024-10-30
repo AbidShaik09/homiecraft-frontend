@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Box, Checkbox, FormControlLabel, Modal, Table, TextField } from '@mui/material';
+import { Box, Checkbox, Container, FormControlLabel, Modal, Table, TextField } from '@mui/material';
 import ButtonSecondary from '../button/secondary/ButtonSecondary';
 import ButtonPrimary from '../button/primary/ButtonPrimary';
 import { useState } from 'react';
@@ -81,9 +81,24 @@ export default function CraftCard(params) {
           title={params.name}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>₹{craft.price}</div> <div style={{ fontSize: '1rem', alignSelf: 'center' }}>Qty: <span style={{ color: 'green' }}>{craft.quantity}</span></div>
+          <Box sx={{display:"flex", justifyContent:"space-between"}}>
+          <Box sx={{display:"flex", alignItems:"center", justifyContent:"center"}} >
+          
+          <Typography noWrap gutterBottom variant="h5" component="span" sx={{ margin:"auto",  alignSelf:"center"}}>
+            ₹{craft.price}
           </Typography>
+          </Box>
+          <Box sx={{display:"flex", alignItems:"center"}} >
+            <Typography noWrap sx={{margin:"0px 4px 0px 0px"}}>
+              Qty: 
+            </Typography>
+            <Typography noWrap color='secondary'>
+              {craft.quantity}
+            </Typography>
+          </Box>
+          </Box>
+          
+          
           <Typography noWrap variant="body2" sx={{ color: 'text.secondary', overflow: 'hidden' }}>
             {craft.name}
           </Typography>
