@@ -39,6 +39,7 @@ export default function OrderRequestDataGrid(params) {
            })    }
     const acceptOrderHandler = (orderId) => {
      
+      params.setRows(params.rows.length>0?params.rows.filter(row => row.id !== orderId):[]);
       axios.post(baseUrl + 'orderrequest/approve/' +orderId,{"message":"Accepted"},{
       headers: {
         'Authorization': `Bearer ${token}`
@@ -47,7 +48,6 @@ export default function OrderRequestDataGrid(params) {
          axios.get(baseUrl + 'order/crafter/'+crafterId).then(x=>{
             axios.get(baseUrl + "crafts/crafter/" + crafterId).then(res => {
               params.setCrafts(res.data);
-              params.setRows(params.rows.length>0?params.rows.filter(row => row.id !== orderId):[]);
               
 
            })
@@ -69,31 +69,58 @@ const col = [
   {
     field: 'craftName',
     headerName: 'Craft Name',
-    width: 100
+    width: 250,
+    renderHeader: () => (
+      <strong>
+        Craft Name
+      </strong>
+    ),
   },{
     field: 'quantity',
      type: 'text',
-    headerName: 'Qty',
-    width: 50
-  },
-  {
-    field: 'purchaseMode',
-    headerName: 'Purchase Mode',
-    width: 130
+    headerName: 'Requested Quantity',
+    width: 150,
+    renderHeader: () => (
+      <strong>
+       Requested Quantity
+      </strong>
+    ),
   },{
     field: 'userMessage',
     headerName: 'Customer Message',
-    width: 200
+    width: 150,
+    renderHeader: () => (
+      <strong>
+        Customer Message
+      </strong>
+    ),
+  }
+  ,
+  
+  {
+    field: 'purchaseMode',
+    headerName: 'Purchase Mode',
+    width: 130,
+    renderHeader: () => (
+      <strong>
+        Purchase Mode
+      </strong>
+    ),
   },{
     field: 'createdDate',
     headerName: 'Request Date',
-    width: 120
+    width: 370,
+    renderHeader: () => (
+      <strong>
+        Request Date
+      </strong>
+    ),
   },
   
   {
     field: 'action',
     headerName: 'Action',
-    width: "150",
+    width: "90",
     renderCell: (params) => (
       
       params!=undefined &&
@@ -108,9 +135,15 @@ const col = [
         
       </div>
     ),
+    
+    renderHeader: () => (
+      <strong>
+        Action
+      </strong>
+    ),
   },
 ];
-
+ 
 
   return (
     <Box sx={{ minHeight: 400, width: '100%' }}>
