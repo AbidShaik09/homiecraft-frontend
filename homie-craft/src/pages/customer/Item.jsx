@@ -114,7 +114,7 @@ function Item() {
             quantity: quantity,
             status: "requested",
             price: craft[0].price * quantity,
-            userMessage: userMessage,
+            userMessage:"",
           },
           {
             headers: {
@@ -127,7 +127,6 @@ function Item() {
         });
       setOpen(false);
       setQuantity(0);
-      setPrice(0);
       setUserMessage();
     } else {
     }
@@ -188,7 +187,6 @@ function Item() {
           sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
-            borderBottom: "1px solid lightGray",
             padding: { xs: 0, sm: 1, md: 2, lg: 3, xl: 4 },
             marginBottom: "10px",
           }}
@@ -202,17 +200,42 @@ function Item() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-around",
+              justifyContent: "space-between",
             }}
           >
             <Container>
-              <h3 style={capitalize}>{craft[0].name}</h3>
+            <div class="d-flex flex-column">
+                  <Typography
+                    sx={{
+                      fontWeight: "2px",
+                      color: "black",
+                      fontSize: "25px",
+                    }}
+                  >
+                    {craft[0].name}
+                  </Typography>
+                  <Typography sx={{ fontSize: "15px", color: "gray" }}>
+                  Crafter: {crafter.name}
+                </Typography>
+                </div>
+                <Typography
+                    sx={{
+                      fontWeight: "2px",
+                      color: "black",
+                      fontSize: "25px",
+                    }}
+                  >
+                   ₹ {price}
+                  </Typography>
+              {/* <h3 style={capitalize}>{craft[0].name}</h3>
+                <h3>{"₹ " + craft[0].price}</h3>
+
               <div class="d-flex gap-5">
-                <h2>{"₹ " + craft[0].price}</h2>
-              </div>
-              <p class="mt-2" style={{ lineHeight: "1.5" }}>
+                
+              </div> */}
+              <div className="mt-2 " style={{fontWeight:"1", color: "gray"}}>
                 {craft[0].description}
-              </p>
+              </div>
             </Container>
             <Container
               sx={{
@@ -220,7 +243,7 @@ function Item() {
                 gap: "20px",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "initial",
+                justifyContent: "space-between",
               }}
             >
               <div className="d-flex flex-column">
@@ -245,7 +268,7 @@ function Item() {
                     sx={{
                       fontWeight: "2px",
                       color: "black",
-                      fontSize: "20px",
+                      fontSize: "16px",
                     }}
                   >
                     {quantity}
@@ -262,10 +285,24 @@ function Item() {
                   Max Quantity: {craft[0].quantity}
                 </Typography>
               </div>
+              <div class="d-flex flex-column">
+                  <Typography
+                    sx={{
+                      fontWeight: "2px",
+                      color: "black",
+                      fontSize: "18px",
+                    }}
+                  >
+                    Payable: {craft[0].price * quantity}
+                  </Typography>
+                  <Typography sx={{ fontSize: "12px", color: "gray" }}>
+                  Payment Method: COD
+                </Typography>
+                </div>
               <ButtonPrimary
                 style={{ width: "100%" }}
-                name="Request Order"
-                action={handleClickOpenHome}
+                name="Order"
+                action={orderRequestHandler}
                 disabled={quantity == 0}
               />
             </Container>
@@ -279,89 +316,9 @@ function Item() {
             justifyContent: "space-around",
           }}
         >
-          <Container
-            sx={{
-              maxWidth: { xs: "100%", lg: "50%" },
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <h3>Purchase Options</h3>
-            <Container
-              sx={{
-                gap: "20px",
-                display: "flex",
-                flexDirection: {
-                  xs: "column",
-                  sm: "row",
-                  lg: "row",
-                  xl: "row",
-                },
-                alignItems: "center",
-                justifyContent: "space-around",
-              }}
-            >
-              <ButtonPrimary
-                style={{ width: "100%" }}
-                name="Home Delivery"
-                action={handleClickOpenHome}
-              />
-              {craft[0].pickUpFromCrafter == true ? (
-                <ButtonPrimary
-                  style={{ width: "100%" }}
-                  name="Pick from Crafter"
-                  action={handleClickOpenPick}
-                />
-              ) : (
-                <ButtonPrimary disabled name="Pick Up From Crafter" />
-              )}
-            </Container>
-          </Container>
-
-          <Container>
-            <h3 style={{ marginLeft: "40px" }}>Crafter Details:</h3>
-            <Container
-              sx={{
-                display: "flex",
-                flexDirection: {
-                  xs: "column-reverse",
-                  sm: "col",
-                  md: "col",
-                  lg: "col",
-                },
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Container>
-                <div>
-                  <div class="d-flex ">
-                    <p>Crafter Name:</p>
-                    <h5 style={capitalize}>{crafter.name}</h5>
-                  </div>
-                  <div class="d-flex">
-                    House Number:<h5>{crafter.houseNumber}</h5>
-                  </div>
-                  <div class="d-flex">
-                    City:<h5>{crafter.city}</h5>
-                  </div>
-                  <div class="d-flex">
-                    State:<h5>{crafter.state}</h5>
-                  </div>
-                </div>
-              </Container>
-
-              <Container sx={{ alignSelf: "center" }}>
-                {/* <img style={{width:'100px', height:'100px',maxHeight:'125px',maxWidth:'125px',objectFit:'cover',borderRadius:'50%',padding:'1px'}} src={crafter.profilePicUrl} alt="" class="w-10 h-10"/> */}
-              </Container>
-            </Container>
-          </Container>
         </Container>
-
-        <hr></hr>
         <Container>
-          <Container sx={{ margin: "40px" }}>
+          {/* <Container sx={{ margin: "40px" }}>
             {userType == "customer" && (
               <Container>
                 <Typography
@@ -387,29 +344,45 @@ function Item() {
                 </Container>
               </Container>
             )}
-          </Container>
+          </Container> */}
           <Container
             sx={{
-              borderRadius: "10px",
-              boxShadow: "0px 0px 10px 0px",
-              width: "70vw",
+              borderRadius: "0px",
+              width: "100%",
               marginBottom: "20px",
             }}
           >
-            <Container>
-              <Typography
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+              {/* <Typography
                 variant="h5"
                 sx={{
+                  fontSize: "25px",
                   paddingTop: "10px",
+                  marginLeft: "6px",
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "initial",
                   alignItems: "center",
                 }}
               >
                 Comments
-              </Typography>
-            </Container>
-            <hr />
+              </Typography> */}
+              <Container sx={{ display: "flex", alignItems:"initial", margin:"20px 0px", maxHeight:"35px"}}>
+                  <TextField
+                    placeholder="Write your comments here..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    sx={{
+                      marginRight: "10px",
+                      padding:"0px 10px",
+                      borderRadius: "10px",
+                    }}
+                  />
+                  <ButtonPrimary action={handleAddComment} name={"comment"}/>
+                </Container>
+            </div>
             {comments.length === 0 ? (
               <Typography
                 sx={{
