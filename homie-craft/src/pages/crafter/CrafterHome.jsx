@@ -100,7 +100,7 @@ function CrafterHome() {
           </IconButton>
             </Container>
             <Container sx={{ display: 'flex', padding: '20px 0px' }}>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: {xs:"center",sm:'start',md:"start"} }}>
                 <>
                 {
                   crafts.length > 0 ?
@@ -117,7 +117,7 @@ function CrafterHome() {
                     : <Typography>-No crafts found-</Typography>
                 }
               </>
-              </div>
+              </Box>
 
 
 

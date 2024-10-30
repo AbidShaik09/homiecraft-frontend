@@ -6,7 +6,7 @@ function Comment(params) {
     return (
         <div style={{display:"flex", flexDirection:"row", margin:"15px 0px", padding:"0px"}}>
             <Container sx={{width:"100px", margin:"0px"}}>
-            <Box component="img" sx={{mariginTop:"4px", display: "flex", height: "30",width: "30", borderRadius:"100%", maxHeight: { xs: 30, md: 30 },maxWidth: { xs: 30, md: 30 }}} alt={"https://th.bing.com/th?id=OIP.jixXH_Els1MXBRmKFdMQPAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2"} src={"https://th.bing.com/th?id=OIP.jixXH_Els1MXBRmKFdMQPAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2"}/>
+            <Box component="img" sx={{mariginTop:"4px", display: "flex", height: "30",width: "30", borderRadius:"100%", maxHeight: { xs: 30, md: 30 },maxWidth: { xs: 30, md: 30 }}} alt={"https://th.bing.com/th?id=OIP.jixXH_Els1MXBRmKFdMQPAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2"} src={c.userPic}/>
 
             </Container>
             {/* <div style={{width:"100px", display:"flex", alignItems:"initial"}}> */}
