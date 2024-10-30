@@ -15,12 +15,9 @@ function AddCraft() {
     const files = Array.from(event.target.files);
     setImageFiles(files);
 
-    // Reset the image error if enough images are uploaded
     if (files.length >= 2) {
-      formik.setFieldError('images', undefined); // Clear the error
-      formik.setFieldValue('images', files); // Update the formik value
-    } else {
-      formik.setFieldValue('images', []); // Reset if less than 2 images
+      formik.setFieldError('images', undefined); 
+      formik.setFieldValue('images', files); 
     }
   };
 
@@ -87,7 +84,7 @@ function AddCraft() {
           sx={{ 
             display: 'flex', 
             flexDirection: 'column', 
-            alignItems: 'center' 
+            alignItems: 'center',
           }}
         >
           <label htmlFor="files"><b>Upload Files</b></label>
@@ -96,10 +93,10 @@ function AddCraft() {
             type="file"
             multiple
             onChange={handleFileChange}
-            style={{ display: 'block', marginTop: '8px', marginBottom: '8px' }}
+            style={{display: 'block', marginTop: '8px', marginBottom: '8px' }}
           />
           {formik.touched.images && formik.errors.images && (
-            <div style={{ color: 'red' }}>{formik.errors.images}</div>
+            <div style={{ color: 'red' }}> {formik.errors.images}</div> 
           )}
         </Container>
 
@@ -114,7 +111,9 @@ function AddCraft() {
               value={formik.values.name}
               onChange={formik.handleChange}
               error={formik.touched.name && Boolean(formik.errors.name)}
-              helperText={formik.touched.name && formik.errors.name}
+              helperText={formik.touched.name && formik.errors.name && (
+                <span style={{ color: 'red' }}>{formik.errors.name}</span> // Consistent error color
+              )}
             />
           </Container>
 
@@ -129,7 +128,9 @@ function AddCraft() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.price && Boolean(formik.errors.price)}
-              helperText={formik.touched.price && formik.errors.price}
+              helperText={formik.touched.price && formik.errors.price && (
+                <span style={{ color: 'red' }}>{formik.errors.price}</span> // Consistent error color
+              )}
             />
           </Container>
 
@@ -142,7 +143,9 @@ function AddCraft() {
               value={formik.values.material}
               onChange={formik.handleChange}
               error={formik.touched.material && Boolean(formik.errors.material)}
-              helperText={formik.touched.material && formik.errors.material}
+              helperText={formik.touched.material && formik.errors.material && (
+                <span style={{ color: 'red' }}>{formik.errors.material}</span> // Consistent error color
+              )}
             />
           </Container>
 
@@ -158,7 +161,9 @@ function AddCraft() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.description && Boolean(formik.errors.description)}
-              helperText={formik.touched.description && formik.errors.description}
+              helperText={formik.touched.description && formik.errors.description && (
+                <span style={{ color: 'red' }}>{formik.errors.description}</span> // Consistent error color
+              )}
             />
           </Container>
 
@@ -173,7 +178,9 @@ function AddCraft() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.quantity && Boolean(formik.errors.quantity)}
-              helperText={formik.touched.quantity && formik.errors.quantity}
+              helperText={formik.touched.quantity && formik.errors.quantity && (
+                <span style={{ color: 'red' }}>{formik.errors.quantity}</span> // Consistent error color
+              )}
             />
           </Container>
 
