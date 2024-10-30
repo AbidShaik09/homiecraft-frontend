@@ -15,7 +15,7 @@ export default function ItemCard(params) {
 
   const DivWrapper = styled('div')(({ theme }) => ({
 
-    backgroundColor: theme.palette.secondary.main
+   // backgroundColor: theme.palette.secondary.main
     
   }));
   const navhook = useNavigate()
