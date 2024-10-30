@@ -49,7 +49,6 @@ export default function CraftCard(params) {
       name: craft.name,
       price: craft.price,
       quantity : craft.quantity,
-      pickUpFromCrafter: craft.pickUpFromCrafter,
       description: craft.description,
       isAvailable: craft.isAvailable
     },
@@ -58,7 +57,7 @@ export default function CraftCard(params) {
         craft.name = values.name,
         craft.price = values.price,
         craft.quantity = values.quantity,
-        craft.pickUpFromCrafter = values.pickUpFromCrafter,
+        craft.pickUpFromCrafter = false,
         craft.description=values.description,
         craft.isAvailable = values.isAvailable
       )
@@ -174,20 +173,7 @@ export default function CraftCard(params) {
               </td>
             </tr>
             <tr className=' '>
-            <td className='bold  grey '>
-              <FormControlLabel
-            control={
-              <Checkbox
-                id="pickUpFromCrafter"
-                name="pickUpFromCrafter"
-                 onChange={formik.handleChange}
-                checked={formik.values.pickUpFromCrafter}
-                disabled= {!isEdit}
-              />
-            }
-            label="Pick up from crafter"
-          />
-              </td>
+           
               <td className='bold  grey '>
               <FormControlLabel
             control={

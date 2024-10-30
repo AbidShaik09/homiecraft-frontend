@@ -104,7 +104,7 @@ function CustomerProfile() {
             name="files"
             type="file"
             onChange={handleFileChange}
-            inputProps={{ accept: "image/*" }} // Accept only image files
+            inputProps={{ accept: "image/*" }} 
           />
         </div>
 
