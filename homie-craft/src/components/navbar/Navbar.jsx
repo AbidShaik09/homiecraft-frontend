@@ -256,13 +256,24 @@ const theme = useTheme()
             {userType!=null && userType!="" && (
               <>
              
-                {userType=="customer" && <IconButton
+             {userType=="customer" && <IconButton
                   size="large"
                   edge="end"
                   aria-label="orders"
                   aria-controls={menuId}
                   aria-haspopup="false"
                   onClick={() => navigate('/orders')}
+                  color="inherit"
+                >
+                  <LocalShippingIcon />
+                </IconButton>}
+                {userType=="crafter" && <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="orders"
+                  aria-controls={menuId}
+                  aria-haspopup="false"
+                  onClick={() => navigate('/orderHistory')}
                   color="inherit"
                 >
                   <LocalShippingIcon />

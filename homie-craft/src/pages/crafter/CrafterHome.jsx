@@ -1,4 +1,4 @@
-import { Box, Button, Card, Container, Divider, Typography } from '@mui/material'
+import { Box, Button, Card, Container, Divider, IconButton, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import DashboardCard from '../../components/card/DashboardCard'
 import SalesGraph from '../../components/barGraph/SalesGraph';
@@ -16,6 +16,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import DataGridDemo from '../../components/datagrids/DataGridDemo';
 import ActiveOrders from '../../components/crafter/ActiveOrders';
+import ItemHolder from '../../components/itemHolder/ItemHolder';
 
 function CrafterHome() {
   
@@ -82,22 +83,23 @@ function CrafterHome() {
   
   
   return (
-    <>
+    <Box sx={{padding:""}}>
       <Dashboard activeOrders={activeOrders} salesData={salesData} rating={4} earnings={earnings} orderRequests = {orderRequests} />
       <Divider />
       <Container sx={{  display: 'flex', flexDirection: { xl: 'row', l: 'row', s: 'row', xs:'column-reverse',md:'row',padding:'0' }}}>
         <br/>
       
-        <Container sx={{ width: { xs: '100%', sm: '100%', md: '55%', padding:"0px"} }} >
+        <Container sx={{ width: '100%' }} >
           <Card sx={{ display: 'flex', marginTop: '50px', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '40px 0px' }}>
-          <Container sx={{display:'flex', width:"100%", justifyContent:"space-between"}}>
+          <Container sx={{display:'flex', alignItems:"center"}}>
             
           <Typography variant='h5'>My Crafts</Typography>
-          <Button variant="contained" onClick={addHandler} startIcon={<AddCircleOutlineIcon />}>
-          Add
-          </Button>
+          
+          <IconButton aria-label="add c" onClick={addHandler} color="primary">
+          <AddCircleOutlineIcon />
+          </IconButton>
             </Container>
-            <Container sx={{ display: 'flex', justifyContent: 'center', padding: '20px 0px' }}>
+            <Container sx={{ display: 'flex', padding: '20px 0px' }}>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
                 <>
                 {
@@ -116,11 +118,19 @@ function CrafterHome() {
                 }
               </>
               </div>
+
+
+
             </Container>
+            
           </Card>
+          
+        
+
         </Container>
       </Container>
-    </>
+      
+      </Box>
   )
 }
 
