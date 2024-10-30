@@ -17,18 +17,18 @@ import axios from 'axios';
 import ShowSearch from '../ShowSearch';
 import { useHomieCraftContext } from '../../context/HomieCraftContext';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { ClickAwayListener } from '@mui/material';
+import { Button, capitalize, ClickAwayListener } from '@mui/material';
 import { useTheme } from '@emotion/react';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: "#BFECFF",
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
   marginLeft: 5,
-  width: '100%',
+  width: '200%',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
     width: 'auto',
@@ -147,6 +147,9 @@ const theme = useTheme()
     setAlignment(newAlignment);
   };
   
+  const capitalize={
+    textTransform: "capitalize"
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -163,6 +166,7 @@ const theme = useTheme()
         horizontal: 'right',
       }}
       sx={{
+        marginTop:"46px",
         '& .MuiPaper-root': {
           backgroundColor: OrangeTheme.palette.primary.text,
         },
@@ -206,7 +210,7 @@ const theme = useTheme()
     <MenuItem onClick={() => window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
               }>
   <Typography variant="h6" noWrap component="div">
-    Login/Signup
+    Login
   </Typography>
 </MenuItem>
     </>
@@ -219,7 +223,7 @@ const theme = useTheme()
       navigate(`/`);
     }
   }, []);
-
+  // const theme = useTheme();
   return (
     <Box sx={{ flexGrow: 1 ,backgroundColor: theme.palette.paper}}>
       <AppBar position="static">
@@ -236,13 +240,13 @@ const theme = useTheme()
           
           {!isCrafter? <>
           <ClickAwayListener onClickAway={handleClickAway}>
-          <Search>
+          <Search sx={{minWidth:"500px"}}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             
             <StyledInputBase
-              
+              sx={{width: "100%"}}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               value={search}
@@ -256,13 +260,24 @@ const theme = useTheme()
             {userType!=null && userType!="" && (
               <>
              
-                {userType=="customer" && <IconButton
+             {userType=="customer" && <IconButton
                   size="large"
                   edge="end"
                   aria-label="orders"
                   aria-controls={menuId}
                   aria-haspopup="false"
                   onClick={() => navigate('/orders')}
+                  color="inherit"
+                >
+                  <LocalShippingIcon />
+                </IconButton>}
+                {userType=="crafter" && <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="orders"
+                  aria-controls={menuId}
+                  aria-haspopup="false"
+                  onClick={() => navigate('/orderHistory')}
                   color="inherit"
                 >
                   <LocalShippingIcon />
@@ -284,13 +299,13 @@ const theme = useTheme()
                 <AccountCircle />
               </IconButton>
             ) : (
-              <MenuItem onClick={() => window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
-              }>
-                <Typography variant="h6" noWrap component="div">
-                  Login
-                </Typography>
-              </MenuItem>
-
+              // <MenuItem onClick={() => window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
+              // }>
+              //   <Typography variant="h6" noWrap component="div">
+              //     Login
+              //   </Typography>
+              // </MenuItem>
+              <Button onClick={() => window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"} variant="contained"  sx={{bgcolor: "#BFECFF" , fontSize:"15px"}} style={capitalize} >Login</Button>
             )}
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

@@ -4,24 +4,27 @@ import React, { Component } from 'react'
 function Comment(params) {
     var c = params.comment
     return (
-        <Container sx={{display:"flex", flexDirection:"row"}}>
-            <Container sx={{width:"100px"}}>
-            <Box component="img" sx={{height: 50,width: 50,maxHeight: { xs: 70, md: 100 },maxWidth: { xs: 70, md: 100 }}} alt={"https://th.bing.com/th?id=OIP.jixXH_Els1MXBRmKFdMQPAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2"} src={c.userPic}/>
-            
+        <div style={{display:"flex", flexDirection:"row", margin:"15px 0px", padding:"0px"}}>
+            <Container sx={{width:"100px", margin:"0px"}}>
+            <Box component="img" sx={{mariginTop:"4px", display: "flex", height: "30",width: "30", borderRadius:"100%", maxHeight: { xs: 30, md: 30 },maxWidth: { xs: 30, md: 30 }}} alt={"https://th.bing.com/th?id=OIP.jixXH_Els1MXBRmKFdMQPAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2"} src={c.userPic}/>
+
             </Container>
+            {/* <div style={{width:"100px", display:"flex", alignItems:"initial"}}> */}
+            {/* <img alt={"https://th.bing.com/th?id=OIP.jixXH_Els1MXBRmKFdMQPAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2"} src={"https://th.bing.com/th?id=OIP.jixXH_Els1MXBRmKFdMQPAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2"} width={"100px"} height={"100"}></img> */}
+            {/* </div> */}
             
             
-            <Container>
-            <Typography variant='h6'>
+            <div style={{display: "flex", flexDirection:"column", alignItems: "initial", justifyContent:"center"}}>
+            <Typography sx={{fontSize: "18px"}}>
                 User{c.userId}
             </Typography>
-            <Typography sx={{marginLeft:"10px"}}>
+            <Typography sx={{ fontSize: "15px", color: "gray" }}>
                 {c.comment}
             </Typography>
 
-            </Container>
+            </div>
             
-        </Container>
+        </div>
     )
 }
 

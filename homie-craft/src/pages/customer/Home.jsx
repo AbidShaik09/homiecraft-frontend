@@ -14,9 +14,10 @@ const Home = () => {
   const banner={img1:'http://localhost:5265/images/carousal1.png',"img2":'http://localhost:5265/images/carousal2.jpg'}
   return (
     <>
+
 <Container className="m-auto mt-3 rounded">
   <Banner 
-    image='http://localhost:5265/images/c1.jpg' 
+    image='http://localhost:5265/images/c3.jpg' 
     
   />
 </Container>
