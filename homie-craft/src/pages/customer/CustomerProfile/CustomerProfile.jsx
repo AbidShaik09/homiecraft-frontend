@@ -76,8 +76,9 @@ function CustomerProfile() {
         Profile
       </Typography>
       
-      <Box component="form" onSubmit={formik.handleSubmit} noValidate>
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+      <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ display: 'flex' }}>
+        {/* Left Section for Profile Picture and Upload */}
+        <Box sx={{ flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center', mr: 2 }}>
           <div style={{
             width: '100px',
             height: '100px',
@@ -96,95 +97,99 @@ function CustomerProfile() {
               </span>
             )}
           </div>
-        </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-          <label htmlFor="files">Update Profile Pic?</label>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
+            <label htmlFor="files">Update Profile Pic?</label>
+            <TextField
+              name="files"
+              type="file"
+              onChange={handleFileChange}
+              inputProps={{ accept: "image/*" }} 
+              sx={{ marginLeft: 1 }}
+            />
+          </div>
+        </Box>
+
+        {/* Right Section for Input Fields */}
+        <Box sx={{ flex: '2' }}>
           <TextField
-            name="files"
-            type="file"
-            onChange={handleFileChange}
-            inputProps={{ accept: "image/*" }} 
+            fullWidth
+            label="Full Name"
+            id="name"
+            name="name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
+            margin="normal"
           />
-        </div>
 
-        <TextField
-          fullWidth
-          label="Full Name"
-          id="name"
-          name="name"
-          value={formik.values.name}
-          onChange={formik.handleChange}
-          error={formik.touched.name && Boolean(formik.errors.name)}
-          helperText={formik.touched.name && formik.errors.name}
-          margin="normal"
-        />
+          <TextField
+            fullWidth
+            label="Mobile No"
+            id="mobile"
+            name="mobile"
+            value={formik.values.mobile}
+            disabled
+            onChange={formik.handleChange}
+            error={formik.touched.mobile && Boolean(formik.errors.mobile)}
+            helperText={formik.touched.mobile && formik.errors.mobile}
+            margin="normal"
+          />
 
-        <TextField
-          fullWidth
-          label="Mobile No"
-          id="mobile"
-          name="mobile"
-          value={formik.values.mobile}
-          disabled
-          onChange={formik.handleChange}
-          error={formik.touched.mobile && Boolean(formik.errors.mobile)}
-          helperText={formik.touched.mobile && formik.errors.mobile}
-          margin="normal"
-        />
+          <TextField
+            fullWidth
+            label="House Number"
+            id="houseNumber"
+            name="houseNumber"
+            value={formik.values.houseNumber}
+            onChange={formik.handleChange}
+            error={formik.touched.houseNumber && Boolean(formik.errors.houseNumber)}
+            helperText={formik.touched.houseNumber && formik.errors.houseNumber}
+            margin="normal"
+          />
 
-        <TextField
-          fullWidth
-          label="House Number"
-          id="houseNumber"
-          name="houseNumber"
-          value={formik.values.houseNumber}
-          onChange={formik.handleChange}
-          error={formik.touched.houseNumber && Boolean(formik.errors.houseNumber)}
-          helperText={formik.touched.houseNumber && formik.errors.houseNumber}
-          margin="normal"
-        />
+          <TextField
+            fullWidth
+            label="City"
+            id="city"
+            name="city"
+            value={formik.values.city}
+            onChange={formik.handleChange}
+            error={formik.touched.city && Boolean(formik.errors.city)}
+            helperText={formik.touched.city && formik.errors.city}
+            margin="normal"
+          />
 
-        <TextField
-          fullWidth
-          label="City"
-          id="city"
-          name="city"
-          value={formik.values.city}
-          onChange={formik.handleChange}
-          error={formik.touched.city && Boolean(formik.errors.city)}
-          helperText={formik.touched.city && formik.errors.city}
-          margin="normal"
-        />
+          <TextField
+            fullWidth
+            label="State"
+            id="state"
+            name="state"
+            value={formik.values.state}
+            onChange={formik.handleChange}
+            error={formik.touched.state && Boolean(formik.errors.state)}
+            helperText={formik.touched.state && formik.errors.state}
+            margin="normal"
+          />
 
-        <TextField
-          fullWidth
-          label="State"
-          id="state"
-          name="state"
-          value={formik.values.state}
-          onChange={formik.handleChange}
-          error={formik.touched.state && Boolean(formik.errors.state)}
-          helperText={formik.touched.state && formik.errors.state}
-          margin="normal"
-        />
+          <TextField
+            fullWidth
+            label="Pincode"
+            id="pinCode"
+            name="pinCode"
+            type="number"
+            value={formik.values.pinCode}
+            onChange={formik.handleChange}
+            error={formik.touched.pinCode && Boolean(formik.errors.pinCode)}
+            helperText={formik.touched.pinCode && formik.errors.pinCode}
+            margin="normal"
+          />
 
-        <TextField
-          fullWidth
-          label="Pincode"
-          id="pinCode"
-          name="pinCode"
-          type="number"
-          value={formik.values.pinCode}
-          onChange={formik.handleChange}
-          error={formik.touched.pinCode && Boolean(formik.errors.pinCode)}
-          helperText={formik.touched.pinCode && formik.errors.pinCode}
-          margin="normal"
-        />
-
-        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
-          Submit
-        </Button>
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+            Submit
+          </Button>
+        </Box>
       </Box>
     </Container>
   );
