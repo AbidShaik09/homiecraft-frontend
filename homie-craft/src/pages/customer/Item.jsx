@@ -392,7 +392,7 @@ function Item() {
                   height: "10vh",
                 }}
               >
-                --No Comments--
+                
               </Typography>
             ) : (
               comments.map((comment) => {
