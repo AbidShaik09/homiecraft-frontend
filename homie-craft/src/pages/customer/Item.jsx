@@ -111,7 +111,7 @@ function Item() {
             userId: localStorage.getItem("id"),
             craftId: id,
             crafterId: craft[0].crafterId,
-            purchaseMode: purchaseMode,
+            purchaseMode: "COD",
             quantity: quantity,
             status: "requested",
             price: craft[0].price * quantity,
