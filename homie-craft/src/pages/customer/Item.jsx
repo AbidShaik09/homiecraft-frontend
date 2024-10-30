@@ -10,6 +10,7 @@ import {
   capitalize,
   Container,
   Fab,
+  IconButton,
   Snackbar,
   TextField,
   Typography,
@@ -257,13 +258,14 @@ function Item() {
                   >
                     Quantity:
                   </Typography>
-                  <RemoveIcon
-                    sx={{ color: "black", width: "15px" }}
-                    type="button"
-                    onClick={() => {
+                  <IconButton sx={{padding:"0px"}} color="secondary" size="small" onClick={() => {
                       quantityHandler(quantity - 1);
-                    }}
+                    }}> 
+                  <RemoveIcon sx={{width:"15px"}}
                   />
+                  </IconButton>
+
+                 
                   <Typography
                     sx={{
                       fontWeight: "2px",
@@ -273,13 +275,14 @@ function Item() {
                   >
                     {quantity}
                   </Typography>
-                  <AddIcon
-                    sx={{ color: "black", width: "15px" }}
-                    type="submit"
-                    onClick={() => {
+
+                  <IconButton sx={{padding:"0px"}} color="secondary" size="small" onClick={() => {
                       quantityHandler(quantity + 1);
-                    }}
+                    }}> 
+                  <AddIcon sx={{width:"15px"}}
                   />
+                  </IconButton>
+                  
                 </div>
                 <Typography sx={{ fontSize: "12px", color: "gray" }}>
                   Max Quantity: {craft[0].quantity}

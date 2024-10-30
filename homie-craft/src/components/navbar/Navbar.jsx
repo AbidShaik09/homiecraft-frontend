@@ -236,13 +236,12 @@ const theme = useTheme()
           
           {!isCrafter? <>
           <ClickAwayListener onClickAway={handleClickAway}>
-          <Search>
+          <Search >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             
             <StyledInputBase
-              
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
               value={search}
