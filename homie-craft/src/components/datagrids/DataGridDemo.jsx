@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 
 export default function DataGridDemo(params) {
   const activeOrderColumns = [
-    { field: 'CraftName', headerName: 'Craft Name', width: 200,
+    { field: 'CraftName', headerName: 'Craft Name', width: 170,
       renderHeader: () => (
         <strong>
           Craft Name
@@ -12,30 +12,49 @@ export default function DataGridDemo(params) {
 
 
      },
-    { field: 'Qty', headerName: 'Qty', width: 30, editable: false ,renderHeader: () => (
+    { field: 'Qty', headerName: 'Qty', width: 20, editable: false ,
+      
+      renderCell: (params) => (
+      
+        params!=undefined &&
+        <div style={{display:"flex", justifyContent:"end"}}>
+          {params.value}
+          
+        </div>
+      ),
+
+      renderHeader: () => (
       <strong>
         Qty
       </strong>
     ),},
-    { field: 'Status', headerName: 'Status', width: 150, editable: false ,
+    { field: 'Status', headerName: 'Status', width: 155, editable: false ,
       renderHeader: () => (
         <strong>
           Status
         </strong>
       ),
     },
-    { field: 'Payment', headerName: 'Payment', width: 85, editable: false,
+    { field: 'Payment', headerName: 'Payment', width: 80, editable: false,
       renderHeader: () => (
         <strong>
           Payment
         </strong>
       ),
      },
-    { field: 'Price', headerName: 'Price', width: 75, editable: false ,
+    { field: 'Price', headerName: 'Price', width: 85, editable: false ,
       renderHeader: () => (
         <strong>
           Price
         </strong>
+      ),
+      renderCell: (params) => (
+      
+        params!=undefined &&
+        <div style={{display:"flex", justifyContent:"end"}}>
+          {params.value}
+          
+        </div>
       ),
      },
   ];

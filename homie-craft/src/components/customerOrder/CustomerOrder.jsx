@@ -116,7 +116,7 @@ function CustomerOrder(params) {
                         <Typography>:</Typography>
                     </Box>
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-around",height:"175px"}}>
-                        <Typography>{order.status === "Accepted" ? <span style={{ color: "orange" }}><b>Accepted</b></span> : order.status === "Picked Up By Corrier" && !isDelivered ? <span style={{ color: "orange" }}><b>Out for delivery</b></span> : <span style={{ color: "green" }}><b>Delivered</b></span>}</Typography>
+                        <Typography>{order.status === "Accepted" ? <span style={{ color: "orange" }}><b>Accepted</b></span> : order.status === "Picked Up By Courier" && !isDelivered ? <span style={{ color: "orange" }}><b>Out for delivery</b></span> : <span style={{ color: "green" }}><b>Delivered</b></span>}</Typography>
                         <Typography>{order.quantity}</Typography>
                         <Typography>{'₹ '+craft[0].price*order.quantity}</Typography>
                         <Typography>{format(new Date(order.createdDate), 'PP')}</Typography>
@@ -154,7 +154,7 @@ function CustomerOrder(params) {
                         
                     </Box>
                     </Box>
-                {order.status === "Picked Up By Corrier" && !isDelivered ? <ButtonPrimary action={corrierHandler} name="Mark As Received" />:<></>}
+                {order.status === "Picked Up By Courier" && !isDelivered ? <ButtonPrimary action={corrierHandler} name="Mark As Received" />:<></>}
                     
                 </Box>
                 </>

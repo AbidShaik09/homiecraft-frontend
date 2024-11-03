@@ -15,7 +15,11 @@ function OrderDetails(params) {
     const navigate = useNavigate()
     
     const corrierHandler = () => {
-        axios.put(`${baseURL}order/delivered/${order.orderID}`).then(() => {setIsDelivered(true); setSnackOpen(true); });
+        axios.put(`${baseURL}order/transit/${order.orderID}`).then(() => {setIsPicked(true);setOrder(prevOrder => ({
+            ...prevOrder,
+            status: "Picked Up By Courier"
+        }))
+        ; setSnackOpen(true); });
     };
 
     const capitalize = {
@@ -116,7 +120,7 @@ function OrderDetails(params) {
                         <Typography>:</Typography>
                     </Box>
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-around",height:"175px"}}>
-                        <Typography  >{order.status === "Accepted" ? <span style={{ color: "orange" }}><b>Accepted</b></span> : order.status === "Picked Up By Corrier" && !isDelivered ? <span style={{ color: "orange" }}><b>Out for delivery</b></span> : <span style={{ color: "green" }}><b>Picked Up</b></span>}</Typography>
+                        <Typography  >{order.status === "Accepted" ? <span style={{ color: "orange" }}><b>Accepted</b></span> : order.status === "Picked Up By Courier" && !isDelivered ? <span style={{ color: "orange" }}><b>Out for delivery</b></span> : <span style={{ color: "green" }}><b>Delivered</b></span>}</Typography>
                         <Typography>{order.quantity}</Typography>
                         <Typography>{'₹ '+craft[0].price*order.quantity}</Typography>
                         <Typography>{format(new Date(order.createdDate), 'PP')}</Typography>

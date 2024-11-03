@@ -32,6 +32,7 @@ function CrafterOrderRequests() {
         let res=q.data
         for(let i=0;i<res.length;i++){
           res[i].createdDate = format(new Date(res[i].createdDate), 'dd/MM/yyyy')
+          res[i].price = "₹ " + res[i].price.toLocaleString('en-IN')
         }
        setRows(res.filter(f => f.status == "requested"));
     }).then(axios.get(baseUrl + "crafts/crafter/" + crafterId).then(res => {
