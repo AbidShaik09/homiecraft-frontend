@@ -62,7 +62,12 @@ function CrafterHome() {
       }}).then(res => {
       let x= res.data
       setOrders(x);
-      setActiveOrders(x.filter(o=>o.isActive==true))
+      
+      let rest=x;
+      for(let i=0;i<rest.length;i++){
+        rest[i].price = "₹ " + rest[i].price.toLocaleString('en-IN')
+      }
+      setActiveOrders(rest.filter(o=>o.isActive==true))
       
     })
 

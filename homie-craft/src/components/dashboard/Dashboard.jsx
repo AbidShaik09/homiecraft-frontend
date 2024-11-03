@@ -12,7 +12,7 @@ import ActiveOrders from "../crafter/ActiveOrders";
 const Dashboard = (params) => {
   const theme = useTheme()
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
+  
 
   return <div>
     <Container sx={{ padding: { xs: '0', sm: 'auto' } }} >
@@ -25,12 +25,7 @@ const Dashboard = (params) => {
         <Container sx={{display:"flex", flexDirection:{md:"row-reverse",sm:"column",lg:"column",xs:"column"}, width:{md:"100%", lg:"50%"}}}>
           <Container sx={{ display: 'flex', width: {lg:'100%',sm:"100%",md:"50%",xs:"100%"}}}>
             <LineChart
-              xAxis={[
-                {
-                  data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                  label: 'Month',
-                },
-              ]}
+              xAxis={[{ scaleType: 'point', data: months }]}
               series={[
                 {
                   data: params.salesData,

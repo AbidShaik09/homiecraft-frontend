@@ -80,18 +80,34 @@ const col = [
      type: 'text',
     headerName: 'Requested Quantity',
     width: 150,
+    renderCell: (params) => (
+      
+      params!=undefined &&
+      <div style={{display:"flex", justifyContent:"end"}}>
+        {params.value}
+        
+      </div>
+    ),
     renderHeader: () => (
       <strong>
        Requested Quantity
       </strong>
     ),
   },{
-    field: 'userMessage',
-    headerName: 'Customer Message',
-    width: 150,
+    field: 'price',
+    headerName: 'Price',
+    width: 200,
+    renderCell: (params) => (
+      
+      params!=undefined &&
+      <div style={{display:"flex", justifyContent:"end"}}>
+        {params.value}
+        
+      </div>
+    ),
     renderHeader: () => (
       <strong>
-        Customer Message
+        Price
       </strong>
     ),
   }
@@ -100,7 +116,7 @@ const col = [
   {
     field: 'purchaseMode',
     headerName: 'Purchase Mode',
-    width: 130,
+    width: 200,
     renderHeader: () => (
       <strong>
         Purchase Mode
@@ -109,7 +125,7 @@ const col = [
   },{
     field: 'createdDate',
     headerName: 'Request Date',
-    width: 370,
+    width: 170,
     renderHeader: () => (
       <strong>
         Request Date
@@ -120,7 +136,7 @@ const col = [
   {
     field: 'action',
     headerName: 'Action',
-    width: "90",
+    width: "130",
     renderCell: (params) => (
       
       params!=undefined &&
@@ -137,9 +153,12 @@ const col = [
     ),
     
     renderHeader: () => (
-      <strong>
-        Action
+      <div style={{display:"flex", justifyContent:"center"}}>
+         <strong >
+        Accept/ Reject
       </strong>
+      </div>
+     
     ),
   },
 ];
