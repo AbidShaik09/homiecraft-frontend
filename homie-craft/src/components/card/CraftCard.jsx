@@ -83,7 +83,7 @@ export default function CraftCard(params) {
           <Box sx={{display:"flex", justifyContent:"space-between"}}>
           <Box sx={{display:"flex", alignItems:"center", justifyContent:"center"}} >
           
-          <Typography noWrap gutterBottom variant="h5" component="span" sx={{ margin:"auto",  alignSelf:"center"}}>
+          <Typography noWrap gutterBottom variant="h6" component="span" sx={{ margin:"auto",  alignSelf:"center"}}>
              {"₹ " + craft.price.toLocaleString('en-IN')}
           </Typography>
           </Box>
