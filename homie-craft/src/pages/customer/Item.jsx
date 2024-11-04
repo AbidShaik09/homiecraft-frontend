@@ -25,17 +25,19 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import Comment from "../../components/comments/Comment";
+import { useHomieCraftContext } from "../../context/HomieCraftContext";
 
 function Item() {
   let { id } = useParams();
+  
+  const {token, setToken,userType,setUserType} = useHomieCraftContext();
+  console.log("Token: ")
   const [craft, setCraft] = useState({});
   const [price, setPrice] = useState();
   const [crafter, setCrafter] = useState({});
   const [open, setOpen] = useState(false);
   const [comments, setComments] = useState([]);
   const navigate = useNavigate();
-  let token = localStorage.getItem("token");
-  let userType = localStorage.getItem("userType");
   const handleClickOpenHome = () => {
     if (localStorage.getItem("userType") == "customer") {
       setOpen(true);
@@ -64,6 +66,9 @@ function Item() {
         if (res.data.length > 0) {
           setCraft(res.data);
           setPrice(res.data[0].price);
+          if(res.data[0].quantity<1){
+            setQuantity(0)
+          }
           axios
             .get(`http://localhost:5265/crafter/${res.data[0].crafterId}`)
             .then((res) => {
@@ -94,7 +99,7 @@ function Item() {
       console.log("Error Occured");
     }
   }, []);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [userMessage, setUserMessage] = useState();
   const [purchaseMode, setPurchaseMode] = useState();
   const quantityHandler = (newQuanity) => {
@@ -103,7 +108,11 @@ function Item() {
   };
 
   const orderRequestHandler = () => {
-    if (quantity > 0) {
+    if(token == null || token=="" || token == "hello" ){
+      window.location.href = "https://homiecraft.b2clogin.com/homiecraft.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_HomieCraftSignupSignIn&client_id=7fda49b9-5fc0-4022-961d-3b2920ee7717&nonce=defaultNonce&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth&scope=openid&response_type=code&prompt=login"
+              
+    }
+    else if (quantity > 0) {
       axios
         .post(
           `http://localhost:5265/orderrequest`,
@@ -215,7 +224,7 @@ function Item() {
                   >
                     {craft[0].name}
                   </Typography>
-                  <Typography sx={{ fontSize: "15px", color: "gray" }}>
+                  <Typography sx={{ fontSize: "15px", color: "gray" }} style={capitalize}>
                   Crafter: {crafter.name}
                 </Typography>
                 </div>
@@ -382,7 +391,7 @@ function Item() {
                       borderRadius: "10px",
                     }}
                   />
-                  <ButtonPrimary action={handleAddComment} name={"comment"}/>
+                  < ButtonPrimary disabled = {newComment.length==0} action={handleAddComment} name={"comment"}/>
                 </Container>
             </div>
             {comments.length === 0 ? (

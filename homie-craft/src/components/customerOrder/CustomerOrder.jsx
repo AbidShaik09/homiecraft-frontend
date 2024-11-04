@@ -70,7 +70,7 @@ function CustomerOrder(params) {
                         <Box sx={{marginTop:"5px",display:"flex",alignItems:"center",flexDirection:"column"}}>
                             <Typography variant='h6' style={capitalize}>{craft[0].name}
                             </Typography>
-                            <Typography variant='h7'>{'₹ '+craft[0].price}</Typography>
+                            <Typography variant='h7' color='secondary'>{order.orderID}</Typography>
                         </Box>
                         :
                         <>
@@ -105,6 +105,7 @@ function CustomerOrder(params) {
                 
                 <Box sx={{display:"flex",gap:"15px"}}>
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
+                        
                         <Typography>Status</Typography>
                         <Typography >Quantity</Typography>
                         <Typography >Total Price</Typography>
@@ -112,6 +113,7 @@ function CustomerOrder(params) {
                         <Typography>{!isDelivered ? "Expected By" : "Delivered On"}</Typography>
                     </Box >
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
+                        
                         <Typography>:</Typography>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
@@ -119,6 +121,7 @@ function CustomerOrder(params) {
                         <Typography>:</Typography>
                     </Box>
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
+                        
                         <Typography>{order.status === "Accepted" ? <span style={{ color: "orange" }}><b>Accepted</b></span> : order.status === "Picked Up By Courier" && !isDelivered ? <span style={{ color: "orange" }}><b>Out for delivery</b></span> : <span style={{ color: "green" }}><b>Delivered</b></span>}</Typography>
                         <Typography>{order.quantity}</Typography>
                         <Typography>{'₹ '+craft[0].price*order.quantity}</Typography>

@@ -69,7 +69,7 @@ function OrderDetails(params) {
                         <Box sx={{marginTop:"5px",display:"flex",alignItems:"center",flexDirection:"column"}}>
                             <Typography variant='h6' style={capitalize}>{craft[0].name}
                             </Typography>
-                            <Typography variant='h7'>{'₹ '+craft[0].price}</Typography>
+                            <Typography variant='h7' color='secondary'>{order.orderID}</Typography>
                         </Box>
                         :
                         <>
