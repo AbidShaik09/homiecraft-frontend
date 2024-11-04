@@ -21,7 +21,7 @@ const Home = () => {
     
   />
 </Container>
-    {crafts.length==0?<Container sx={{display:"flex", justifyContent:"center"}}><Typography>No Items Available</Typography></Container>:<ItemHolder items ={crafts}/>} 
+    {crafts.length==0?<Container sx={{display:"flex", justifyContent:"center",height:"300px", alignItems:"center"}}><Typography>No Items Available</Typography></Container>:<ItemHolder items ={crafts}/>} 
     
     </>
   )
