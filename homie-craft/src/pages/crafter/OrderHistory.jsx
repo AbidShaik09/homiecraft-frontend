@@ -10,7 +10,11 @@ function OrderHistory() {
     let id = localStorage.getItem("id")
     useEffect(() => {
         axios.get(baseURL + "order/crafter/" + id).then(e => {
-            var o = e.data.sort((a, b) => b.isActive - a.isActive);;
+            const statusOrder = ["Accepted","Picked Up By Courier",  "Delivered"];
+            
+            var o = e.data.sort((a, b) => {
+                return statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
+            });
             setOrders(o);
             console.log(orders);
 

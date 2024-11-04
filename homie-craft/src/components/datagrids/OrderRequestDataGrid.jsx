@@ -69,8 +69,7 @@ export default function OrderRequestDataGrid(params) {
     rejectOrderHandler(id)
   };
 
-  const col = [
-
+  const col = (rows, crafts) => [
     {
       field: 'craftName',
       headerName: 'Craft Name',
@@ -80,17 +79,16 @@ export default function OrderRequestDataGrid(params) {
           Craft Name
         </strong>
       ),
-    }, {
+    },
+    {
       field: 'quantity',
       type: 'text',
       headerName: 'Requested Quantity',
       width: 150,
       renderCell: (params) => (
-
         params != undefined &&
         <div style={{ display: "flex", justifyContent: "end" }}>
           {params.value}
-
         </div>
       ),
       renderHeader: () => (
@@ -98,16 +96,15 @@ export default function OrderRequestDataGrid(params) {
           Requested Quantity
         </strong>
       ),
-    }, {
+    },
+    {
       field: 'price',
       headerName: 'Price',
-      width: 200,
+      width: 130,
       renderCell: (params) => (
-
         params != undefined &&
         <div style={{ display: "flex", justifyContent: "end" }}>
           {params.value}
-
         </div>
       ),
       renderHeader: () => (
@@ -115,9 +112,7 @@ export default function OrderRequestDataGrid(params) {
           Price
         </strong>
       ),
-    }
-    ,
-
+    },
     {
       field: 'purchaseMode',
       headerName: 'Purchase Mode',
@@ -127,7 +122,8 @@ export default function OrderRequestDataGrid(params) {
           Purchase Mode
         </strong>
       ),
-    }, {
+    },
+    {
       field: 'createdDate',
       headerName: 'Request Date',
       width: 170,
@@ -137,36 +133,48 @@ export default function OrderRequestDataGrid(params) {
         </strong>
       ),
     },
-
     {
-      field: 'action',
+      field: 'id',
       headerName: 'Action',
-      width: "130",
+      width: 130,
       renderCell: (params) => (
-
         params != undefined &&
         <div style={{ display: "flex" }}>
-
-          <IconButton onClick={() => handleAccept(params.id)} aria-label="accept" color="primary">
+          <IconButton
+            disabled={(() => {
+              const id = params.value;
+              const row = rows.find(r => r.id === id);
+              const craftId = row.craftId;
+              const craft = crafts.find(craft => craft.id === craftId);
+  
+              return !(craft && craft.quantity >= row.quantity);
+            })()}
+            onClick={() => handleAccept(params.id)}
+            aria-label="accept"
+            color="primary"
+          >
             <CheckIcon />
           </IconButton>
-          <IconButton onClick={() => handleReject(params.id)} aria-label="reject" color="secondary">
+  
+          <IconButton
+            onClick={() => handleReject(params.id)}
+            aria-label="reject"
+            color="secondary"
+          >
             <ClearIcon />
           </IconButton>
-
         </div>
       ),
-
       renderHeader: () => (
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <strong >
-            Accept/ Reject
+          <strong>
+            Accept/Reject
           </strong>
         </div>
-
       ),
     },
   ];
+  
 
   const handleSnackClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -178,7 +186,7 @@ export default function OrderRequestDataGrid(params) {
   };
   return (
     <Container>
-      <Box sx={{ minHeight: 400, width: '100%' }}>
+      <Container sx={{ minHeight: 400, width: '100%' }}>
         
       {params.rows.length>0?<>
         <DataGrid
@@ -189,7 +197,7 @@ export default function OrderRequestDataGrid(params) {
             }
           }}
           rows={params.rows}
-          columns={col}
+          columns={col(params.rows, params.crafts)}
           initialState={{
             pagination: {
               paginationModel: {
@@ -200,8 +208,8 @@ export default function OrderRequestDataGrid(params) {
           pageSizeOptions={[2, 5, 10, 25, 50, 75]}
           disableRowSelectionOnClick
         />
-      </>:<Container sx={{width:"400px"}}>
-          <Typography>No Order Requests</Typography>
+      </>:<Container sx={{display:"flex", height:"200px",justifyContent:"center",alignItems:"center"}}>
+          <Typography>- No Order Requests -</Typography>
         </Container>}
         
         <div>
@@ -235,7 +243,7 @@ export default function OrderRequestDataGrid(params) {
             </Alert>
           </Snackbar>
         </div>
-      </Box>
+      </Container>
     </Container>
 
 
