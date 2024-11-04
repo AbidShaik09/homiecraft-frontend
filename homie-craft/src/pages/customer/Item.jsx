@@ -61,6 +61,7 @@ function Item() {
     setUserMessage();
   };
   useEffect(() => {
+    window.scrollTo(0, 0);
     try {
       axios.get(`http://localhost:5265/crafts/${id}`).then((res) => {
         if (res.data.length > 0) {
