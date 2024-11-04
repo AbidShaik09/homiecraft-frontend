@@ -94,7 +94,7 @@ function Item() {
       console.log("Error Occured");
     }
   }, []);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [userMessage, setUserMessage] = useState();
   const [purchaseMode, setPurchaseMode] = useState();
   const quantityHandler = (newQuanity) => {
@@ -226,7 +226,7 @@ function Item() {
                       fontSize: "25px",
                     }}
                   >
-                   ₹ {price}
+                   {"₹ " + price.toLocaleString('en-IN')}
                   </Typography>
               {/* <h3 style={capitalize}>{craft[0].name}</h3>
                 <h3>{"₹ " + craft[0].price}</h3>
@@ -257,7 +257,7 @@ function Item() {
                       
                     }}
                   >
-                    Quantity:
+                    Quantity :
                   </Typography>
                   <IconButton sx={{padding:"0px"}} color="secondary" size="small" onClick={() => {
                       quantityHandler(quantity - 1);
@@ -286,13 +286,13 @@ function Item() {
                   
                 </div>
                 <Typography sx={{ fontSize: "12px", color: "gray" }}>
-                  Max Quantity: {craft[0].quantity}
+                Available Stock  : {craft[0].quantity}
                 </Typography>
                 <Typography sx={{ fontSize: "12px", color: "gray" }}>
-                Payable: {craft[0].price * quantity}
+                Payable Amount : {craft[0].price * quantity}
                 </Typography>
                 <Typography sx={{ fontSize: "12px", color: "gray" }}>
-                Payment Method: Cash on delivery
+                Payment Method : Cash on delivery
                 </Typography>
               </div>
               <div className="d-flex align-items-end">
@@ -478,7 +478,7 @@ function Item() {
               variant="filled"
               sx={{ width: "100%" }}
             >
-              Your order request is successful!
+              Order request sent successfully!
             </Alert>
           </Snackbar>
         </div>

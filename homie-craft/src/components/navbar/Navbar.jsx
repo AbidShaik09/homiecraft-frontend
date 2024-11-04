@@ -277,7 +277,7 @@ const theme = useTheme()
                   aria-label="orders"
                   aria-controls={menuId}
                   aria-haspopup="false"
-                  onClick={() => navigate('/orderHistory')}
+                  onClick={() => navigate('/orders')}
                   color="inherit"
                 >
                   <LocalShippingIcon />

@@ -15,7 +15,7 @@ function ItemHolder(params) {
           return (
             <>
               <div className="rounded">
-            <ItemCard  image={c.images[0]}  title={c.name} id= {c.id} price = {c.price} />
+            <ItemCard  image={c.images[0]}  title={c.name} id= {c.id} price = { c.price.toLocaleString('en-IN')} />
             </div>
             
             
