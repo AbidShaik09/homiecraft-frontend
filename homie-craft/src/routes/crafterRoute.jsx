@@ -16,7 +16,7 @@ function CrafterRoute() {
           
         {/* <Route path='/indexHandler' element= {<IndexHandler/>}/> */}
           <Route path='/' element={<CrafterHome/>}/>
-          <Route path='/orderHistory' element={<OrderHistory/>}/>
+          <Route path='/orders' element={<OrderHistory/>}/>
           <Route path='add-craft/:crafterId' element={<AddCraft/>}/>
           <Route path="/profile" element= {<CrafterProfile/>}/>
           

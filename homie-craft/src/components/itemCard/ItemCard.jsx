@@ -34,13 +34,13 @@ export default function ItemCard(params) {
         alt={title}
       />
       <CardContent>
-      <Typography noWrap gutterBottom  variant="h6" component="div"
+      <Typography noWrap gutterBottom  variant="h7" component="div"
           sx={{ overflow: 'hidden'}}
         >
           {title}
     
         </Typography>
-        <Typography gutterBottom variant="h5" component="div"
+        <Typography gutterBottom variant="h6" component="div"
           sx={{ overflow: 'hidden', fontWeight:'bold'}}
         >
          
