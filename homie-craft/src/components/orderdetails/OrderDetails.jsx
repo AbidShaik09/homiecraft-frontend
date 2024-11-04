@@ -34,10 +34,6 @@ function OrderDetails(params) {
         setSnackOpen(false);
       };
 
-    const itemRedirect=()=>{
-        navigate(`/item/${craft[0].id}`)
-    }
-
     useEffect(() => {
         axios.get(`${baseURL}crafts/${order.craftId}`).then((res) => {
             setCraft(res.data);
@@ -60,8 +56,7 @@ function OrderDetails(params) {
         }}>
             {craft.length > 0 ? (
                <Container 
-                    onClick={itemRedirect} 
-                    sx={{cursor:"pointer",  
+                    sx={{ 
                         display:"flex",
                         alignItems:"center",                   
                     flexDirection:"column",                    

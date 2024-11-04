@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Container, IconButton } from '@mui/material';
+import { Alert, Button, Container, IconButton, Snackbar } from '@mui/material';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -17,6 +17,7 @@ export default function OrderRequestDataGrid(params) {
     useEffect(() => {
       
   },[]);
+  const [openSnack, setSnackOpen] = React.useState(false);
 
   var crafterId = localStorage.getItem("id")
    
@@ -48,7 +49,7 @@ export default function OrderRequestDataGrid(params) {
          axios.get(baseUrl + 'order/crafter/'+crafterId).then(x=>{
             axios.get(baseUrl + "crafts/crafter/" + crafterId).then(res => {
               params.setCrafts(res.data);
-              
+              setSnackOpen(true);
 
            })
          }
@@ -163,7 +164,13 @@ const col = [
   },
 ];
  
+const handleSnackClose = (event, reason) => {
+  if (reason === "clickaway") {
+    return;
+  }
 
+  setSnackOpen(false);
+};
   return (
     <Box sx={{ minHeight: 400, width: '100%' }}>
       <DataGrid
@@ -185,6 +192,22 @@ const col = [
         pageSizeOptions={[2,5,10,25,50,75]}
         disableRowSelectionOnClick
       />
+      <div>
+          <Snackbar
+            open={openSnack}
+            autoHideDuration={6000}
+            onClose={handleSnackClose}
+          >
+            <Alert
+              onClose={handleSnackClose}
+              severity="success"
+              variant="filled"
+              sx={{ width: "100%" }}
+            >
+              Order Request Accepted!
+            </Alert>
+          </Snackbar>
+        </div>
     </Box>
   );
 }
