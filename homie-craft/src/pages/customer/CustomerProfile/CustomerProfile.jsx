@@ -98,15 +98,7 @@ function CustomerProfile() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-          <label htmlFor="files">Update Profile Pic?</label>
-          <TextField
-            name="files"
-            type="file"
-            onChange={handleFileChange}
-            inputProps={{ accept: "image/*" }} 
-          />
-        </div>
+        
 
         <TextField
           fullWidth
@@ -181,6 +173,15 @@ function CustomerProfile() {
           helperText={formik.touched.pinCode && formik.errors.pinCode}
           margin="normal"
         />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <label htmlFor="files">Update Profile Pic?</label>
+          <TextField
+            name="files"
+            type="file"
+            onChange={handleFileChange}
+            inputProps={{ accept: "image/*" }} 
+          />
+        </div>
 
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
           Submit

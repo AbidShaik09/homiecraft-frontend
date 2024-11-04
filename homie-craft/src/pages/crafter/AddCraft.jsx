@@ -1,5 +1,5 @@
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -10,7 +10,9 @@ function AddCraft() {
   const baseURL = "http://localhost:5265";
   const navhook = useNavigate();
   const [imageFiles, setImageFiles] = useState([]);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const formik = useFormik({
     initialValues: {
       crafterId: crafterId,
@@ -212,11 +214,11 @@ function AddCraft() {
           xs={12} 
           sx={{ 
             display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center' 
+            flexDirection: 'column'
           }}
         >
-          <label htmlFor="files"><b>Upload Files</b></label>
+          <Container>
+          <label htmlFor="files">Upload Files</label>
           <input
             name="files"
             type="file"
@@ -227,6 +229,8 @@ function AddCraft() {
           {formik.touched.images && formik.errors.images && (
             <div style={{ color: errorColor }}>{formik.errors.images}</div>
           )}
+          </Container>
+          
         </Container>
 
         <Container>

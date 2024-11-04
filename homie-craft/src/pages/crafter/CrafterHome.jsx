@@ -105,7 +105,7 @@ function CrafterHome() {
           </IconButton>
             </Container>
             <Container sx={{ display: 'flex', padding: '20px 0px' }}>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: {xs:"center",sm:'start',md:"start"} }}>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '13px', justifyContent: {xs:"center",sm:'start',md:"start"} }}>
                 <>
                 {
                   crafts.length > 0 ?
