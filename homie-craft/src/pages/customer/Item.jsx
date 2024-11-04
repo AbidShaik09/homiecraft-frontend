@@ -221,6 +221,7 @@ function Item() {
                       color: "black",
                       fontSize: "25px",
                     }}
+                     style={capitalize}
                   >
                     {craft[0].name}
                   </Typography>
