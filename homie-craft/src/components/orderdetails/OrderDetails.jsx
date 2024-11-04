@@ -135,26 +135,29 @@ function OrderDetails(params) {
             <Box sx={{ flexGrow: 1 ,alignItems:"flex-start",paddingX:"30px", width:"750px"}}>
                 {craft.length > 0 && (
                 <>
-                <Typography variant='h6' style={capitalize} sx={{marginLeft:"0px",marginBottom:"0px"}}>Shipping Address</Typography>
+                <Typography variant='h6' style={capitalize} sx={{marginLeft:"0px",marginBottom:"15px"}}>Shipping Address</Typography>
                 <Box>
                 <Box sx={{display:"flex",gap:"15px"}}>
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
-                        <Typography>Mobile</Typography>
+                        <Typography>H.No</Typography>
                         <Typography >City</Typography>
                         <Typography >State</Typography>
                         <Typography>Pin Code</Typography>
+                        <Typography>Mobile</Typography>
                     </Box >
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
+                        <Typography>:</Typography>
                     </Box>
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
-                        <Typography>{order.phoneTo}</Typography>
+                    <Typography>{order.houseTo}</Typography>
                         <Typography>{order.cityTo}</Typography>
                         <Typography>{order.stateTo}</Typography>
                         <Typography>{order.pincodeTo}</Typography>
+                        <Typography>{order.phoneTo}</Typography>
                         
                     </Box>
                     </Box>
