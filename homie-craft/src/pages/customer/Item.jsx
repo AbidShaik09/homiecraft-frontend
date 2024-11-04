@@ -94,7 +94,7 @@ function Item() {
       console.log("Error Occured");
     }
   }, []);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [userMessage, setUserMessage] = useState();
   const [purchaseMode, setPurchaseMode] = useState();
   const quantityHandler = (newQuanity) => {
@@ -111,7 +111,7 @@ function Item() {
             userId: localStorage.getItem("id"),
             craftId: id,
             crafterId: craft[0].crafterId,
-            purchaseMode: "COD",
+            purchaseMode: "Cash On Delivery",
             quantity: quantity,
             status: "requested",
             price: craft[0].price * quantity,
@@ -226,7 +226,7 @@ function Item() {
                       fontSize: "25px",
                     }}
                   >
-                   ₹ {price}
+                   {"₹ " + price.toLocaleString('en-IN')}
                   </Typography>
               {/* <h3 style={capitalize}>{craft[0].name}</h3>
                 <h3>{"₹ " + craft[0].price}</h3>
@@ -254,14 +254,15 @@ function Item() {
                       fontWeight: "2px",
                       color: "black",
                       fontSize: "18px",
+                      
                     }}
                   >
-                    Quantity:
+                    Quantity :
                   </Typography>
                   <IconButton sx={{padding:"0px"}} color="secondary" size="small" onClick={() => {
                       quantityHandler(quantity - 1);
                     }}> 
-                  <RemoveIcon sx={{width:"15px"}}
+                  <RemoveIcon sx={{width:"12px"}}
                   />
                   </IconButton>
 
@@ -285,29 +286,27 @@ function Item() {
                   
                 </div>
                 <Typography sx={{ fontSize: "12px", color: "gray" }}>
-                  Max Quantity: {craft[0].quantity}
+                Available Stock  : {craft[0].quantity}
+                </Typography>
+                <Typography sx={{ fontSize: "12px", color: "gray" }}>
+                Payable Amount : {craft[0].price * quantity}
+                </Typography>
+                <Typography sx={{ fontSize: "12px", color: "gray" }}>
+                Payment Method : Cash on delivery
                 </Typography>
               </div>
-              <div class="d-flex flex-column">
-                  <Typography
-                    sx={{
-                      fontWeight: "2px",
-                      color: "black",
-                      fontSize: "18px",
-                    }}
-                  >
-                    Payable: {craft[0].price * quantity}
-                  </Typography>
-                  <Typography sx={{ fontSize: "12px", color: "gray" }}>
-                  Payment Method: COD
-                </Typography>
-                </div>
-              <ButtonPrimary
-                style={{ width: "100%" }}
-                name="Order"
-                action={orderRequestHandler}
+              <div className="d-flex align-items-end">
+
+              <Button
+              variant="contained"
+                sx={{padding: "5px 25px"}}
+                style={{ width: "100%", }}
+                onClick={orderRequestHandler}
                 disabled={quantity == 0}
-              />
+                >
+                Order
+                </Button>
+                </div>
             </Container>
           </Container>
         </Container>
@@ -479,7 +478,7 @@ function Item() {
               variant="filled"
               sx={{ width: "100%" }}
             >
-              Your order request is successful!
+              Order request sent successfully!
             </Alert>
           </Snackbar>
         </div>

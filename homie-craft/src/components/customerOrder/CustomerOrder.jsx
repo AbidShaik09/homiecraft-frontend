@@ -100,29 +100,35 @@ function CustomerOrder(params) {
                 {craft.length > 0 && (
                 <>
                 <Typography variant='h6' style={capitalize} sx={{marginLeft:"0px",marginBottom:"15px"}}>Order Summary</Typography>
+                <Box>
+
+                
                 <Box sx={{display:"flex",gap:"15px"}}>
-                    <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-around",height:"175px"}}>
+                    <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
                         <Typography>Status</Typography>
                         <Typography >Quantity</Typography>
                         <Typography >Total Price</Typography>
                         <Typography>Ordered On</Typography>
                         <Typography>{!isDelivered ? "Expected By" : "Delivered On"}</Typography>
                     </Box >
-                    <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-around",height:"175px"}}>
+                    <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
                     </Box>
-                    <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-around",height:"175px"}}>
-                        <Typography>{order.status === "Accepted" ? <span style={{ color: "orange" }}><b>Accepted</b></span> : order.status === "Picked Up By Corrier" && !isDelivered ? <span style={{ color: "orange" }}><b>Out for delivery</b></span> : <span style={{ color: "green" }}><b>Delivered</b></span>}</Typography>
+                    <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
+                        <Typography>{order.status === "Accepted" ? <span style={{ color: "orange" }}><b>Accepted</b></span> : order.status === "Picked Up By Courier" && !isDelivered ? <span style={{ color: "orange" }}><b>Out for delivery</b></span> : <span style={{ color: "green" }}><b>Delivered</b></span>}</Typography>
                         <Typography>{order.quantity}</Typography>
                         <Typography>{'₹ '+craft[0].price*order.quantity}</Typography>
                         <Typography>{format(new Date(order.createdDate), 'PP')}</Typography>
                         <Typography>{format(new Date(order.expectedDelivery), 'PP')}</Typography>
                     </Box>
                 </Box>
+                {order.status === "Picked Up By Courier" && false ? <ButtonPrimary action={corrierHandler} name="Mark As Received" />:<></>}
+                </Box>
+                
                 </>
                 )}
             </Box>
@@ -131,30 +137,33 @@ function CustomerOrder(params) {
             <Box sx={{ flexGrow: 1 ,alignItems:"flex-start",paddingX:"30px", width:"750px"}}>
                 {craft.length > 0 && (
                 <>
-                <Typography variant='h6' style={capitalize} sx={{marginLeft:"0px",marginBottom:"0px"}}>Shipping Address</Typography>
+                <Typography variant='h6' style={capitalize} sx={{marginLeft:"0px",marginBottom:"15px"}}>Shipping Address</Typography>
                 <Box>
                 <Box sx={{display:"flex",gap:"15px"}}>
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
-                        <Typography>Mobile</Typography>
+                        <Typography>H.No</Typography>
                         <Typography >City</Typography>
                         <Typography >State</Typography>
                         <Typography>Pin Code</Typography>
+                        <Typography>Mobile</Typography>
                     </Box >
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
                         <Typography>:</Typography>
+                        <Typography>:</Typography>
                     </Box>
                     <Box sx={{display:"flex", flexDirection:"column", justifyContent:"space-evenly",height:"175px"}}>
-                        <Typography>{order.phoneTo}</Typography>
+                        <Typography>{order.houseTo}</Typography>
                         <Typography>{order.cityTo}</Typography>
                         <Typography>{order.stateTo}</Typography>
                         <Typography>{order.pincodeTo}</Typography>
+                        <Typography>{order.phoneTo}</Typography>
                         
                     </Box>
                     </Box>
-                {order.status === "Picked Up By Corrier" && !isDelivered ? <ButtonPrimary action={corrierHandler} name="Mark As Received" />:<></>}
+                {order.status === "Picked Up By Courier" && !isDelivered ? <ButtonPrimary action={corrierHandler} name="Mark As Received" />:<></>}
                     
                 </Box>
                 </>

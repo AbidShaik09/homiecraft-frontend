@@ -67,7 +67,7 @@ export default function CraftCard(params) {
     
   })
 
-
+  
   
 
 
@@ -83,17 +83,22 @@ export default function CraftCard(params) {
           <Box sx={{display:"flex", justifyContent:"space-between"}}>
           <Box sx={{display:"flex", alignItems:"center", justifyContent:"center"}} >
           
-          <Typography noWrap gutterBottom variant="h5" component="span" sx={{ margin:"auto",  alignSelf:"center"}}>
-            ₹{craft.price}
+          <Typography noWrap gutterBottom variant="h6" component="span" sx={{ margin:"auto",  alignSelf:"center"}}>
+             {"₹ " + craft.price.toLocaleString('en-IN')}
           </Typography>
           </Box>
           <Box sx={{display:"flex", alignItems:"center"}} >
+            {craft.isAvailable?<>
             <Typography noWrap sx={{margin:"0px 4px 0px 0px"}}>
               Qty: 
             </Typography>
             <Typography noWrap color='secondary'>
               {craft.quantity}
+            </Typography></>:<>
+            <Typography noWrap color='red'>
+              Inactive
             </Typography>
+            </>}
           </Box>
           </Box>
           
