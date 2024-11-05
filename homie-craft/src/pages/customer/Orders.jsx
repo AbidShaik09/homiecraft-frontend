@@ -13,12 +13,16 @@ function Orders() {
     useEffect(() => {
         setLoading(true);
         axios.get(baseURL + "order/customer/" + id).then(e => {
-            var o = e.data.sort((a, b) => b.isActive - a.isActive);
+            const statusOrder = ["Picked Up By Courier", "Accepted", "Delivered"];
+            
+            var o = e.data.sort((a, b) => {
+                return statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
+            });
+            
             setOrders(o);
             console.log(orders);
             setLoading(false);
-            }
-        ).catch(e =>{
+        }).catch(e =>{
             setLoading(false);
             <Snackbar title='Error occured'/>
         })

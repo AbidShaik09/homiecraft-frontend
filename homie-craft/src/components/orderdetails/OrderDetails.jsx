@@ -34,10 +34,6 @@ function OrderDetails(params) {
         setSnackOpen(false);
       };
 
-    const itemRedirect=()=>{
-        navigate(`/item/${craft[0].id}`)
-    }
-
     useEffect(() => {
         axios.get(`${baseURL}crafts/${order.craftId}`).then((res) => {
             setCraft(res.data);
@@ -60,8 +56,7 @@ function OrderDetails(params) {
         }}>
             {craft.length > 0 ? (
                <Container 
-                    onClick={itemRedirect} 
-                    sx={{cursor:"pointer",  
+                    sx={{ 
                         display:"flex",
                         alignItems:"center",                   
                     flexDirection:"column",                    
@@ -74,7 +69,7 @@ function OrderDetails(params) {
                         <Box sx={{marginTop:"5px",display:"flex",alignItems:"center",flexDirection:"column"}}>
                             <Typography variant='h6' style={capitalize}>{craft[0].name}
                             </Typography>
-                            <Typography variant='h7'>{'₹ '+craft[0].price}</Typography>
+                            <Typography variant='h7' color='secondary'>{order.orderID}</Typography>
                         </Box>
                         :
                         <>

@@ -22,6 +22,9 @@ export default function ItemCard(params) {
   const navigateHandler =()=>{
     navhook('/item/'+id)
   }
+  const capitalize={
+    textTransform: "capitalize",
+  }
   
   return (
     <DivWrapper key={id} className='orange-card ' onClick={navigateHandler}>
@@ -36,6 +39,7 @@ export default function ItemCard(params) {
       <CardContent>
       <Typography noWrap gutterBottom  variant="h7" component="div"
           sx={{ overflow: 'hidden'}}
+          style={capitalize}
         >
           {title}
     

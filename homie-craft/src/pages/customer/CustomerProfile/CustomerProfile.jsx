@@ -97,32 +97,9 @@ function CustomerProfile() {
               </span>
             )}
           </div>
+          </Box>
 
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
-            <label htmlFor="files">Update Profile Pic?</label>
-            <TextField
-              name="files"
-              type="file"
-              onChange={handleFileChange}
-              inputProps={{ accept: "image/*" }} 
-              sx={{ marginLeft: 1 }}
-            />
-          </div>
-        </Box>
-
-        {/* Right Section for Input Fields */}
-        <Box sx={{ flex: '2' }}>
-          <TextField
-            fullWidth
-            label="Full Name"
-            id="name"
-            name="name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
-            margin="normal"
-          />
+        
 
           <TextField
             fullWidth
@@ -186,10 +163,31 @@ function CustomerProfile() {
             margin="normal"
           />
 
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
-            Submit
-          </Button>
-        </Box>
+        <TextField
+          fullWidth
+          label="Pincode"
+          id="pinCode"
+          name="pinCode"
+          type="number"
+          value={formik.values.pinCode}
+          onChange={formik.handleChange}
+          error={formik.touched.pinCode && Boolean(formik.errors.pinCode)}
+          helperText={formik.touched.pinCode && formik.errors.pinCode}
+          margin="normal"
+        />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <label htmlFor="files">Update Profile Pic?</label>
+          <TextField
+            name="files"
+            type="file"
+            onChange={handleFileChange}
+            inputProps={{ accept: "image/*" }} 
+          />
+        </div>
+
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+          Submit
+        </Button>
       </Box>
     </Container>
   );

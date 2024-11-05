@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Banner from '../../components/banner/Banner'
 import ItemHolder from '../../components/itemHolder/ItemHolder';
 import axios from 'axios';
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 
 
 const Home = () => {
@@ -21,7 +21,8 @@ const Home = () => {
     
   />
 </Container>
-    <ItemHolder items ={crafts}/>
+    {crafts.length==0?<Container sx={{display:"flex", justifyContent:"center",height:"300px", alignItems:"center"}}><Typography>No Items Available</Typography></Container>:<ItemHolder items ={crafts}/>} 
+    
     </>
   )
 }
