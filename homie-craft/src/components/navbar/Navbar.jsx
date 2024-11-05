@@ -17,7 +17,8 @@ import axios from 'axios';
 import ShowSearch from '../ShowSearch';
 import { useHomieCraftContext } from '../../context/HomieCraftContext';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Button, capitalize, ClickAwayListener } from '@mui/material';
+import { Button, capitalize, ClickAwayListener, Container } from '@mui/material';
+import BlackLogo from './BlackLogo.png'
 import { useTheme } from '@emotion/react';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -228,15 +229,21 @@ const theme = useTheme()
     <Box sx={{ flexGrow: 1 ,backgroundColor: theme.palette.paper}}>
       <AppBar position="static">
         <Toolbar>
+        
+        <Box sx={{display:"flex", alignItems:"center",cursor:"pointer",gap:"5px"}} onClick={() => navigate('/')}>
+        <img  src={BlackLogo} style={{width:"23px",height:"23px",paddingBottom:"3px",alignSelf:"baseline", borderRadius:"0px"}} alt="Logo"/>
           <Typography
             variant="h5"
             noWrap
             type="button"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-            onClick={() => navigate('/')}
+            sx={{ display: { xs: 'none', sm: 'block', fontWeight:"bold" } }}
+            
           >
+
             Homie Craft
           </Typography>
+          </Box>
+          
           
           {!isCrafter? <>
           <ClickAwayListener onClickAway={handleClickAway}>
