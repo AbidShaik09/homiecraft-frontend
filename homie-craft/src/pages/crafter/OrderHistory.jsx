@@ -3,11 +3,14 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ButtonPrimary from '../../components/button/primary/ButtonPrimary'
 import OrderDetails from '../../components/orderdetails/OrderDetails'
+import { useHomieCraftContext } from '../../context/HomieCraftContext'
 
 function OrderHistory() {
     const baseURL = "http://localhost:5265/"
     const [orders, setOrders] = useState([])
-    let id = localStorage.getItem("id")
+    
+  const {token, setToken,userType,setUserType,id,setId} = useHomieCraftContext()
+    
     useEffect(() => {
         axios.get(baseURL + "order/crafter/" + id).then(e => {
             const statusOrder = ["Accepted","Picked Up By Courier",  "Delivered"];
